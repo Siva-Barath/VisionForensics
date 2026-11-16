@@ -1,0 +1,54 @@
+{
+  "random_seed": 42,
+  "features": [
+    "img_width",
+    "img_height",
+    "img_aspect_ratio",
+    "img_laplacian_variance_mean",
+    "img_blur_severity_mean",
+    "img_noise_sigma_mean",
+    "img_edge_density_mean",
+    "img_illumination_std_mean",
+    "img_ela_region_count_mean",
+    "img_ela_max_difference_mean",
+    "img_entropy_score_mean",
+    "cm_keypoint_count_akaze",
+    "cm_descriptor_matches",
+    "cm_inlier_matches",
+    "cm_average_region_size",
+    "cm_duplicate_pair_count",
+    "cm_confidence",
+    "cm_inlier_ratio"
+  ],
+  "feature_count": 18,
+  "logistic_regression_params": {
+    "penalty": "l2",
+    "C": 0.05,
+    "solver": "lbfgs",
+    "max_iter": 2000,
+    "intercept": 0.2871782248036312
+  },
+  "random_forest_params": {
+    "n_estimators": 100,
+    "max_depth": null,
+    "min_samples_leaf": 2,
+    "max_features": "sqrt"
+  },
+  "sample_counts": {
+    "train": {
+      "total": 1320,
+      "authentic": 660,
+      "forged": 660
+    },
+    "val": {
+      "total": 280,
+      "authentic": 140,
+      "forged": 140
+    },
+    "test_quarantined": {
+      "total": 280,
+      "authentic": 140,
+      "forged": 140
+    }
+  }
+}

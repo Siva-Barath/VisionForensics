@@ -1,0 +1,51 @@
+{
+  "canonical_browser_url": "https://localhost:8443",
+  "controlled_account": "controlled_origin_ff502d62a7@visionforensics.local",
+  "password_retained": false,
+  "results": [
+    {
+      "check": "Canonical localhost TLS certificate and production UI",
+      "status": "PASS"
+    },
+    {
+      "check": "Registration from canonical browser origin",
+      "status": "PASS"
+    },
+    {
+      "check": "Login from canonical browser origin",
+      "status": "PASS"
+    },
+    {
+      "check": "Both cookies Secure and HttpOnly",
+      "status": "PASS"
+    },
+    {
+      "check": "Cookie-only account access",
+      "status": "PASS"
+    },
+    {
+      "check": "Cookie refresh with canonical browser Origin",
+      "status": "PASS"
+    },
+    {
+      "check": "Cross-origin cookie refresh rejected",
+      "status": "PASS"
+    },
+    {
+      "check": "Cross-origin cookie logout rejected",
+      "status": "PASS"
+    },
+    {
+      "check": "Legitimate session remains after rejected CSRF",
+      "status": "PASS"
+    },
+    {
+      "check": "Logout with canonical browser Origin",
+      "status": "PASS"
+    },
+    {
+      "check": "Post-logout cookie access denied",
+      "status": "PASS"
+    }
+  ]
+}

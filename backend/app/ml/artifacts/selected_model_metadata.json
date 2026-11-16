@@ -1,0 +1,37 @@
+{
+  "selected_model": "Random Forest",
+  "pipeline_file": "random_forest.joblib",
+  "selected_threshold": 0.55,
+  "validation_metrics": {
+    "threshold": 0.55,
+    "accuracy": 0.8892857142857142,
+    "roc_auc": 0.9573214285714287,
+    "pr_auc": 0.9652227347019992,
+    "brier_score": 0.08120515253722027,
+    "forged_class (positive=1)": {
+      "precision": 0.9739130434782609,
+      "recall": 0.8,
+      "f1_score": 0.8784313725490197
+    },
+    "authentic_class (negative=0)": {
+      "precision": 0.8303030303030303,
+      "recall": 0.9785714285714285,
+      "f1_score": 0.898360655737705
+    },
+    "macro_metrics": {
+      "precision": 0.9021080368906456,
+      "recall": 0.8892857142857142,
+      "f1_score": 0.8883960141433623
+    },
+    "confusion_matrix": {
+      "true_negatives (TN)": 137,
+      "false_positives (FP)": 3,
+      "false_negatives (FN)": 28,
+      "true_positives (TP)": 112,
+      "false_positive_rate (FPR)": 0.02142857142857143,
+      "false_negative_rate (FNR)": 0.2
+    }
+  },
+  "decision_rationale": "Random Forest demonstrated superior discrimination capability (ROC-AUC 0.9573, PR-AUC 0.9652) and robust validation forged recall (0.8000) with low false alarm rate (0.0214).",
+  "test_quarantine_preserved": true
+}

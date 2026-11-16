@@ -1,0 +1,6 @@
+{
+  "migration": "PASS",
+  "frontend_image": "PASS",
+  "backend_frontend_update": "PASS",
+  "database_volume_reset": false
+}

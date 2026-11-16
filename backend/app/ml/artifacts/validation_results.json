@@ -1,0 +1,130 @@
+{
+  "logistic_regression_val": {
+    "threshold": 0.5,
+    "accuracy": 0.8714285714285714,
+    "roc_auc": 0.9425510204081633,
+    "pr_auc": 0.9527615447759067,
+    "brier_score": 0.10070686098850255,
+    "forged_class (positive=1)": {
+      "precision": 0.9126984126984127,
+      "recall": 0.8214285714285714,
+      "f1_score": 0.8646616541353382
+    },
+    "authentic_class (negative=0)": {
+      "precision": 0.8376623376623377,
+      "recall": 0.9214285714285714,
+      "f1_score": 0.8775510204081632
+    },
+    "macro_metrics": {
+      "precision": 0.8751803751803752,
+      "recall": 0.8714285714285714,
+      "f1_score": 0.8711063372717507
+    },
+    "confusion_matrix": {
+      "true_negatives (TN)": 129,
+      "false_positives (FP)": 11,
+      "false_negatives (FN)": 25,
+      "true_positives (TP)": 115,
+      "false_positive_rate (FPR)": 0.07857142857142857,
+      "false_negative_rate (FNR)": 0.17857142857142858
+    }
+  },
+  "random_forest_val": {
+    "threshold": 0.5,
+    "accuracy": 0.8857142857142857,
+    "roc_auc": 0.9573214285714287,
+    "pr_auc": 0.9652227347019992,
+    "brier_score": 0.08120515253722027,
+    "forged_class (positive=1)": {
+      "precision": 0.95,
+      "recall": 0.8142857142857143,
+      "f1_score": 0.8769230769230769
+    },
+    "authentic_class (negative=0)": {
+      "precision": 0.8375,
+      "recall": 0.9571428571428572,
+      "f1_score": 0.8933333333333334
+    },
+    "macro_metrics": {
+      "precision": 0.89375,
+      "recall": 0.8857142857142857,
+      "f1_score": 0.8851282051282052
+    },
+    "confusion_matrix": {
+      "true_negatives (TN)": 134,
+      "false_positives (FP)": 6,
+      "false_negatives (FN)": 26,
+      "true_positives (TP)": 114,
+      "false_positive_rate (FPR)": 0.04285714285714286,
+      "false_negative_rate (FNR)": 0.18571428571428572
+    }
+  },
+  "threshold_recommendations": {
+    "logistic_regression": {
+      "threshold": 0.4,
+      "metrics": {
+        "threshold": 0.4,
+        "accuracy": 0.8678571428571429,
+        "roc_auc": 0.9425510204081633,
+        "pr_auc": 0.9527615447759067,
+        "brier_score": 0.10070686098850255,
+        "forged_class (positive=1)": {
+          "precision": 0.8759124087591241,
+          "recall": 0.8571428571428571,
+          "f1_score": 0.8664259927797834
+        },
+        "authentic_class (negative=0)": {
+          "precision": 0.8601398601398601,
+          "recall": 0.8785714285714286,
+          "f1_score": 0.8692579505300353
+        },
+        "macro_metrics": {
+          "precision": 0.8680261344494922,
+          "recall": 0.8678571428571429,
+          "f1_score": 0.8678419716549093
+        },
+        "confusion_matrix": {
+          "true_negatives (TN)": 123,
+          "false_positives (FP)": 17,
+          "false_negatives (FN)": 20,
+          "true_positives (TP)": 120,
+          "false_positive_rate (FPR)": 0.12142857142857143,
+          "false_negative_rate (FNR)": 0.14285714285714285
+        }
+      }
+    },
+    "random_forest": {
+      "threshold": 0.55,
+      "metrics": {
+        "threshold": 0.55,
+        "accuracy": 0.8892857142857142,
+        "roc_auc": 0.9573214285714287,
+        "pr_auc": 0.9652227347019992,
+        "brier_score": 0.08120515253722027,
+        "forged_class (positive=1)": {
+          "precision": 0.9739130434782609,
+          "recall": 0.8,
+          "f1_score": 0.8784313725490197
+        },
+        "authentic_class (negative=0)": {
+          "precision": 0.8303030303030303,
+          "recall": 0.9785714285714285,
+          "f1_score": 0.898360655737705
+        },
+        "macro_metrics": {
+          "precision": 0.9021080368906456,
+          "recall": 0.8892857142857142,
+          "f1_score": 0.8883960141433623
+        },
+        "confusion_matrix": {
+          "true_negatives (TN)": 137,
+          "false_positives (FP)": 3,
+          "false_negatives (FN)": 28,
+          "true_positives (TP)": 112,
+          "false_positive_rate (FPR)": 0.02142857142857143,
+          "false_negative_rate (FNR)": 0.2
+        }
+      }
+    }
+  }
+}

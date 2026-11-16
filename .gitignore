@@ -1,0 +1,89 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+
+# Environment & Secrets (Never commit credentials)
+.env
+.env.pilot
+*.env
+!.env.example
+!.env.pilot.template
+
+# Cryptographic Keys & Certificates
+*.key
+*.pem
+*.crt
+*.cer
+*.p12
+*.pfx
+frontend/certs/
+certs/
+ca/
+pki/
+
+# Backups & Archives
+backups/
+*.dump
+*.dump.sha256
+*.hmac
+
+# Storage (keep dirs, ignore contents)
+uploads/*
+processed/*
+reports/*
+heatmaps/*
+backend/uploads/*
+backend/processed/*
+backend/reports/*
+backend/heatmaps/*
+!uploads/.gitkeep
+!processed/.gitkeep
+!reports/.gitkeep
+!heatmaps/.gitkeep
+!backend/uploads/.gitkeep
+!backend/processed/.gitkeep
+!backend/reports/.gitkeep
+!backend/heatmaps/.gitkeep
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.test-build/
+
+# Database runtime data & cluster
+backend/data/
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Test runs, scratch & logs
+scratch/
+project_audit/test_runs/
+*.log
+
+# Scratch test images generated during unit testing
+ex04_p0.png
+ex04_p1.png
+test_p1.png
+test_p1_exact.png
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

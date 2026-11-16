@@ -1,0 +1,23 @@
+[
+  {
+    "filename": "baseline.png",
+    "sha256": "3cb0ce5b02e57412076e93705fe4b4bb1db296618de254be84ece9ba4f5af560",
+    "origin": "Pillow deterministic synthetic fixture; no real identity or benchmark data",
+    "ground_truth": "synthetic control",
+    "limitation": "workflow control, not authentic-document accuracy evaluation"
+  },
+  {
+    "filename": "modified.jpg",
+    "sha256": "8c5046b727f46ac9df4c86c6619def8e0fb348bbcd7ae982520978f619b75caa",
+    "origin": "Pillow deterministic synthetic fixture; no real identity or benchmark data",
+    "ground_truth": "pixel edit",
+    "limitation": "workflow control, not authentic-document accuracy evaluation"
+  },
+  {
+    "filename": "two_pages.pdf",
+    "sha256": "6f945c7477308c3478cc50a93dcce1fb70e8def236f2a3d78e2e8b84e8183798",
+    "origin": "Pillow deterministic synthetic fixture; no real identity or benchmark data",
+    "ground_truth": "synthetic control",
+    "limitation": "workflow control, not authentic-document accuracy evaluation"
+  }
+]

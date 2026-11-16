@@ -1,0 +1,605 @@
+{
+  "protected_files": [
+    {
+      "file": "backend/app/ml/artifacts/active_feature_schema.json",
+      "sha256": "eaef52167d829396728b78af848acae3ef62097538cb8433de29aa635c45c3dc",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/evaluation_results.json",
+      "sha256": "08ffe8f91fe6f1503db944985e841a63e9bcc1496f45b672866f63399f6effaa",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/feature_importance.json",
+      "sha256": "318bd5a697d50a9c244c05e90c68bc7746332440dac2a61a0a38f3df3c7e2318",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/logistic_regression.joblib",
+      "sha256": "52e2d7c524caff8996089306f498d68ef82ce9d3db987697ab56c12b6619e062",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/phase9_benchmark_results.json",
+      "sha256": "7b5c5fb1d45e8ccb66ce5ee08add732335b74ce818a41f99955b7c7c003d649a",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/random_forest.joblib",
+      "sha256": "f274d4a93661ce8c5fd95f41a43e629edac41ab16d771355e7decacf0040e280",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/scaler.joblib",
+      "sha256": "72a7dc1b76e1607bc092f120865befe15978cd7d175bcb99417266833d33a9c7",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/selected_model_metadata.json",
+      "sha256": "8e9962e583d2100c4311ac25db72797951d3ef0f1290def73a1509dca0605b6a",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/test_category_breakdown.json",
+      "sha256": "07a898786dfac55625bdd929a8046d12f1eab7f0bb1bb66adfc2d0240016f95d",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/test_confusion_matrices.json",
+      "sha256": "b3f3f1081c78d47b8d2ddae099ec1179d105794574f026bc9a8bebdaa86e3e85",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/test_results.json",
+      "sha256": "0602639ec9b66839f99497e2aa4da13f1bedd67592cbec9f2d5a1e84ccf2b95e",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/test_specimen_breakdown.json",
+      "sha256": "e36777cf1b389e15e0980dd4091ef0cbfb0fc6aeb4e2106df840e3613c34ffb3",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/threshold_analysis.json",
+      "sha256": "383a35e3e75f2e7fbd32b2503427b5f223dca0b2d90c642af760a8f0794dc2e4",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/training_config.json",
+      "sha256": "886ebfc5193cf0dcc066ec0e8bcf7bf60e1df3941592a2c33708681982a373be",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/validation_results.json",
+      "sha256": "d7080bf600419abce398bb8517a3822b77512322fe536c70d5eebfe64da73333",
+      "unchanged": true
+    },
+    {
+      "file": "backend/app/ml/artifacts/validation_vs_test_comparison.json",
+      "sha256": "77d252505dfffd6b256d6b12faaf4f71e23569e67fa20941cad79bdf6ad0b818",
+      "unchanged": true
+    },
+    {
+      "file": "phase9_benchmark_results.json",
+      "sha256": "7b5c5fb1d45e8ccb66ce5ee08add732335b74ce818a41f99955b7c7c003d649a",
+      "unchanged": true
+    },
+    {
+      "file": "phase9_final_acceptance_audit.md",
+      "sha256": "b72cece2b148574f0da97bd538d37cdbc3f195f31ba3f4f8b477abd42f45af78",
+      "unchanged": true
+    },
+    {
+      "file": "phase9_locked_benchmark_evaluation_report.md",
+      "sha256": "5421fada34c3ea0e0a8e4e03501575f3f6bb08061b639875fc4cdf8e8a2e89d3",
+      "unchanged": true
+    },
+    {
+      "file": "tools/evaluate_phase4_test.py",
+      "sha256": "19ee94856d207107061853e657e5dd6b630bede480e0c7407ba4a6bb527eed6b",
+      "unchanged": true
+    },
+    {
+      "file": "tools/evaluate_phase9_locked_benchmark.py",
+      "sha256": "90f6c4c038afc731df57d96dc504e3f608ea635131f688a1aff889d8224e6cf0",
+      "unchanged": true
+    }
+  ],
+  "source_changes": [
+    {
+      "file": "backend/app/__init__.py",
+      "before": "cd0c2a21c11773cb8f132ad220f52adfdc9d4332191a7fd8f7d01e2972f960d7",
+      "after": "c09c295a6080031a98c9ebd83573c60639ab32ca8bbb52f3d267ee41962ec044"
+    },
+    {
+      "file": "backend/app/api/auth.py",
+      "before": "b673183e97296d6024a0d2dbc62334e479b557290e968b8f48a35c4f6a53998a",
+      "after": "de832bcad02b8c101cfa214f502a11db9c001de788a1b0532ec17dcc98c1abfd"
+    },
+    {
+      "file": "backend/app/api/documents.py",
+      "before": "f309630783a98023b7c90e5a053f81e04c34c9ec4ea6af25ab3ebb1e5948699e",
+      "after": "56ed93a43f6a6555873d725dc62fb4c28cca8d9f92067601d85e01b9684d2c47"
+    },
+    {
+      "file": "backend/app/api/health.py",
+      "before": "1f6bd0b1ebd6e86304ed91c7f08605ba5da2bc706e212b636be8f9801dbe29af",
+      "after": "965fa3fb1edfb029ed4d0857d62617e6b54b07f4cc256b2284373a3a00f2250d"
+    },
+    {
+      "file": "backend/app/api/upload.py",
+      "before": "b4ba53894aebca23d12581109660fbdd0347e196e3b31a711701c6280a59a4cc",
+      "after": "cfdc940bce9acacf9788e10f83ba058604759b4521b553832f25bacae96bb68a"
+    },
+    {
+      "file": "backend/app/api/__init__.py",
+      "before": "cf6c9e73cb273d86681cfa8f2a29ef124b7a1423f92458ab4b4f0ad49b096cfd",
+      "after": "21fecf276b7c2ee0021d7826f05f109e24e80bb9680b509a41e5a020f9e6b677"
+    },
+    {
+      "file": "backend/app/core/auth.py",
+      "before": "deda08d045b75ac37775e5d74d022f1de23496c5a493c71e043a92140b3ebcce",
+      "after": "c1f202292bd443c09e9ab5469924fc3823856faa1527907cc756115ef9ca50c5"
+    },
+    {
+      "file": "backend/app/database/session.py",
+      "before": "eda18a7a2a0dd6d27b0dcc5ff8fdd9e9f058a7922b5d7635bbf520fc09a9f72f",
+      "after": "993f6bce8df17d7ee8d005d100b3c694d1f9e5f03ea9ae0fe8c2f7f7f78c6d29"
+    },
+    {
+      "file": "backend/app/evaluation/deployment_validator.py",
+      "before": "687623f3bd8829b94afca66e657c7289fc88c290739ef27a618bdd741eee5258",
+      "after": "e587364cdca2260d18fcfac4701c93d27e11bd41aca162c73d81735aad6d3a4f"
+    },
+    {
+      "file": "backend/app/evaluation/evaluation_runner.py",
+      "before": "d5aaf8d5e4374562ecdd3f759fe7018ccdd68984e40f106611b664497d276fe9",
+      "after": "0fba091c76a2af754de55af449a83873d6d7eb955d4a7460d613debe6aba0fa6"
+    },
+    {
+      "file": "backend/app/ml/feature_vector.py",
+      "before": "d85be52fe50d2741507f66f504cc9a13174d97c274c76a14f3c19ec67181f637",
+      "after": "37f1075aee5922460e1eb7beee9bdbffc2119092e8d69df12a31ec01b18b3508"
+    },
+    {
+      "file": "backend/app/models/analysis.py",
+      "before": "0c8003bebd33ba5a3f0cfdfdb7217e1fd35480ea4b94671499583de3789dcb7b",
+      "after": "f7a606dc705e3721b39dc0c796449afb00b67a46d4fa766c69a861cf4eaf38bf"
+    },
+    {
+      "file": "backend/app/pipeline/artifact.py",
+      "before": "3e0ffbb26927767ee9f78dc898634f0a66ba798a88e48a10dd5a6923a39abcbf",
+      "after": "77d82b9d86b359b0b5a07e0118b81b19af27b0bccc2667c2d1dd2ae8f30cd758"
+    },
+    {
+      "file": "backend/app/pipeline/context.py",
+      "before": "80ba048d9b761797d53c9a2af92e62be22f4c6c5058e77e64918ef8d99155999",
+      "after": "ab411eec4c2ee417dd17b40f76996c818c6b248b770db4a1b433616c8bff39e9"
+    },
+    {
+      "file": "backend/app/pipeline/stages/explainability_stage.py",
+      "before": "9928bd829ae19cfe69dfa8f725c01dc5897a3c1e709a1e3eda4c695b6276cd0c",
+      "after": "16f3aa9b7f41e5009e1054773af15860655bea73becfa3613d9aa2ae315cff9c"
+    },
+    {
+      "file": "backend/app/pipeline/stages/ml_inference_stage.py",
+      "before": "5ec67de3108317fa7a8c8c0815eadafc19b045b23cfb7c15f334650003e6c0a7",
+      "after": "15a7514536b8f21a204a5a90236e3a6a720db9e8f3779f9757506fa49a13e0ce"
+    },
+    {
+      "file": "backend/app/pipeline/stages/preprocessing_stage.py",
+      "before": "87a08b7fe8ad23669df744b6f0ba2044178552bec21a7c723533877a7ce2691c",
+      "after": "178e35ebf793747738c0aae75ea54fb92562aabd14cfb7ac7cab539538cde99a"
+    },
+    {
+      "file": "backend/app/repositories/document_repository.py",
+      "before": "2d838d99becd9e01931a627b11c4144acabc6630d7db5e9d5a9c5b4f33bcba0f",
+      "after": "fc7b11066e7d8c304cbca1732596c7f9f1c7958d980720d4dee14e6e3ce170a4"
+    },
+    {
+      "file": "backend/app/schemas/analysis.py",
+      "before": "92a4fc9234fc4e7f3f066022e574196372439577f4be721acf5191bea2ecdea2",
+      "after": "e5acc6c348dc5dc5a00c113d37ad216591d87e915cd742a59de0609b50c97523"
+    },
+    {
+      "file": "backend/app/services/audit_service.py",
+      "before": "8566066aa96cc6cb4c6d349c4aeb3b07bd7085175156efda68c65331b8e8eb87",
+      "after": "9a68945d7f3a8767ec07a63a7d17ce240215b199798ef36d980a1e268f609bda"
+    },
+    {
+      "file": "backend/app/services/document_service.py",
+      "before": "b78552f4db9195763ac7dc0857f76d60aabcf0bd18fd507d58fb4b504f3128fd",
+      "after": "f44f56e6ef1e97338a2566115321787a931c80feb5a31b322ef9bc056d10baa1"
+    },
+    {
+      "file": "backend/app/services/report_service.py",
+      "before": "391a6f407de9817f8f9188369cf7caa96870bee9251756c822178164262e1294",
+      "after": "daeffd2fce31e59a464087137a3ca0b705385111c6e4c792172dcf364c7461ad"
+    },
+    {
+      "file": "backend/app/services/evidence_fusion/fusion_service.py",
+      "before": "fa6d32ebfa8c74aacc2c4e8eb4d90f975c9bf19e216202c88220c05061473eab",
+      "after": "6e17df4c899e41a7677b98f1e28a7b5636e3615bc8de3642e6ddbca1c0f3114d"
+    },
+    {
+      "file": "backend/app/services/forensics/copy_move_region_analyzer.py",
+      "before": "f02bbeb5734fb3980b99493f10394cdef6528f48536e648cde982c981788be31",
+      "after": "798b0cac8e62b5ae4233493791f1882d8e090fa32ae0aa7088dd7cff08f2c9f7"
+    },
+    {
+      "file": "backend/app/services/forensics/forgery_service.py",
+      "before": "eb95a01e0ac573a4cdca652bc1e0dedff0995cfe3fd0e9a14bf7cf5a4d2595fc",
+      "after": "c27153849b704802659b62c8e297209f7f847d95399537ce7795b8cf55d423e0"
+    },
+    {
+      "file": "backend/app/services/forensics/image_artifact_detector.py",
+      "before": "7ae46987410ef95ede0161ae626f4d08308ab5ca3f2a83ec049b7fbc485eafe3",
+      "after": "b3ff08fe793121455e9859b99ac4db20edeaf99a04fdcd81332128d04ebd62a6"
+    },
+    {
+      "file": "backend/app/services/forensics/logo_region_analyzer.py",
+      "before": "462005008d04559a54ec0d2be0bfcedd3bf90d2df5c97e8ea6bca40e6898eae7",
+      "after": "07c755095eb1d0c140b19c0ccd1380e8975b1d200c75e676062b2e57510f7dcb"
+    },
+    {
+      "file": "backend/app/services/forensics/signature_region_analyzer.py",
+      "before": "c06ca905f8a71cba65dde7d87e4f0d5503f51e321febe85679afc264f2c32213",
+      "after": "d53865d54de7117d70b8ee107d42d550d1ff4de7e2b7159e98764d557c75539e"
+    },
+    {
+      "file": "backend/app/services/forensics/logo_analyzers/base_logo_analyzer.py",
+      "before": "0a04f8fc5e5581ed90ff0876b8070f7489f1ffcf51a722757bbb060f0566b209",
+      "after": "3ad666bb42debda03fb30eb4478074201392382f1969d14d163748bf5a4e29d8"
+    },
+    {
+      "file": "backend/app/services/ml_inference/inference_service.py",
+      "before": "4b4e5ecb3d16a7597db0877ba48345edf4b7632fa98bdeaf406ac78c84e089e3",
+      "after": "df85eb3fc430d77922ffab9202b05c56056f29822236589f71229995fc85890e"
+    },
+    {
+      "file": "backend/app/services/ml_inference/models.py",
+      "before": "88e096ab251d0a004674bf82cdf33b4492f177e7a2bd66547fb360f3db01ad29",
+      "after": "ad76ae92eb93435a7274281b703b9a9738e5800dc281b6b3634065712161278e"
+    },
+    {
+      "file": "backend/app/services/ocr/ocr_service.py",
+      "before": "f574e7fc23a1588bd6ddb0cc808d8ff1c1c2d4d6e580987e78d7c2650618ff23",
+      "after": "5043fc58fa00846f114e094a4a7fffbd0ffced63e30755523c17042f5a904140"
+    },
+    {
+      "file": "backend/app/services/ocr/postprocessor.py",
+      "before": "54157e891cd1c859a1b3305294a0cd244aa892b88f94ebdcb7bf95898983d9ea",
+      "after": "015d5e7371a54ec065865b8117245b73a9f6849817dec57c2b28b3193e51aa39"
+    },
+    {
+      "file": "backend/app/services/ocr/engines/easyocr_engine.py",
+      "before": "f97f4aa7402ca60d5eb897b10ed7a0410de5cbbf65656bb8dd995dd2a41482e6",
+      "after": "57c84408c54c3346d262171ccf95a04672b1b43dc5c4c607b47ac089c7133cbc"
+    },
+    {
+      "file": "backend/app/services/ocr/engines/paddleocr_engine.py",
+      "before": "0980a412c492bf6117b85df84e7f540350006c5959d9c9d04f6ee9a3e896f190",
+      "after": "e47881fd8c542328bcc02e3cc5f4506fc13efc8cd19036404fe1c17dfd9a595b"
+    },
+    {
+      "file": "backend/app/services/ocr/engines/tesseract_engine.py",
+      "before": "d6583ea372dcdf74219edccf7bbf895b3c886d2a4c308049637f9de394ea480b",
+      "after": "39058647d2795f3b3da9bc0dff1adce5790529131b3f51d72ed8f8e9ffd7b1df"
+    },
+    {
+      "file": "backend/app/services/preprocessing/pdf_converter.py",
+      "before": "a392276a339d1080155b4d666cef15030e0d99a91260affe9306db1756e4ed48",
+      "after": "e5a7fc8007fda51bc12a2acd19a95a5fc36eeddbfd0921971165a854f40d6c56"
+    },
+    {
+      "file": "backend/app/services/preprocessing/operations/base_operation.py",
+      "before": "e797a91db8ffa61ba1c7e20d0f302eecd0eb828f3743ed276002a6f7aa099e94",
+      "after": "6e91bcf41cf2d12f4dabae739b98a25ce195e55d2c3d51fbce1e4c338ef06ab9"
+    },
+    {
+      "file": "backend/app/services/preprocessing/operations/contrast.py",
+      "before": "1e74ca0780e16335962fda7b373244a1b76c5f05ae7fb687d29c57a1ad58d811",
+      "after": "4a3ef10003ec14a963b06babac7571affb5c3b20a371c57ce934a7a4c584e437"
+    },
+    {
+      "file": "backend/app/services/preprocessing/operations/normalize.py",
+      "before": "a7d851236760a7e113dcee1c7414469dd8e0fad574124b9924d5206d3fac5d09",
+      "after": "04e5501c86a1164cb2b9bc7ec74c3b04ca96783ffa4b92c1dae2fb489f4c0652"
+    },
+    {
+      "file": "backend/app/services/report_generation/pdf_generator.py",
+      "before": "aa9dfa4c3d286b1f4a9a6e43bcc390468528b783d33a071b2f75ef6e00b1d9dc",
+      "after": "a8bb81e9265dbddd8ba9f40dc691557c9b54de9455534ce1df4168ff99804805"
+    },
+    {
+      "file": "backend/app/services/report_generation/report_service.py",
+      "before": "e20e7981be1925233da73b858d91c94994c95d8a8933cd0c503e861a208be156",
+      "after": "0cfd9ade71d6bb6b6f31516c066b7e92882e5516f72837781f5d67bb3724b6d0"
+    },
+    {
+      "file": "backend/app/utils/file_validator.py",
+      "before": "401f311587aaee1bac16cbfcd190d090cfbdfb8e76276d8f3b1fd4a34b364bae",
+      "after": "ede70f25c3f1ac17d1d5275772be69a2112c222e5d1f6b75324c959a245884fc"
+    },
+    {
+      "file": "backend/tests/test_api.py",
+      "before": "100c85cfa36699587936a0ace2c70b9e7344a23baff2a4338beb39c79e05ec1e",
+      "after": "f4846a8d7bb8105946aed68a7fe68a51b743957dccf42a6815de6773407a086f"
+    },
+    {
+      "file": "backend/tests/test_deskew.py",
+      "before": "780bb9bb989e0ff472b773afb42a0bcd64a646d105cc62c047639121ead4c702",
+      "after": "0541af92c0883851b8fa224026260c3b959b7acf27be9d3d49e332ef7129b285"
+    },
+    {
+      "file": "backend/tests/test_evaluation.py",
+      "before": "acddf980b9735288d94d92680a24cb5cce5790512ba24cc3d9433c004a77861f",
+      "after": "d4d91ec5d21174a81a1dab923526e32cebc18fc29234c22e3d648b2c7401db1b"
+    },
+    {
+      "file": "backend/tests/test_evidence_fusion.py",
+      "before": "6ea73f16e852b99a63eb551c653503b7dfd3e2b1d5425a019dbb6c0d2df87c73",
+      "after": "e0697572521c65b245e11c81b795fca2c1362476aedca4b78d2c954b5495c06b"
+    },
+    {
+      "file": "backend/tests/test_feature_extractor.py",
+      "before": "6a33100443bde8b7b1074330e731513622bcd7294a3ccb15cb957233cc7e77b8",
+      "after": "6a6ab515697c24c9baa469fac4ec748d1164b13ff60ae0ca98d6773381ad7be1"
+    },
+    {
+      "file": "backend/tests/test_forensics_framework.py",
+      "before": "8782cf0df7c730582d22264eecf63358fef693141ae1dec16a3a081bad5ef43e",
+      "after": "6c4dcef8c1957268e84898236aa34d97d6259ca5a47ec06593015c876ac3569a"
+    },
+    {
+      "file": "backend/tests/test_image_forensics.py",
+      "before": "8ad6c007cae7f58cd261d0eb6da00182d7367e5407fd7b499a6bfd26f94e96c6",
+      "after": "de7d8a0391f82228a73ddc72394b48ffe92c0838bd905a1d373760bc12a8b10c"
+    },
+    {
+      "file": "backend/tests/test_logo_forensics.py",
+      "before": "6d408ceba583606f5af12599165bd522c09f599dfc52fee540bca7e47f23a7e3",
+      "after": "6192b6bd0e038963c3786466ace64eca284994acfb22309444b95c9504cbed28"
+    },
+    {
+      "file": "backend/tests/test_milestone_7b.py",
+      "before": "bf31f623840d857303b536355ce8df3cfaed16090069ed7726f9bdd737532a92",
+      "after": "f900c60d64899cc8282c89e97090c92d9c5cfe1d42293652e2aa6551f02d529a"
+    },
+    {
+      "file": "backend/tests/test_milestone_7b_remediation.py",
+      "before": "4a4032bcc6dda6a9cb218c60df48b5b1e909b2f235db5a7d66b44b223002985f",
+      "after": "a4370f445dc65d5cf312e3317642ad738917cbbe78828a8f80c95e8bd3e0dbd3"
+    },
+    {
+      "file": "backend/tests/test_paddleocr_engine.py",
+      "before": "ae5f40f3b821dbc2f0f4e055ff8b19db8da5f733551422ff8b4273a67207e71c",
+      "after": "f051cd44d9496d0076277786ed860b09b401399f749ea5d572d9562e3c689de9"
+    },
+    {
+      "file": "backend/tests/test_phase5_e2e.py",
+      "before": "06818aebf54dc1e7a64b8c12e2b1f74a3b80c347225ea1217bb508cc22f71a76",
+      "after": "0987544c7d4d50adf1460ed1e945a85016c2753289419a1a5adb60fa829f4a61"
+    },
+    {
+      "file": "backend/tests/test_preprocessing.py",
+      "before": "74895d3dea723eb1bbe62c1e5425b472670cb6a57093042629e1bf28c1dc348b",
+      "after": "faffe411b25d2af2acb8a93ba9daf2cfb466f98f5ceef149a14c6d6b49aff4dd"
+    },
+    {
+      "file": "backend/tests/test_report_generation.py",
+      "before": "21a3c71ca6ec251472630a1489b9cfde438ec36b40b1a60897adb5da8830f3c8",
+      "after": "ebb16331d0ffbba3cc6d6550f32b107edfb0ab5c1512c8bff2c0f0f5cf3a48f1"
+    },
+    {
+      "file": "frontend/src/features/comparison/pages/DocumentComparisonPage.tsx",
+      "before": "09ca0283aa1095c0b50dc389c3d522ebc2c71f2b72eda8bb724df495740ad3a6",
+      "after": "6caead3148b824659312e73019f3e037cde7033a656e6bd0498513236dd8bdf8"
+    },
+    {
+      "file": "frontend/src/features/explainability/components/DocumentViewer.tsx",
+      "before": "3fb92a07502bbceffbbe290981e330f5173fa797e0207f0136ad53a0e66c64f2",
+      "after": "c2345d5541e26d12dbe6b307fe07e16af1fcb912b9c2499858b8d29decc9bcba"
+    },
+    {
+      "file": "frontend/src/features/explainability/pages/InvestigationDashboardPage.tsx",
+      "before": "f1a7b17614afb073df2b751fdc0fa18f9f7f20af2f7196ae9f4b93961c5427aa",
+      "after": "bf1041b1bb860cc85c322d6ab7a4a35363e3059df6e5fce3667f39bff9b03ff5"
+    },
+    {
+      "file": "frontend/src/pages/AnalyticsPage.tsx",
+      "before": "a2411e2664c3f25825133ae4e0213e4bc41512cfcba149d9b79aa6a15197348b",
+      "after": "b1b94054694e1cef127cb4d34eb5ec4679bdb7c0eacd79361264e6eee6479ebf"
+    },
+    {
+      "file": "frontend/src/pages/CasesPage.tsx",
+      "before": "49450ccef6291f180bbd731919e2a7eb4ac20e119fd97e1294b88d70c2055b34",
+      "after": "70780162529d5ba3e0e2a3bdd2f724382b973eb750e1c0b112232acb4e118743"
+    },
+    {
+      "file": "frontend/src/pages/HomePage.tsx",
+      "before": "ff9de150bf530bf5b726262f79ea9a85ad9a71f4ea18cb3566d2dd26153931f1",
+      "after": "4a7730836f63dd8996a8f5c167c0c1098de61efda9b77a5e62e4ac12096e2b99"
+    },
+    {
+      "file": "frontend/src/pages/LoginPage.tsx",
+      "before": "dbd3e82686cd44c4974f10d80aadfa97365ecf2cd2f139a197816be301d73ea3",
+      "after": "dc9b28480b89d07bdb70787ad0e5c746cb98f065af71a49b85279b038d85b1c8"
+    },
+    {
+      "file": "frontend/src/pages/NewInvestigationPage.tsx",
+      "before": "1fb7996d4330034b3ed6a2dfd774ec0c651c7a09842909fb252879522228e3c9",
+      "after": "88760549c98b28fa42fa208a109cdd755d1cbbe037ba59c214e27388aac3708b"
+    },
+    {
+      "file": "frontend/src/pages/SettingsPage.tsx",
+      "before": "062710ad5799029e4fe11dbf07043ae930655e9c98117d52235d23a930062348",
+      "after": "08e0cd07196502834dba0bf73e8e466faf80046355acab010137a29a67a6d850"
+    },
+    {
+      "file": "frontend/src/services/api.ts",
+      "before": "81c16daa0fc588c1451d89780395305d653991273bdcfab9f1796bc35813de2f",
+      "after": "88ba79fa82fd6713a69c84be8bba239a60d398f0b32b59aee7683fcdb1469aec"
+    },
+    {
+      "file": "frontend/src/types/analysis.ts",
+      "before": "66a041f596db385557922093bfa2ff9e2afcdf53290f291ef04a85d5c0c5f6d9",
+      "after": "f71bdc733f6deb4f4c212e031459dee988a54d3bb9642f1f4ab487cba3f225df"
+    },
+    {
+      "file": "frontend/src/types/index.ts",
+      "before": "865e59cd8d2a849aac4601229cd405e97ab4bed4ae6c781879677566b18afb99",
+      "after": "b3cce0211f51ed48e9dc5f0eb193ef98d02d80a2090fdbf6432ee1b788263c02"
+    }
+  ],
+  "deployed_checks": [
+    {
+      "path": "/",
+      "status": "PASS",
+      "sha256": "2ff014ee01c3657319fc281212fe534c72fc1fa20e36c40ddab1d84e04f843fd",
+      "security_headers": "PASS"
+    },
+    {
+      "path": "/login",
+      "status": "PASS",
+      "sha256": "2ff014ee01c3657319fc281212fe534c72fc1fa20e36c40ddab1d84e04f843fd",
+      "security_headers": "PASS"
+    },
+    {
+      "path": "/cases",
+      "status": "PASS",
+      "sha256": "2ff014ee01c3657319fc281212fe534c72fc1fa20e36c40ddab1d84e04f843fd",
+      "security_headers": "PASS"
+    },
+    {
+      "path": "/assets/index-CKoRNRFZ.js",
+      "status": "PASS",
+      "sha256": "a062c43537b2bbdff8432d2616dc34ff0090951079716d48d11e5747c14034b3",
+      "security_headers": "PASS"
+    },
+    {
+      "path": "/assets/index-Bq_146Ia.css",
+      "status": "PASS",
+      "sha256": "40e47d9783d343ebbdc3033239f379ee315fe7846b2f2f6e1b80047aebc423fc",
+      "security_headers": "PASS"
+    },
+    {
+      "path": "/api/v1/health",
+      "status": "PASS",
+      "sha256": "0c80455c4a0f8f0f3c45a1d26576f8da1b8d97936a6ed786824baf60d0f9c4a3",
+      "security_headers": "PASS"
+    }
+  ],
+  "https_health": {
+    "status": "healthy",
+    "version": "1.0.0",
+    "environment": "pilot",
+    "modules": {
+      "database": {
+        "status": "connected",
+        "type": "PostgreSQL"
+      },
+      "storage": {
+        "status": "active",
+        "upload_dir": "uploads",
+        "processed_dir": "processed"
+      },
+      "ml_engine": {
+        "status": "active",
+        "model": "Random Forest (18 Features)",
+        "operational_threshold": 0.4,
+        "sha256": "f274d4a93661ce8c5fd95f41a43e629edac41ab16d771355e7decacf0040e280",
+        "integrity_verified": true
+      },
+      "pdf_processing": {
+        "status": "active",
+        "version": "7.0.1"
+      },
+      "visual_arbiter": {
+        "status": "active",
+        "version": "4.9.0"
+      },
+      "ocr_engine": {
+        "status": "unavailable",
+        "reason": "OCR engine dependencies (paddleocr/easyocr/tesseract) not installed in runtime environment"
+      }
+    }
+  },
+  "native_preview_health": {
+    "status": "healthy",
+    "version": "1.0.0",
+    "environment": "development",
+    "modules": {
+      "database": {
+        "status": "connected",
+        "type": "PostgreSQL"
+      },
+      "storage": {
+        "status": "active",
+        "upload_dir": "uploads",
+        "processed_dir": "processed"
+      },
+      "ml_engine": {
+        "status": "active",
+        "model": "Random Forest (18 Features)",
+        "operational_threshold": 0.4,
+        "sha256": "f274d4a93661ce8c5fd95f41a43e629edac41ab16d771355e7decacf0040e280",
+        "integrity_verified": true
+      },
+      "pdf_processing": {
+        "status": "active",
+        "version": "6.13.2"
+      },
+      "visual_arbiter": {
+        "status": "active",
+        "version": "4.10.0"
+      },
+      "ocr_engine": {
+        "status": "unavailable",
+        "reason": "OCR engine dependencies (paddleocr/easyocr/tesseract) not installed in runtime environment"
+      }
+    }
+  },
+  "http_redirect": "PASS",
+  "containers": [
+    {
+      "name": "visionforensics-pilot-postgres",
+      "image_id": "sha256:266d3c257594e195b309ae9d1805e54c788f1d7b375f56bf6c367aac6c917e7b",
+      "running": true,
+      "health": "healthy",
+      "ports": {
+        "5432/tcp": null
+      }
+    },
+    {
+      "name": "visionforensics-pilot-backend",
+      "image_id": "sha256:6ff4aba1e971a4383c1d917ff693a5b0b2ad929734016230be090d97b259626a",
+      "running": true,
+      "health": "healthy",
+      "ports": {
+        "8000/tcp": null
+      }
+    },
+    {
+      "name": "visionforensics-pilot-frontend",
+      "image_id": "sha256:6dc9f94fce106952a9d8b0d85e258a92b711cc3cc4c58158461e7f9818aaf382",
+      "running": true,
+      "health": "healthy",
+      "ports": {
+        "443/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8443"
+          }
+        ],
+        "80/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8080"
+          }
+        ]
+      }
+    }
+  ]
+}

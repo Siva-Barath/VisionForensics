@@ -1,0 +1,610 @@
+{
+  "evaluation_timestamp": "2026-11-01T12:20:00Z",
+  "benchmark_provenance": {
+    "source_corpus": "MIDV-500 Held-Out Specimen Quarantined Partition",
+    "physical_specimens_count": 7,
+    "total_frames_count": 280,
+    "authentic_frames_count": 140,
+    "forged_frames_count": 140,
+    "specimen_ids": [
+      "35_nor_drvlic_",
+      "36_pol_drvlic_",
+      "43_tur_id_",
+      "44_ukr_id_",
+      "45_ukr_passport_",
+      "46_ury_passport_",
+      "50_xpo_id_"
+    ],
+    "leakage_audit": "PASSED (0 overlap with train/val specimens)"
+  },
+  "freeze_manifest": {
+    "status": "PASSED",
+    "random_forest_sha256": "f274d4a93661ce8c5fd95f41a43e629edac41ab16d771355e7decacf0040e280",
+    "schema_sha256": "eaef52167d829396728b78af848acae3ef62097538cb8433de29aa635c45c3dc",
+    "primary_threshold": 0.4,
+    "features_count": 18,
+    "features": [
+      "img_width",
+      "img_height",
+      "img_aspect_ratio",
+      "img_laplacian_variance_mean",
+      "img_blur_severity_mean",
+      "img_noise_sigma_mean",
+      "img_edge_density_mean",
+      "img_illumination_std_mean",
+      "img_ela_region_count_mean",
+      "img_ela_max_difference_mean",
+      "img_entropy_score_mean",
+      "cm_keypoint_count_akaze",
+      "cm_descriptor_matches",
+      "cm_inlier_matches",
+      "cm_average_region_size",
+      "cm_duplicate_pair_count",
+      "cm_confidence",
+      "cm_inlier_ratio"
+    ]
+  },
+  "track1_frozen_ml": {
+    "metrics_t04": {
+      "threshold": 0.4,
+      "accuracy": 0.8821428571428571,
+      "roc_auc": 0.9473214285714285,
+      "pr_auc": 0.9606555508342467,
+      "brier_score": 0.08293700255105144,
+      "forged_class": {
+        "precision": 0.8905109489051095,
+        "recall": 0.8714285714285714,
+        "f1_score": 0.8808664259927799
+      },
+      "authentic_class": {
+        "precision": 0.8741258741258742,
+        "specificity": 0.8928571428571429,
+        "f1_score": 0.8833922261484101
+      },
+      "confusion_matrix": {
+        "tn": 125,
+        "fp": 15,
+        "fn": 18,
+        "tp": 122,
+        "fpr": 0.10714285714285714,
+        "fnr": 0.12857142857142856
+      }
+    },
+    "metrics_t05": {
+      "threshold": 0.5,
+      "accuracy": 0.8892857142857142,
+      "roc_auc": 0.9473214285714285,
+      "pr_auc": 0.9606555508342467,
+      "brier_score": 0.08293700255105144,
+      "forged_class": {
+        "precision": 0.9504132231404959,
+        "recall": 0.8214285714285714,
+        "f1_score": 0.8812260536398469
+      },
+      "authentic_class": {
+        "precision": 0.8427672955974843,
+        "specificity": 0.9571428571428572,
+        "f1_score": 0.8963210702341138
+      },
+      "confusion_matrix": {
+        "tn": 134,
+        "fp": 6,
+        "fn": 25,
+        "tp": 115,
+        "fpr": 0.04285714285714286,
+        "fnr": 0.17857142857142858
+      }
+    }
+  },
+  "unified_platform_decision": {
+    "accuracy": 0.8571428571428571,
+    "forged_precision": 0.8333333333333334,
+    "forged_recall": 0.8928571428571429,
+    "specificity": 0.8214285714285714,
+    "confusion_matrix": {
+      "tn": 115,
+      "fp": 25,
+      "fn": 15,
+      "tp": 125,
+      "fpr": 0.17857142857142858,
+      "fnr": 0.10714285714285714
+    }
+  },
+  "category_level_results": {
+    "copy_move": {
+      "sample_count": 35,
+      "mean_p_ml": 0.4822219681261419,
+      "std_p_ml": 0.30034349779883796,
+      "track1_t04_detected": 19,
+      "track1_t04_recall": 0.5428571428571428,
+      "platform_detected": 20,
+      "platform_recall": 0.5714285714285714,
+      "track3_high_risk_count": 2,
+      "track3_suspicious_count": 3
+    },
+    "logo": {
+      "sample_count": 35,
+      "mean_p_ml": 0.9608153061224489,
+      "std_p_ml": 0.02807510929626661,
+      "track1_t04_detected": 35,
+      "track1_t04_recall": 1.0,
+      "platform_detected": 35,
+      "platform_recall": 1.0,
+      "track3_high_risk_count": 3,
+      "track3_suspicious_count": 1
+    },
+    "none": {
+      "sample_count": 140,
+      "mean_p_ml": 0.19204959634825003,
+      "std_p_ml": 0.14461517744779592,
+      "track1_t04_detected": 15,
+      "track1_t04_recall": 0.8928571428571429,
+      "platform_detected": 25,
+      "platform_recall": 0.8214285714285714,
+      "track3_high_risk_count": 10,
+      "track3_suspicious_count": 11
+    },
+    "signature": {
+      "sample_count": 35,
+      "mean_p_ml": 0.9150583900226755,
+      "std_p_ml": 0.10120298096925387,
+      "track1_t04_detected": 35,
+      "track1_t04_recall": 1.0,
+      "platform_detected": 35,
+      "platform_recall": 1.0,
+      "track3_high_risk_count": 1,
+      "track3_suspicious_count": 4
+    },
+    "text": {
+      "sample_count": 35,
+      "mean_p_ml": 0.8644214966418415,
+      "std_p_ml": 0.18933309904070122,
+      "track1_t04_detected": 33,
+      "track1_t04_recall": 0.9428571428571428,
+      "platform_detected": 35,
+      "platform_recall": 1.0,
+      "track3_high_risk_count": 2,
+      "track3_suspicious_count": 2
+    }
+  },
+  "specimen_level_results": {
+    "35_nor_drvlic_": {
+      "specimen_id": "35_nor_drvlic_",
+      "display_name": "Norway Driving License",
+      "country": "Norway",
+      "document_type": "driving_license",
+      "total_frames": 40,
+      "authentic_frames": 20,
+      "forged_frames": 20,
+      "track1_metrics_t04": {
+        "accuracy": 0.9,
+        "forged_recall": 0.9,
+        "specificity": 0.9,
+        "roc_auc": 0.96,
+        "mean_authentic_p_ml": 0.1461704505829792,
+        "mean_forged_p_ml": 0.8257796574236101,
+        "confusion_matrix": {
+          "tn": 18,
+          "fp": 2,
+          "fn": 2,
+          "tp": 18
+        }
+      },
+      "platform_synthesized_metrics": {
+        "accuracy": 0.9,
+        "forged_recall": 0.9,
+        "specificity": 0.9,
+        "confusion_matrix": {
+          "tn": 18,
+          "fp": 2,
+          "fn": 2,
+          "tp": 18
+        }
+      },
+      "track3_findings": {
+        "high_risk_elevations": 1,
+        "suspicious_elevations": 0,
+        "authentic_frames_with_clusters": 3,
+        "forged_frames_with_clusters": 3
+      },
+      "forgery_type_breakdown": {
+        "copy_move": {
+          "frames": 5,
+          "detected_t04": 3,
+          "mean_p_ml": 0.6246243941054682
+        },
+        "logo": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9496333333333334
+        },
+        "signature": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.8486714285714285
+        },
+        "text": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.8801894736842104
+        }
+      }
+    },
+    "36_pol_drvlic_": {
+      "specimen_id": "36_pol_drvlic_",
+      "display_name": "Poland Driving License",
+      "country": "Poland",
+      "document_type": "driving_license",
+      "total_frames": 40,
+      "authentic_frames": 20,
+      "forged_frames": 20,
+      "track1_metrics_t04": {
+        "accuracy": 0.9,
+        "forged_recall": 0.9,
+        "specificity": 0.9,
+        "roc_auc": 0.97,
+        "mean_authentic_p_ml": 0.18962182780053288,
+        "mean_forged_p_ml": 0.8706343137254902,
+        "confusion_matrix": {
+          "tn": 18,
+          "fp": 2,
+          "fn": 2,
+          "tp": 18
+        }
+      },
+      "platform_synthesized_metrics": {
+        "accuracy": 0.9,
+        "forged_recall": 0.9,
+        "specificity": 0.9,
+        "confusion_matrix": {
+          "tn": 18,
+          "fp": 2,
+          "fn": 2,
+          "tp": 18
+        }
+      },
+      "track3_findings": {
+        "high_risk_elevations": 0,
+        "suspicious_elevations": 2,
+        "authentic_frames_with_clusters": 1,
+        "forged_frames_with_clusters": 1
+      },
+      "forgery_type_breakdown": {
+        "copy_move": {
+          "frames": 5,
+          "detected_t04": 3,
+          "mean_p_ml": 0.6261039215686275
+        },
+        "logo": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9473
+        },
+        "signature": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9522999999999999
+        },
+        "text": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9568333333333333
+        }
+      }
+    },
+    "43_tur_id_": {
+      "specimen_id": "43_tur_id_",
+      "display_name": "Turkey Identity Card",
+      "country": "Turkey",
+      "document_type": "id_card",
+      "total_frames": 40,
+      "authentic_frames": 20,
+      "forged_frames": 20,
+      "track1_metrics_t04": {
+        "accuracy": 0.825,
+        "forged_recall": 0.8,
+        "specificity": 0.85,
+        "roc_auc": 0.9325000000000001,
+        "mean_authentic_p_ml": 0.22621446876996415,
+        "mean_forged_p_ml": 0.7949177752802754,
+        "confusion_matrix": {
+          "tn": 17,
+          "fp": 3,
+          "fn": 4,
+          "tp": 16
+        }
+      },
+      "platform_synthesized_metrics": {
+        "accuracy": 0.85,
+        "forged_recall": 0.9,
+        "specificity": 0.8,
+        "confusion_matrix": {
+          "tn": 16,
+          "fp": 4,
+          "fn": 2,
+          "tp": 18
+        }
+      },
+      "track3_findings": {
+        "high_risk_elevations": 3,
+        "suspicious_elevations": 2,
+        "authentic_frames_with_clusters": 3,
+        "forged_frames_with_clusters": 3
+      },
+      "forgery_type_breakdown": {
+        "copy_move": {
+          "frames": 5,
+          "detected_t04": 3,
+          "mean_p_ml": 0.5492903318903319
+        },
+        "logo": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9778500000000001
+        },
+        "signature": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9350428571428571
+        },
+        "text": {
+          "frames": 5,
+          "detected_t04": 3,
+          "mean_p_ml": 0.7174879120879122
+        }
+      }
+    },
+    "44_ukr_id_": {
+      "specimen_id": "44_ukr_id_",
+      "display_name": "Ukraine Identity Card",
+      "country": "Ukraine",
+      "document_type": "id_card",
+      "total_frames": 40,
+      "authentic_frames": 20,
+      "forged_frames": 20,
+      "track1_metrics_t04": {
+        "accuracy": 0.925,
+        "forged_recall": 0.9,
+        "specificity": 0.95,
+        "roc_auc": 0.965,
+        "mean_authentic_p_ml": 0.2160027661064426,
+        "mean_forged_p_ml": 0.7826017379679144,
+        "confusion_matrix": {
+          "tn": 19,
+          "fp": 1,
+          "fn": 2,
+          "tp": 18
+        }
+      },
+      "platform_synthesized_metrics": {
+        "accuracy": 0.825,
+        "forged_recall": 0.95,
+        "specificity": 0.7,
+        "confusion_matrix": {
+          "tn": 14,
+          "fp": 6,
+          "fn": 1,
+          "tp": 19
+        }
+      },
+      "track3_findings": {
+        "high_risk_elevations": 8,
+        "suspicious_elevations": 4,
+        "authentic_frames_with_clusters": 11,
+        "forged_frames_with_clusters": 8
+      },
+      "forgery_type_breakdown": {
+        "copy_move": {
+          "frames": 5,
+          "detected_t04": 3,
+          "mean_p_ml": 0.38704028520499106
+        },
+        "logo": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9507904761904762
+        },
+        "signature": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.8398428571428569
+        },
+        "text": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9527333333333333
+        }
+      }
+    },
+    "45_ukr_passport_": {
+      "specimen_id": "45_ukr_passport_",
+      "display_name": "Ukraine International Passport",
+      "country": "Ukraine",
+      "document_type": "passport",
+      "total_frames": 40,
+      "authentic_frames": 20,
+      "forged_frames": 20,
+      "track1_metrics_t04": {
+        "accuracy": 0.875,
+        "forged_recall": 0.95,
+        "specificity": 0.8,
+        "roc_auc": 0.9425000000000001,
+        "mean_authentic_p_ml": 0.2538853413700163,
+        "mean_forged_p_ml": 0.8087307664901318,
+        "confusion_matrix": {
+          "tn": 16,
+          "fp": 4,
+          "fn": 1,
+          "tp": 19
+        }
+      },
+      "platform_synthesized_metrics": {
+        "accuracy": 0.85,
+        "forged_recall": 0.95,
+        "specificity": 0.75,
+        "confusion_matrix": {
+          "tn": 15,
+          "fp": 5,
+          "fn": 1,
+          "tp": 19
+        }
+      },
+      "track3_findings": {
+        "high_risk_elevations": 1,
+        "suspicious_elevations": 4,
+        "authentic_frames_with_clusters": 3,
+        "forged_frames_with_clusters": 3
+      },
+      "forgery_type_breakdown": {
+        "copy_move": {
+          "frames": 5,
+          "detected_t04": 4,
+          "mean_p_ml": 0.4724458238356071
+        },
+        "logo": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9643
+        },
+        "signature": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9463777777777777
+        },
+        "text": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.8517994643471422
+        }
+      }
+    },
+    "46_ury_passport_": {
+      "specimen_id": "46_ury_passport_",
+      "display_name": "Uruguay Passport",
+      "country": "Uruguay",
+      "document_type": "passport",
+      "total_frames": 40,
+      "authentic_frames": 20,
+      "forged_frames": 20,
+      "track1_metrics_t04": {
+        "accuracy": 0.85,
+        "forged_recall": 0.8,
+        "specificity": 0.9,
+        "roc_auc": 0.92375,
+        "mean_authentic_p_ml": 0.16997273665876605,
+        "mean_forged_p_ml": 0.739175142182379,
+        "confusion_matrix": {
+          "tn": 18,
+          "fp": 2,
+          "fn": 4,
+          "tp": 16
+        }
+      },
+      "platform_synthesized_metrics": {
+        "accuracy": 0.8,
+        "forged_recall": 0.8,
+        "specificity": 0.8,
+        "confusion_matrix": {
+          "tn": 16,
+          "fp": 4,
+          "fn": 4,
+          "tp": 16
+        }
+      },
+      "track3_findings": {
+        "high_risk_elevations": 4,
+        "suspicious_elevations": 5,
+        "authentic_frames_with_clusters": 4,
+        "forged_frames_with_clusters": 5
+      },
+      "forgery_type_breakdown": {
+        "copy_move": {
+          "frames": 5,
+          "detected_t04": 1,
+          "mean_p_ml": 0.2999459899749374
+        },
+        "logo": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9711000000000001
+        },
+        "signature": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9467809523809525
+        },
+        "text": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.7388736263736264
+        }
+      }
+    },
+    "50_xpo_id_": {
+      "specimen_id": "50_xpo_id_",
+      "display_name": "Interpol Identity Card",
+      "country": "International (Interpol)",
+      "document_type": "id_card",
+      "total_frames": 40,
+      "authentic_frames": 20,
+      "forged_frames": 20,
+      "track1_metrics_t04": {
+        "accuracy": 0.9,
+        "forged_recall": 0.85,
+        "specificity": 0.95,
+        "roc_auc": 0.965,
+        "mean_authentic_p_ml": 0.1424795831490491,
+        "mean_forged_p_ml": 0.8175656385281386,
+        "confusion_matrix": {
+          "tn": 19,
+          "fp": 1,
+          "fn": 3,
+          "tp": 17
+        }
+      },
+      "platform_synthesized_metrics": {
+        "accuracy": 0.875,
+        "forged_recall": 0.85,
+        "specificity": 0.9,
+        "confusion_matrix": {
+          "tn": 18,
+          "fp": 2,
+          "fn": 3,
+          "tp": 17
+        }
+      },
+      "track3_findings": {
+        "high_risk_elevations": 1,
+        "suspicious_elevations": 4,
+        "authentic_frames_with_clusters": 3,
+        "forged_frames_with_clusters": 2
+      },
+      "forgery_type_breakdown": {
+        "copy_move": {
+          "frames": 5,
+          "detected_t04": 2,
+          "mean_p_ml": 0.41610303030303025
+        },
+        "logo": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9647333333333332
+        },
+        "signature": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.936392857142857
+        },
+        "text": {
+          "frames": 5,
+          "detected_t04": 5,
+          "mean_p_ml": 0.9530333333333333
+        }
+      }
+    }
+  },
+  "latency_statistics": {
+    "total_inference_time_sec": 0.0244,
+    "mean_per_frame_latency_ms": 0.087
+  }
+}

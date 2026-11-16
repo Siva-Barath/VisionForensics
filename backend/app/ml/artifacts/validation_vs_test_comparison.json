@@ -1,0 +1,72 @@
+{
+  "random_forest": {
+    "validation_t05": {
+      "accuracy": 0.8857142857142857,
+      "roc_auc": 0.9573214285714287,
+      "pr_auc": 0.9652227347019992,
+      "brier_score": 0.08120515253722027,
+      "forged_precision": 0.95,
+      "forged_recall": 0.8142857142857143,
+      "forged_f1": 0.8769230769230769,
+      "false_positive_rate": 0.04285714285714286
+    },
+    "test_t05": {
+      "accuracy": 0.8892857142857142,
+      "roc_auc": 0.9473214285714286,
+      "pr_auc": 0.9606555508342467,
+      "brier_score": 0.08293700255105144,
+      "forged_precision": 0.9504132231404959,
+      "forged_recall": 0.8214285714285714,
+      "forged_f1": 0.8812260536398469,
+      "false_positive_rate": 0.04285714285714286
+    },
+    "generalization_gap_t05": {
+      "accuracy_gap": -0.0035714285714285587,
+      "roc_auc_gap": 0.010000000000000009,
+      "pr_auc_gap": 0.004567183867752456,
+      "forged_f1_gap": -0.004302976716769935
+    },
+    "test_t04": {
+      "accuracy": 0.8821428571428571,
+      "forged_precision": 0.8905109489051095,
+      "forged_recall": 0.8714285714285714,
+      "forged_f1": 0.8808664259927799,
+      "false_positive_rate": 0.10714285714285714
+    }
+  },
+  "logistic_regression": {
+    "validation_t05": {
+      "accuracy": 0.8714285714285714,
+      "roc_auc": 0.9425510204081633,
+      "pr_auc": 0.9527615447759067,
+      "brier_score": 0.10070686098850255,
+      "forged_precision": 0.9126984126984127,
+      "forged_recall": 0.8214285714285714,
+      "forged_f1": 0.8646616541353382,
+      "false_positive_rate": 0.07857142857142857
+    },
+    "test_t05": {
+      "accuracy": 0.8785714285714286,
+      "roc_auc": 0.9343877551020408,
+      "pr_auc": 0.951748731738012,
+      "brier_score": 0.10183488838714123,
+      "forged_precision": 0.9274193548387096,
+      "forged_recall": 0.8214285714285714,
+      "forged_f1": 0.8712121212121211,
+      "false_positive_rate": 0.06428571428571428
+    },
+    "generalization_gap_t05": {
+      "accuracy_gap": -0.0071428571428571175,
+      "roc_auc_gap": 0.008163265306122547,
+      "pr_auc_gap": 0.0010128130378946887,
+      "forged_f1_gap": -0.006550467076782862
+    },
+    "test_t04": {
+      "accuracy": 0.8642857142857143,
+      "forged_precision": 0.8493150684931506,
+      "forged_recall": 0.8857142857142857,
+      "forged_f1": 0.8671328671328671,
+      "false_positive_rate": 0.15714285714285714
+    }
+  }
+}

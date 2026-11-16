@@ -1,0 +1,372 @@
+{
+  "database": "vf_stabilization_fe42494e9f",
+  "documents": [
+    {
+      "id": "ed161032-f7c4-47e7-9370-720e332fb287",
+      "filename": "baseline.png",
+      "sha256": "3cb0ce5b02e57412076e93705fe4b4bb1db296618de254be84ece9ba4f5af560"
+    },
+    {
+      "id": "73296dde-41a1-43ff-bd22-5df0a2359f95",
+      "filename": "modified.jpg",
+      "sha256": "8c5046b727f46ac9df4c86c6619def8e0fb348bbcd7ae982520978f619b75caa"
+    },
+    {
+      "id": "8b024205-82ec-4dff-8b97-6ae1c0ac3db7",
+      "filename": "two_pages.pdf",
+      "sha256": "6f945c7477308c3478cc50a93dcce1fb70e8def236f2a3d78e2e8b84e8183798"
+    }
+  ],
+  "results": [
+    {
+      "workflow": "Unauthenticated access rejected",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Login",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Asset cookie is HttpOnly",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Authenticated document listing",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "New case creation",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Case details persistence",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Upload baseline.png",
+      "status": "PASS",
+      "detail": "201"
+    },
+    {
+      "workflow": "Pipeline baseline.png",
+      "status": "PASS",
+      "detail": "completed"
+    },
+    {
+      "workflow": "Analysis retrieval baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Raw ML separated baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "All 18 genuine inputs baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Actual module execution baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Frozen ML execution baseline.png",
+      "status": "PASS",
+      "detail": "SUCCESS"
+    },
+    {
+      "workflow": "T=.40 preserved baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Page count baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Original bytes/SHA baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Derived preview baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Preview coordinate dimensions baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Real ELA heatmap baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Database round-trip baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "API equality after cache loss baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Custody events baseline.png",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Upload modified.jpg",
+      "status": "PASS",
+      "detail": "201"
+    },
+    {
+      "workflow": "Pipeline modified.jpg",
+      "status": "PASS",
+      "detail": "completed"
+    },
+    {
+      "workflow": "Analysis retrieval modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Raw ML separated modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "All 18 genuine inputs modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Actual module execution modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Frozen ML execution modified.jpg",
+      "status": "PASS",
+      "detail": "SUCCESS"
+    },
+    {
+      "workflow": "T=.40 preserved modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Page count modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Original bytes/SHA modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Derived preview modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Preview coordinate dimensions modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Real ELA heatmap modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Database round-trip modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "API equality after cache loss modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Custody events modified.jpg",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Upload two_pages.pdf",
+      "status": "PASS",
+      "detail": "201"
+    },
+    {
+      "workflow": "Pipeline two_pages.pdf",
+      "status": "PASS",
+      "detail": "completed"
+    },
+    {
+      "workflow": "Analysis retrieval two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Raw ML separated two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "All 18 genuine inputs two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Actual module execution two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Frozen ML execution two_pages.pdf",
+      "status": "PASS",
+      "detail": "SUCCESS"
+    },
+    {
+      "workflow": "T=.40 preserved two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Page count two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Original bytes/SHA two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Derived preview two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Preview coordinate dimensions two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Real ELA heatmap two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Database round-trip two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "API equality after cache loss two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Multi-page last/bounds",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Custody events two_pages.pdf",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Invalid content rejected",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Oversized file rejected",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Intake metadata retained",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Exact workspace totals endpoint",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Document comparison",
+      "status": "PASS",
+      "detail": "200"
+    },
+    {
+      "workflow": "Report generation",
+      "status": "PASS",
+      "detail": "201"
+    },
+    {
+      "workflow": "Report hash/download",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Cookie-only asset authentication",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Logout",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Post-logout cookie access rejected",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Controlled analyst registration",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Other analyst login",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Cross-user exhibit restriction",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Cross-user case restriction",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "workflow": "Role-based administrator restriction",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

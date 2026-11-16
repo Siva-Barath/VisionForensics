@@ -1,0 +1,258 @@
+{
+  "base_url": "https://127.0.0.1:8443",
+  "certificate_verification": "pilot CA, hostname verification enabled",
+  "controlled_account": "controlled_pilot_bf2113111e1d@visionforensics.local",
+  "password_retained": false,
+  "documents": [
+    {
+      "id": "86b0d2ca-5cf5-4ae1-8766-22f0bab09344",
+      "filename": "baseline.png",
+      "sha256": "3cb0ce5b02e57412076e93705fe4b4bb1db296618de254be84ece9ba4f5af560"
+    },
+    {
+      "id": "570f3532-fdf7-4d69-b2d8-f1691af913ba",
+      "filename": "modified.jpg",
+      "sha256": "8c5046b727f46ac9df4c86c6619def8e0fb348bbcd7ae982520978f619b75caa"
+    },
+    {
+      "id": "a47ab339-b4cd-4f6c-b648-9374307db5e9",
+      "filename": "two_pages.pdf",
+      "sha256": "6f945c7477308c3478cc50a93dcce1fb70e8def236f2a3d78e2e8b84e8183798"
+    }
+  ],
+  "report": {
+    "report_id": "063ef618-d87f-4727-8672-3f99cdc73b35",
+    "download_url": "/api/v1/reports/063ef618-d87f-4727-8672-3f99cdc73b35/download",
+    "sha256": "f776a8a308a8b77f8d0517cf49a893bf7785c24e5b00e1204f25b4b013f96963"
+  },
+  "results": [
+    {
+      "check": "HTTPS trusted by pilot CA, backend healthy",
+      "status": "PASS"
+    },
+    {
+      "check": "Frozen model integrity and threshold",
+      "status": "PASS"
+    },
+    {
+      "check": "Unavailable OCR reported honestly",
+      "status": "PASS"
+    },
+    {
+      "check": "Production UI served",
+      "status": "PASS"
+    },
+    {
+      "check": "Built asset matches deployed bytes: /assets/index-CKic0r-s.js",
+      "status": "PASS"
+    },
+    {
+      "check": "Built asset matches deployed bytes: /assets/index-Coh9-NIs.css",
+      "status": "PASS"
+    },
+    {
+      "check": "Unauthenticated exhibit access denied",
+      "status": "PASS"
+    },
+    {
+      "check": "Controlled analyst registration",
+      "status": "PASS"
+    },
+    {
+      "check": "Cookie authentication",
+      "status": "PASS"
+    },
+    {
+      "check": "Secure HttpOnly access and refresh cookies",
+      "status": "PASS"
+    },
+    {
+      "check": "Upload/pipeline baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Upload/pipeline modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Upload/pipeline two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Persisted full analysis baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Raw 18 feature result baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Per-page results baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Original bytes SHA256 baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Real derived preview baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Region coordinate frame baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Real ELA artifact baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Custody retained baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Persisted full analysis modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Raw 18 feature result modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Per-page results modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Original bytes SHA256 modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Real derived preview modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Region coordinate frame modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Real ELA artifact modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Custody retained modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Persisted full analysis two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Raw 18 feature result two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Per-page results two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Original bytes SHA256 two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Real derived preview two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Region coordinate frame two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Real ELA artifact two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Custody retained two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Live comparison",
+      "status": "PASS"
+    },
+    {
+      "check": "Actual report generated",
+      "status": "PASS"
+    },
+    {
+      "check": "Report download hash",
+      "status": "PASS"
+    },
+    {
+      "check": "Real PDF page count",
+      "status": "PASS"
+    },
+    {
+      "check": "Scoped cases available",
+      "status": "PASS"
+    },
+    {
+      "check": "Exact scoped counts available",
+      "status": "PASS"
+    },
+    {
+      "check": "Container restart completed without volume reset",
+      "status": "PASS"
+    },
+    {
+      "check": "Healthy after container restart",
+      "status": "PASS"
+    },
+    {
+      "check": "Full raw snapshot survives restart baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Original survives restart baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "ELA artifact survives restart baseline.png",
+      "status": "PASS"
+    },
+    {
+      "check": "Full raw snapshot survives restart modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Original survives restart modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "ELA artifact survives restart modified.jpg",
+      "status": "PASS"
+    },
+    {
+      "check": "Full raw snapshot survives restart two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Original survives restart two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "ELA artifact survives restart two_pages.pdf",
+      "status": "PASS"
+    },
+    {
+      "check": "Report survives restart",
+      "status": "PASS"
+    },
+    {
+      "check": "Logout",
+      "status": "PASS"
+    },
+    {
+      "check": "Cookie revoked after logout",
+      "status": "PASS"
+    }
+  ]
+}

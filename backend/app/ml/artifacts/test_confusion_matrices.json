@@ -1,0 +1,34 @@
+{
+  "random_forest_t05": {
+    "true_negatives (TN)": 134,
+    "false_positives (FP)": 6,
+    "false_negatives (FN)": 25,
+    "true_positives (TP)": 115,
+    "false_positive_rate (FPR)": 0.04285714285714286,
+    "false_negative_rate (FNR)": 0.17857142857142858
+  },
+  "random_forest_t04": {
+    "true_negatives (TN)": 125,
+    "false_positives (FP)": 15,
+    "false_negatives (FN)": 18,
+    "true_positives (TP)": 122,
+    "false_positive_rate (FPR)": 0.10714285714285714,
+    "false_negative_rate (FNR)": 0.12857142857142856
+  },
+  "logistic_regression_t05": {
+    "true_negatives (TN)": 131,
+    "false_positives (FP)": 9,
+    "false_negatives (FN)": 25,
+    "true_positives (TP)": 115,
+    "false_positive_rate (FPR)": 0.06428571428571428,
+    "false_negative_rate (FNR)": 0.17857142857142858
+  },
+  "logistic_regression_t04": {
+    "true_negatives (TN)": 118,
+    "false_positives (FP)": 22,
+    "false_negatives (FN)": 16,
+    "true_positives (TP)": 124,
+    "false_positive_rate (FPR)": 0.15714285714285714,
+    "false_negative_rate (FNR)": 0.11428571428571428
+  }
+}

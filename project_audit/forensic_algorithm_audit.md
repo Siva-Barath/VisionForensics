@@ -1,0 +1,21 @@
+# Forensic algorithm audit
+
+13 November 2026. Actual sources inspected; algorithm existence is not validated real-world accuracy.
+
+| Algorithm / source | Actual implementation | Correctness/false-positive concerns | False negatives / limits | Required tests |
+|---|---|---|---|---|
+| ELA / image_analyzers/ela_analyzer.py, image_artifact_detector.py | JPEG encode/decode, absdiff/grayscale, normalize global max, contour threshold | Fixed severity 85; global feature distinct from local normalized map; texture/recompression may trigger | Shared compression clones, smooth regions; ELA alone not proof | Uniform/recompressed/spliced controls, coordinate/magnitude checks, preserve raw-map provenance |
+| Blur/Laplacian | Cached Laplacian variance and configured severity | Capture quality is not manipulation; preprocessing changes statistics | Local edits diluted globally | Blur ladder, page-specific failure, capture conditions |
+| Noise/edge/illumination/texture | MAD Laplacian sigma, Canny density, Gaussian background std, local std proxy | Proxy called entropy is not Shannon entropy; lighting/print texture false alarms | Glare/obstruction/perspective not validated | Noise/lighting/edge controls; preserve frozen metric definition |
+| Copy-move / copy_move_region_analyzer.py and analyzers | ORB/AKAZE, ratio matching, translation filter, RANSAC homography, clustering/confidence | H not checked for plausibility/invertibility/reprojection; repetitive text/seals; placeholder FalsePositiveFilter/BlockSimilarityAnalyzer | Smooth clones, transformations, low texture | Repetitive negatives, rotated/scaled clones, degenerate H, true reprojection checks |
+| OCR / ocr engines, OCRStage | Real PaddleOCR adapter; EasyOCR/Tesseract stubs | is_available uses import success; stubs return Mock text/empty OCRPage; selection prefers EasyOCR | Model/runtime initialization, character-level limitations, no persisted boxes | Capability vs import tests; actual output/box/confidence; graceful unavailable/failure |
+| Metadata / MetadataStage, MetadataDetector | EXIF/Pillow info and pypdf catalog | Stage nests fields but legacy detector reads top-level software; editing software not proof | Missing metadata normal; full timestamp checks absent | No-metadata negative, nested software, creator/producer/dates |
+| Signature/logo / region analyzers | Ink, contours, skeleton, edges, symmetry/shape | No reference-backed identity/authenticity; coarse layout regions | No genuine signature authentication | Region validity; reject unsupported authenticity claims |
+| JPEG / jpeg_quality_estimator.py | Pillow DQT inverse-IJG median estimate | Docstring calls estimate exact; custom tables/rounding; page JPEG fallback may confuse source container | No source DQT on PNG/PDF | Non-JPEG NOT APPLICABLE, standard/custom/absent tables |
+| PDF / pdf_converter.py | PDFium, pdf2image fallback; pages to PNG | Render errors replaced by generated graphic analyzed as evidence; minimum scale 1 defeats cap; resources not closed | Missing/corrupt pages falsely successful | Fail render explicitly; huge page caps; page limits/native close; per-page readback |
+| Comparison / comparison_service.py | ORB/RANSAC, SSIM/pixel difference, heatmap/mask/regions | Resize fallback can distort aspect; heuristic confidence | Lighting/alignment variation; similarity not authenticity | Identical/altered/unrelated pairs; fallback caveats |
+| Unified risk / RiskStage | Three-track max/rule synthesis, JPEG qualifier | Composite is not calibrated probability; raw class mutation; unavailable tracks look available | Internal detector failures can become empty findings | Failure-status tests; governance approval before policy changes |
+
+Coordinates originate in preprocessed rasters; original -> derived transform is not persisted. Stored page width/height can describe source quality metrics instead of transformed raster. SVG coordinate mapping is therefore not verified for every deskew/perspective case.
+
+ExplainabilityStage treats UNKNOWN/missing risk like low risk; ReportStage checks path object presence/risk dict, not actual verified assets. EvidenceFusionStage is unregistered; its calibrated framework is not the live registered risk path. No accuracy claim is based on mock evaluation services.

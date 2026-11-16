@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "feature_count": 18,
+  "features": [
+    "img_width",
+    "img_height",
+    "img_aspect_ratio",
+    "img_laplacian_variance_mean",
+    "img_blur_severity_mean",
+    "img_noise_sigma_mean",
+    "img_edge_density_mean",
+    "img_illumination_std_mean",
+    "img_ela_region_count_mean",
+    "img_ela_max_difference_mean",
+    "img_entropy_score_mean",
+    "cm_keypoint_count_akaze",
+    "cm_descriptor_matches",
+    "cm_inlier_matches",
+    "cm_average_region_size",
+    "cm_duplicate_pair_count",
+    "cm_confidence",
+    "cm_inlier_ratio"
+  ],
+  "identity_columns": [
+    "split",
+    "image_name",
+    "source_image",
+    "document_category",
+    "specimen_id",
+    "forgery_type",
+    "label"
+  ],
+  "total_columns": 25
+}

@@ -1,0 +1,23 @@
+{
+  "database": "vf_stabilization_fe42494e9f",
+  "results": [
+    {
+      "filename": "baseline.png",
+      "separate_process_persistence": "PASS",
+      "original_sha256": "PASS",
+      "heatmap": "PASS"
+    },
+    {
+      "filename": "modified.jpg",
+      "separate_process_persistence": "PASS",
+      "original_sha256": "PASS",
+      "heatmap": "PASS"
+    },
+    {
+      "filename": "two_pages.pdf",
+      "separate_process_persistence": "PASS",
+      "original_sha256": "PASS",
+      "heatmap": "PASS"
+    }
+  ]
+}

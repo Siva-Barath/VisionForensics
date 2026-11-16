@@ -1,0 +1,168 @@
+{
+  "logistic_regression_coefficients": [
+    {
+      "feature": "img_ela_max_difference_mean",
+      "coefficient": 2.0944513647082714,
+      "abs_coefficient": 2.0944513647082714
+    },
+    {
+      "feature": "img_entropy_score_mean",
+      "coefficient": -0.8587321128814419,
+      "abs_coefficient": 0.8587321128814419
+    },
+    {
+      "feature": "img_blur_severity_mean",
+      "coefficient": -0.8484740926547815,
+      "abs_coefficient": 0.8484740926547815
+    },
+    {
+      "feature": "img_laplacian_variance_mean",
+      "coefficient": 0.666093160894881,
+      "abs_coefficient": 0.666093160894881
+    },
+    {
+      "feature": "img_noise_sigma_mean",
+      "coefficient": -0.5165502456916212,
+      "abs_coefficient": 0.5165502456916212
+    },
+    {
+      "feature": "img_edge_density_mean",
+      "coefficient": -0.46949292966639644,
+      "abs_coefficient": 0.46949292966639644
+    },
+    {
+      "feature": "img_illumination_std_mean",
+      "coefficient": -0.23493372486584774,
+      "abs_coefficient": 0.23493372486584774
+    },
+    {
+      "feature": "img_ela_region_count_mean",
+      "coefficient": -0.2116927344671003,
+      "abs_coefficient": 0.2116927344671003
+    },
+    {
+      "feature": "cm_keypoint_count_akaze",
+      "coefficient": 0.13557142443126471,
+      "abs_coefficient": 0.13557142443126471
+    },
+    {
+      "feature": "cm_inlier_matches",
+      "coefficient": -0.11296979714312928,
+      "abs_coefficient": 0.11296979714312928
+    },
+    {
+      "feature": "cm_average_region_size",
+      "coefficient": 0.08861271073127568,
+      "abs_coefficient": 0.08861271073127568
+    },
+    {
+      "feature": "cm_descriptor_matches",
+      "coefficient": -0.06946107887206165,
+      "abs_coefficient": 0.06946107887206165
+    },
+    {
+      "feature": "cm_confidence",
+      "coefficient": -0.048662070901989485,
+      "abs_coefficient": 0.048662070901989485
+    },
+    {
+      "feature": "cm_inlier_ratio",
+      "coefficient": 0.04551445640982278,
+      "abs_coefficient": 0.04551445640982278
+    },
+    {
+      "feature": "cm_duplicate_pair_count",
+      "coefficient": 0.03611723241726384,
+      "abs_coefficient": 0.03611723241726384
+    },
+    {
+      "feature": "img_width",
+      "coefficient": 0.0,
+      "abs_coefficient": 0.0
+    },
+    {
+      "feature": "img_height",
+      "coefficient": 0.0,
+      "abs_coefficient": 0.0
+    },
+    {
+      "feature": "img_aspect_ratio",
+      "coefficient": 0.0,
+      "abs_coefficient": 0.0
+    }
+  ],
+  "random_forest_gini_importances": [
+    {
+      "feature": "img_ela_max_difference_mean",
+      "importance": 0.381965213384914
+    },
+    {
+      "feature": "img_laplacian_variance_mean",
+      "importance": 0.10664963162040574
+    },
+    {
+      "feature": "img_ela_region_count_mean",
+      "importance": 0.0959615501439718
+    },
+    {
+      "feature": "img_blur_severity_mean",
+      "importance": 0.07120573442323598
+    },
+    {
+      "feature": "img_entropy_score_mean",
+      "importance": 0.06791708143289324
+    },
+    {
+      "feature": "img_edge_density_mean",
+      "importance": 0.06170591388456491
+    },
+    {
+      "feature": "img_illumination_std_mean",
+      "importance": 0.05123204873841074
+    },
+    {
+      "feature": "cm_keypoint_count_akaze",
+      "importance": 0.04545082457621549
+    },
+    {
+      "feature": "cm_descriptor_matches",
+      "importance": 0.031917405076668105
+    },
+    {
+      "feature": "cm_inlier_ratio",
+      "importance": 0.02768018574005233
+    },
+    {
+      "feature": "cm_inlier_matches",
+      "importance": 0.024933201205858894
+    },
+    {
+      "feature": "img_noise_sigma_mean",
+      "importance": 0.021686811077483936
+    },
+    {
+      "feature": "cm_average_region_size",
+      "importance": 0.006678823600166659
+    },
+    {
+      "feature": "cm_duplicate_pair_count",
+      "importance": 0.003308333913049184
+    },
+    {
+      "feature": "cm_confidence",
+      "importance": 0.0017072411821089204
+    },
+    {
+      "feature": "img_width",
+      "importance": 0.0
+    },
+    {
+      "feature": "img_height",
+      "importance": 0.0
+    },
+    {
+      "feature": "img_aspect_ratio",
+      "importance": 0.0
+    }
+  ]
+}

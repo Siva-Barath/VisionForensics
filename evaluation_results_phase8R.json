@@ -1,0 +1,844 @@
+{
+  "evaluation_timestamp": "2026-11-01T11:22:52Z",
+  "total_exhibits_tested": 12,
+  "track1_ml_alone": {
+    "confusion_matrix": {
+      "true_positives": 2,
+      "true_negatives": 6,
+      "false_positives": 0,
+      "false_negatives": 4,
+      "ml_unavailable": 0
+    },
+    "metrics": {
+      "accuracy": 0.6667,
+      "precision": 1.0,
+      "recall": 0.3333,
+      "specificity": 1.0,
+      "operational_threshold": 0.4
+    }
+  },
+  "unified_platform_decision": {
+    "confusion_matrix": {
+      "true_positives": 2,
+      "true_negatives": 6,
+      "false_positives": 0,
+      "false_negatives": 4
+    },
+    "metrics": {
+      "accuracy": 0.6667,
+      "precision": 1.0,
+      "recall": 0.3333,
+      "specificity": 1.0
+    }
+  },
+  "latency_statistics_seconds": {
+    "mean_ingestion_latency": 2.84,
+    "min_latency": 1.35,
+    "max_latency": 8.46,
+    "sla_threshold_seconds": 10.0,
+    "sla_compliance_rate": "100.0%"
+  },
+  "exhibits": [
+    {
+      "exhibit_id": "EX-01",
+      "document_id": "c8342634-6f59-4466-abed-0e6f37bdd16b",
+      "filename": "exhibit_01_aut_drvlic.tif",
+      "display_name": "CA Driving License (Authentic Baseline)",
+      "category": "Authentic",
+      "format": "TIFF",
+      "doc_type": "driving_license",
+      "ground_truth": "AUTHENTIC",
+      "expected_tier": "LOW_RISK",
+      "p_ml": 0.2058,
+      "risk_tier": "LOW_RISK",
+      "predicted_class": "AUTHENTIC",
+      "overall_verdict": "LOW_RISK / AUTHENTIC",
+      "outcome": "True Negative (TN)",
+      "platform_outcome": "True Negative (TN)",
+      "detected_regions": 11,
+      "page_count": 1,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.2058,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "LOW_RISK",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 18.0,
+            "img_laplacian_variance_mean": 163.19,
+            "img_blur_severity_mean": 0.0,
+            "cm_inlier_matches": 28.0
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 0,
+        "max_cluster_confidence": 0.0,
+        "total_inlier_matches": 28,
+        "copy_move_confirmed": false,
+        "visual_tier": "LOW_RISK",
+        "evidence_items": []
+      },
+      "compression_qualification": {
+        "is_jpeg": false,
+        "estimated_quality": null,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 5.25,
+      "backend_time_ms": 4244.9,
+      "warnings_count": 8,
+      "analyst_notes": "Pristine authentic driving license scan; baseline test for physical substrate."
+    },
+    {
+      "exhibit_id": "EX-02",
+      "document_id": "4cd0ae00-22a6-46dc-af8e-cdf2e1c09167",
+      "filename": "exhibit_02_aut_idcard.png",
+      "display_name": "Albanian ID Card (Authentic Baseline)",
+      "category": "Authentic",
+      "format": "PNG",
+      "doc_type": "id_card",
+      "ground_truth": "AUTHENTIC",
+      "expected_tier": "LOW_RISK",
+      "p_ml": 0.2498,
+      "risk_tier": "LOW_RISK",
+      "predicted_class": "AUTHENTIC",
+      "overall_verdict": "LOW_RISK / AUTHENTIC",
+      "outcome": "True Negative (TN)",
+      "platform_outcome": "True Negative (TN)",
+      "detected_regions": 0,
+      "page_count": 1,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.2498,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "LOW_RISK",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 23.0,
+            "img_laplacian_variance_mean": 185.12,
+            "img_blur_severity_mean": 0.0,
+            "cm_inlier_matches": 26.0
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 0,
+        "max_cluster_confidence": 0.0,
+        "total_inlier_matches": 26,
+        "copy_move_confirmed": false,
+        "visual_tier": "LOW_RISK",
+        "evidence_items": []
+      },
+      "compression_qualification": {
+        "is_jpeg": false,
+        "estimated_quality": null,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 2.37,
+      "backend_time_ms": 2101.3,
+      "warnings_count": 8,
+      "analyst_notes": "Authentic national ID card in lossless PNG format."
+    },
+    {
+      "exhibit_id": "EX-03",
+      "document_id": "423800eb-3a3d-41c1-a322-3f047afd7958",
+      "filename": "exhibit_03_aut_passport.jpg",
+      "display_name": "Azerbaijani Passport (Authentic Baseline)",
+      "category": "Authentic",
+      "format": "JPG",
+      "doc_type": "passport",
+      "ground_truth": "AUTHENTIC",
+      "expected_tier": "LOW_RISK",
+      "p_ml": 0.2603,
+      "risk_tier": "LOW_RISK",
+      "predicted_class": "AUTHENTIC",
+      "overall_verdict": "LOW_RISK / AUTHENTIC",
+      "outcome": "True Negative (TN)",
+      "platform_outcome": "True Negative (TN)",
+      "detected_regions": 0,
+      "page_count": 1,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.2603,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "LOW_RISK",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 17.0,
+            "img_laplacian_variance_mean": 176.32,
+            "img_blur_severity_mean": 0.0,
+            "cm_inlier_matches": 34.0
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 0,
+        "max_cluster_confidence": 0.0,
+        "total_inlier_matches": 34,
+        "copy_move_confirmed": false,
+        "visual_tier": "LOW_RISK",
+        "evidence_items": []
+      },
+      "compression_qualification": {
+        "is_jpeg": true,
+        "estimated_quality": 95.0,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 1.72,
+      "backend_time_ms": 1618.9,
+      "warnings_count": 8,
+      "analyst_notes": "Authentic passport biographical page in standard JPEG format."
+    },
+    {
+      "exhibit_id": "EX-04",
+      "document_id": "76e7f6de-1a84-4f2b-a699-759e17b85e70",
+      "filename": "exhibit_04_aut_multipage.pdf",
+      "display_name": "Dossier Exhibit (Authentic Multi-Page PDF)",
+      "category": "Authentic",
+      "format": "PDF",
+      "doc_type": "dossier_pdf",
+      "ground_truth": "AUTHENTIC",
+      "expected_tier": "LOW_RISK",
+      "p_ml": 0.1395,
+      "risk_tier": "SUSPICIOUS",
+      "predicted_class": "AUTHENTIC",
+      "overall_verdict": "SUSPICIOUS / REVIEW_REQUIRED",
+      "outcome": "True Negative (TN)",
+      "platform_outcome": "True Negative (TN)",
+      "detected_regions": 2,
+      "page_count": 2,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.1395,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "LOW_RISK",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 12.0,
+            "img_laplacian_variance_mean": 81.93,
+            "img_blur_severity_mean": 18.07,
+            "cm_inlier_matches": 31.0
+          }
+        },
+        {
+          "page_index": 1,
+          "forgery_probability": 0.124,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "LOW_RISK",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 14.0,
+            "img_laplacian_variance_mean": 84.28,
+            "img_blur_severity_mean": 15.72,
+            "cm_inlier_matches": 28.0
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 1,
+        "max_cluster_confidence": 0.85,
+        "total_inlier_matches": 31,
+        "copy_move_confirmed": true,
+        "visual_tier": "SUSPICIOUS",
+        "evidence_items": [
+          {
+            "detector": "copy_move_region_analyzer",
+            "page_index": 0,
+            "severity": 90.0,
+            "confidence": 1.0,
+            "description": "Source Region"
+          },
+          {
+            "detector": "copy_move_region_analyzer",
+            "page_index": 0,
+            "severity": 90.0,
+            "confidence": 1.0,
+            "description": "Destination Region"
+          }
+        ]
+      },
+      "compression_qualification": {
+        "is_jpeg": false,
+        "estimated_quality": null,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 8.46,
+      "backend_time_ms": 8331.4,
+      "warnings_count": 9,
+      "analyst_notes": "2-page authentic composite PDF exhibit (DL + Passport) testing multi-page ingestion."
+    },
+    {
+      "exhibit_id": "EX-05",
+      "document_id": "1c795ad7-ac3a-4df2-b2f2-bccf49425a38",
+      "filename": "exhibit_05_forg_text_drvlic.tif",
+      "display_name": "Italian Driving License (Text Forgery)",
+      "category": "Forged",
+      "format": "TIFF",
+      "doc_type": "driving_license",
+      "ground_truth": "FORGED",
+      "expected_tier": "HIGH_RISK",
+      "p_ml": 0.99,
+      "risk_tier": "HIGH_RISK",
+      "predicted_class": "FORGED",
+      "overall_verdict": "SUSPICIOUS / HIGH_RISK",
+      "outcome": "True Positive (TP)",
+      "platform_outcome": "True Positive (TP)",
+      "detected_regions": 0,
+      "page_count": 1,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.99,
+          "predicted_class": "FORGED",
+          "risk_tier": "HIGH_RISK",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 15.0,
+            "img_laplacian_variance_mean": 139.35,
+            "img_blur_severity_mean": 0.0
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 0,
+        "max_cluster_confidence": 0.0,
+        "total_inlier_matches": 9,
+        "copy_move_confirmed": false,
+        "visual_tier": "LOW_RISK",
+        "evidence_items": []
+      },
+      "compression_qualification": {
+        "is_jpeg": false,
+        "estimated_quality": null,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 1.57,
+      "backend_time_ms": 1417.9,
+      "warnings_count": 8,
+      "analyst_notes": "Driver license with altered birth date and license expiration text."
+    },
+    {
+      "exhibit_id": "EX-06",
+      "document_id": "5ca59760-e4ee-4667-bcc8-3b0c24f25b40",
+      "filename": "exhibit_06_forg_text_drvlic.png",
+      "display_name": "Italian Driving License (Text Forgery PNG)",
+      "category": "Forged",
+      "format": "PNG",
+      "doc_type": "driving_license",
+      "ground_truth": "FORGED",
+      "expected_tier": "HIGH_RISK",
+      "p_ml": 0.9458,
+      "risk_tier": "HIGH_RISK",
+      "predicted_class": "FORGED",
+      "overall_verdict": "SUSPICIOUS / HIGH_RISK",
+      "outcome": "True Positive (TP)",
+      "platform_outcome": "True Positive (TP)",
+      "detected_regions": 1,
+      "page_count": 1,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.9458,
+          "predicted_class": "FORGED",
+          "risk_tier": "HIGH_RISK",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 22.0,
+            "img_laplacian_variance_mean": 169.38,
+            "img_blur_severity_mean": 0.0
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 0,
+        "max_cluster_confidence": 0.0,
+        "total_inlier_matches": 10,
+        "copy_move_confirmed": false,
+        "visual_tier": "LOW_RISK",
+        "evidence_items": []
+      },
+      "compression_qualification": {
+        "is_jpeg": false,
+        "estimated_quality": null,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 1.47,
+      "backend_time_ms": 1221.5,
+      "warnings_count": 8,
+      "analyst_notes": "Driver license with altered demographic text in PNG format."
+    },
+    {
+      "exhibit_id": "EX-07",
+      "document_id": "5d35a668-a26d-4940-8164-72af381ad66e",
+      "filename": "exhibit_07_forg_copymove_id.jpg",
+      "display_name": "Portuguese ID Card (Copy-Move Forgery JPG)",
+      "category": "Forged",
+      "format": "JPG",
+      "doc_type": "id_card",
+      "ground_truth": "FORGED",
+      "expected_tier": "HIGH_RISK",
+      "p_ml": 0.091,
+      "risk_tier": "SUSPICIOUS",
+      "predicted_class": "AUTHENTIC",
+      "overall_verdict": "SUSPICIOUS / REVIEW_REQUIRED",
+      "outcome": "False Negative (FN)",
+      "platform_outcome": "False Negative (FN)",
+      "detected_regions": 5,
+      "page_count": 1,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.091,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "LOW_RISK",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 6.0,
+            "img_laplacian_variance_mean": 66.44,
+            "img_blur_severity_mean": 33.56,
+            "cm_inlier_matches": 25.0
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 1,
+        "max_cluster_confidence": 0.85,
+        "total_inlier_matches": 25,
+        "copy_move_confirmed": true,
+        "visual_tier": "SUSPICIOUS",
+        "evidence_items": [
+          {
+            "detector": "copy_move_region_analyzer",
+            "page_index": 0,
+            "severity": 90.0,
+            "confidence": 1.0,
+            "description": "Source Region"
+          },
+          {
+            "detector": "copy_move_region_analyzer",
+            "page_index": 0,
+            "severity": 90.0,
+            "confidence": 1.0,
+            "description": "Destination Region"
+          }
+        ]
+      },
+      "compression_qualification": {
+        "is_jpeg": true,
+        "estimated_quality": 90.0,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 3.45,
+      "backend_time_ms": 1304.2,
+      "warnings_count": 8,
+      "analyst_notes": "National ID card with duplicated security features and altered identity text in JPEG."
+    },
+    {
+      "exhibit_id": "EX-08",
+      "document_id": "f8e27d23-f8da-4a93-8196-e5facd1f79f8",
+      "filename": "exhibit_08_forg_multipage_mixed.pdf",
+      "display_name": "Composite Dossier (Mixed Multi-Page PDF)",
+      "category": "Forged",
+      "format": "PDF",
+      "doc_type": "dossier_pdf",
+      "ground_truth": "FORGED",
+      "expected_tier": "HIGH_RISK",
+      "p_ml": 0.3585,
+      "risk_tier": "SUSPICIOUS",
+      "predicted_class": "AUTHENTIC",
+      "overall_verdict": "SUSPICIOUS / REVIEW_REQUIRED",
+      "outcome": "False Negative (FN)",
+      "platform_outcome": "False Negative (FN)",
+      "detected_regions": 2,
+      "page_count": 2,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.1395,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "LOW_RISK",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 12.0,
+            "img_laplacian_variance_mean": 81.93,
+            "img_blur_severity_mean": 18.07,
+            "cm_inlier_matches": 31.0
+          }
+        },
+        {
+          "page_index": 1,
+          "forgery_probability": 0.3585,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "SUSPICIOUS",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 16.0,
+            "img_laplacian_variance_mean": 45.33,
+            "img_blur_severity_mean": 54.67
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 1,
+        "max_cluster_confidence": 0.85,
+        "total_inlier_matches": 31,
+        "copy_move_confirmed": true,
+        "visual_tier": "SUSPICIOUS",
+        "evidence_items": [
+          {
+            "detector": "copy_move_region_analyzer",
+            "page_index": 0,
+            "severity": 90.0,
+            "confidence": 1.0,
+            "description": "Source Region"
+          },
+          {
+            "detector": "copy_move_region_analyzer",
+            "page_index": 0,
+            "severity": 90.0,
+            "confidence": 1.0,
+            "description": "Destination Region"
+          }
+        ]
+      },
+      "compression_qualification": {
+        "is_jpeg": false,
+        "estimated_quality": null,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 4.15,
+      "backend_time_ms": 4107.4,
+      "warnings_count": 9,
+      "analyst_notes": "2-page PDF containing Page 1 authentic reference and Page 2 altered text specimen."
+    },
+    {
+      "exhibit_id": "EX-09",
+      "document_id": "8258253c-c053-4713-be5a-e0e4672548c9",
+      "filename": "exhibit_09_susp_copymove_drvlic.tif",
+      "display_name": "Driving License (Subtle Copy-Move Specimen A)",
+      "category": "Suspicious",
+      "format": "TIFF",
+      "doc_type": "driving_license",
+      "ground_truth": "FORGED",
+      "expected_tier": "SUSPICIOUS",
+      "p_ml": 0.3552,
+      "risk_tier": "SUSPICIOUS",
+      "predicted_class": "AUTHENTIC",
+      "overall_verdict": "SUSPICIOUS / REVIEW_REQUIRED",
+      "outcome": "False Negative (FN)",
+      "platform_outcome": "False Negative (FN)",
+      "detected_regions": 1,
+      "page_count": 1,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.3552,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "SUSPICIOUS",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 21.0,
+            "img_laplacian_variance_mean": 53.15,
+            "img_blur_severity_mean": 46.85
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 0,
+        "max_cluster_confidence": 0.0,
+        "total_inlier_matches": 15,
+        "copy_move_confirmed": false,
+        "visual_tier": "LOW_RISK",
+        "evidence_items": []
+      },
+      "compression_qualification": {
+        "is_jpeg": false,
+        "estimated_quality": null,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 1.48,
+      "backend_time_ms": 1303.1,
+      "warnings_count": 8,
+      "analyst_notes": "Subtle clone patch sharing compression history; known copy-move recall boundary."
+    },
+    {
+      "exhibit_id": "EX-10",
+      "document_id": "aca7fb26-724a-415f-b42c-43544c52d143",
+      "filename": "exhibit_10_susp_copymove_drvlic.tif",
+      "display_name": "Driving License (Subtle Copy-Move Specimen B)",
+      "category": "Suspicious",
+      "format": "TIFF",
+      "doc_type": "driving_license",
+      "ground_truth": "FORGED",
+      "expected_tier": "SUSPICIOUS",
+      "p_ml": 0.317,
+      "risk_tier": "SUSPICIOUS",
+      "predicted_class": "AUTHENTIC",
+      "overall_verdict": "SUSPICIOUS / REVIEW_REQUIRED",
+      "outcome": "False Negative (FN)",
+      "platform_outcome": "False Negative (FN)",
+      "detected_regions": 1,
+      "page_count": 1,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.317,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "SUSPICIOUS",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 20.0,
+            "img_laplacian_variance_mean": 30.59,
+            "img_blur_severity_mean": 69.41
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 0,
+        "max_cluster_confidence": 0.0,
+        "total_inlier_matches": 0,
+        "copy_move_confirmed": false,
+        "visual_tier": "LOW_RISK",
+        "evidence_items": []
+      },
+      "compression_qualification": {
+        "is_jpeg": false,
+        "estimated_quality": null,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 1.38,
+      "backend_time_ms": 1281.2,
+      "warnings_count": 8,
+      "analyst_notes": "Intra-document clone boundary case; testing suspicious risk tier assignment."
+    },
+    {
+      "exhibit_id": "EX-11",
+      "document_id": "d24ba56b-0793-41f7-9827-7e6509dc4c9f",
+      "filename": "exhibit_11_diff_heavy_jpeg.jpg",
+      "display_name": "Driving License (Severe JPEG Artifact Degradation)",
+      "category": "Difficult",
+      "format": "JPG",
+      "doc_type": "driving_license",
+      "ground_truth": "AUTHENTIC",
+      "expected_tier": "SUSPICIOUS",
+      "p_ml": 0.4129,
+      "risk_tier": "SUSPICIOUS",
+      "predicted_class": "AUTHENTIC",
+      "overall_verdict": "SUSPICIOUS / COMPRESSION_DEGRADED",
+      "outcome": "True Negative (TN)",
+      "platform_outcome": "True Negative (TN)",
+      "detected_regions": 2,
+      "page_count": 1,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.4129,
+          "predicted_class": "FORGED",
+          "risk_tier": "SUSPICIOUS",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 12.0,
+            "img_laplacian_variance_mean": 171.71,
+            "img_blur_severity_mean": 0.0,
+            "cm_inlier_matches": 22.0
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 1,
+        "max_cluster_confidence": 0.85,
+        "total_inlier_matches": 22,
+        "copy_move_confirmed": false,
+        "visual_tier": "LOW_RISK",
+        "evidence_items": []
+      },
+      "compression_qualification": {
+        "is_jpeg": true,
+        "estimated_quality": 25.0,
+        "is_heavily_compressed": true,
+        "compression_notice": "Document exhibits severe JPEG compression artifacts (estimated Q=25 < 40). High-frequency 8x8 DCT block boundaries may artificially elevate blur, edge density, and Laplacian variance features."
+      },
+      "ingest_latency_sec": 1.35,
+      "backend_time_ms": 1296.6,
+      "warnings_count": 8,
+      "analyst_notes": "Authentic document subjected to high DCT compression (Q=25); testing noise robustness."
+    },
+    {
+      "exhibit_id": "EX-12",
+      "document_id": "2f330745-d21e-4ed5-868a-992a8bb3df66",
+      "filename": "exhibit_12_diff_low_contrast.png",
+      "display_name": "ID Card (Low-Contrast Degraded Scan)",
+      "category": "Difficult",
+      "format": "PNG",
+      "doc_type": "id_card",
+      "ground_truth": "AUTHENTIC",
+      "expected_tier": "LOW_RISK",
+      "p_ml": 0.1593,
+      "risk_tier": "LOW_RISK",
+      "predicted_class": "AUTHENTIC",
+      "overall_verdict": "LOW_RISK / AUTHENTIC",
+      "outcome": "True Negative (TN)",
+      "platform_outcome": "True Negative (TN)",
+      "detected_regions": 0,
+      "page_count": 1,
+      "pages_ml": [
+        {
+          "page_index": 0,
+          "forgery_probability": 0.1593,
+          "predicted_class": "AUTHENTIC",
+          "risk_tier": "LOW_RISK",
+          "status": "SUCCESS",
+          "feature_completeness": 1.0,
+          "top_contributing_features": {
+            "img_ela_max_difference_mean": 16.0,
+            "img_laplacian_variance_mean": 149.28,
+            "img_blur_severity_mean": 0.0,
+            "cm_inlier_matches": 26.0
+          }
+        }
+      ],
+      "track_3_visual": {
+        "available": true,
+        "detected_clusters": 0,
+        "max_cluster_confidence": 0.0,
+        "total_inlier_matches": 26,
+        "copy_move_confirmed": false,
+        "visual_tier": "LOW_RISK",
+        "evidence_items": []
+      },
+      "compression_qualification": {
+        "is_jpeg": false,
+        "estimated_quality": null,
+        "is_heavily_compressed": false,
+        "compression_notice": null
+      },
+      "ingest_latency_sec": 1.42,
+      "backend_time_ms": 1326.6,
+      "warnings_count": 8,
+      "analyst_notes": "Authentic ID card scan with contrast attenuated by 65%; testing illumination variance."
+    }
+  ],
+  "comparisons": [
+    {
+      "comp_id": "COMP-01",
+      "name": "Suspect Alteration vs Reference Baseline",
+      "doc_a": "c8342634-6f59-4466-abed-0e6f37bdd16b",
+      "doc_b": "1c795ad7-ac3a-4df2-b2f2-bccf49425a38",
+      "ssim": null,
+      "differential_regions": 22,
+      "alignment_status": "FALLBACK_DIRECT_RESIZE",
+      "alignment_confidence": 0.5,
+      "latency_sec": 0.69,
+      "expected": "Differential detected (SSIM drop, visual discrepancies identified)"
+    },
+    {
+      "comp_id": "COMP-02",
+      "name": "Identical Exhibit Verification Baseline",
+      "doc_a": "c8342634-6f59-4466-abed-0e6f37bdd16b",
+      "doc_b": "c8342634-6f59-4466-abed-0e6f37bdd16b",
+      "ssim": null,
+      "differential_regions": 0,
+      "alignment_status": "FEATURE_ALIGNED",
+      "alignment_confidence": 1.0,
+      "latency_sec": 0.55,
+      "expected": "Near-perfect match (SSIM ~ 1.000, zero differential regions)"
+    },
+    {
+      "comp_id": "COMP-03",
+      "name": "Multi-Page Differential Investigation",
+      "doc_a": "76e7f6de-1a84-4f2b-a699-759e17b85e70",
+      "doc_b": "f8e27d23-f8da-4a93-8196-e5facd1f79f8",
+      "ssim": null,
+      "differential_regions": 28,
+      "alignment_status": "FALLBACK_DIRECT_RESIZE",
+      "alignment_confidence": 0.5,
+      "latency_sec": 0.83,
+      "expected": "Cross-page differential analysis with alignment"
+    }
+  ],
+  "reports": [
+    {
+      "exhibit_id": "EX-01",
+      "report_id": "400b119f-df61-44bb-b3c9-6c95867aa59b",
+      "report_number": "VF-REP-20261101-400B119F",
+      "title": "Forensic Examination \u2014 Authentic Baseline Exhibit",
+      "size_bytes": 8487,
+      "sha256_hash": "5e384963337816522fb0cd982642dabfb6b0b805a2f83e64b5c13689a05b8447",
+      "hash_verified": true,
+      "gen_latency_sec": 0.08
+    },
+    {
+      "exhibit_id": "EX-05",
+      "report_id": "7ba04f87-06b1-46d0-9d7a-c974159bbc4b",
+      "report_number": "VF-REP-20261101-7BA04F87",
+      "title": "Forensic Examination \u2014 High-Risk Alteration Exhibit",
+      "size_bytes": 7622,
+      "sha256_hash": "76362e8f0a0588bb386bdeb7f843ac1c1c020fb7288ed45e4934337b19ea039d",
+      "hash_verified": true,
+      "gen_latency_sec": 0.04
+    },
+    {
+      "exhibit_id": "EX-08",
+      "report_id": "69e5fbf6-8961-419c-9fea-0eb4b20e0f52",
+      "report_number": "VF-REP-20261101-69E5FBF6",
+      "title": "Forensic Examination \u2014 Multi-Page Mixed Exhibit",
+      "size_bytes": 7841,
+      "sha256_hash": "46c4e3e7fe4d4941d522ff0485489d62d698fc8916ecc9f85d7b54338099245a",
+      "hash_verified": true,
+      "gen_latency_sec": 0.04
+    }
+  ],
+  "custody_stats": {
+    "custody_total": 372,
+    "security_total": 76,
+    "event_counts": {
+      "EXHIBIT_INGESTED": 96,
+      "ANALYSIS_EXECUTED": 96,
+      "EXHIBIT_ACCESSED": 100,
+      "EXHIBIT_IMAGE_ACCESSED": 8,
+      "REPORT_GENERATED": 16,
+      "REPORT_DOWNLOADED": 22,
+      "TAMPERING_ALARM": 4,
+      "DOCUMENT_COMPARISON_PERFORMED": 30
+    },
+    "distinct_docs_with_custody": 96
+  }
+}
