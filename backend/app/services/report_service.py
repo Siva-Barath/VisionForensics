@@ -202,6 +202,9 @@ class ReportService:
             for l in logs
         ]
 
+        case_num = document.case.case_number if document.case else None
+        case_title = document.case.title if document.case else None
+
         document_meta = {
             "id": document.id,
             "original_filename": document.original_filename,
@@ -210,6 +213,8 @@ class ReportService:
             "page_count": document.page_count or 1,
             "sha256_hash": document.sha256_hash or "",
             "case_id": document.case_id,
+            "case_number": case_num,
+            "case_title": case_title,
         }
 
         # 4. Generate PDF bytes
