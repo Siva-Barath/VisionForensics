@@ -6,6 +6,7 @@ import {
   Download, 
   Copy, 
   Check,
+  GraduationCap
 } from 'lucide-react';
 import type { DocumentAnalysisResponse } from '@/types';
 
@@ -14,6 +15,8 @@ interface Props {
   pageCount: number;
   onOpenReportModal: () => void;
   onNavigateComparison: () => void;
+  isEvaluatorView?: boolean;
+  onToggleEvaluatorView?: () => void;
 }
 
 export function DocumentIdentityHeader({
@@ -21,6 +24,8 @@ export function DocumentIdentityHeader({
   pageCount,
   onOpenReportModal,
   onNavigateComparison,
+  isEvaluatorView = false,
+  onToggleEvaluatorView,
 }: Props) {
   const [copied, setCopied] = useState(false);
 
@@ -79,6 +84,28 @@ export function DocumentIdentityHeader({
 
         {/* Right: Actions */}
         <div className="flex items-center gap-2.5 flex-wrap w-full lg:w-auto justify-start lg:justify-end">
+          {/* Evaluator View Mode Toggle Button */}
+          {onToggleEvaluatorView && (
+            <button
+              type="button"
+              onClick={onToggleEvaluatorView}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all border ${
+                isEvaluatorView
+                  ? 'bg-[#17172F] text-white border-[#17172F] shadow-sm'
+                  : 'bg-[#F8F9FF] text-[#73758B] border-[#E6E5F0] hover:text-[#17172F] hover:border-[#DDD5F9]'
+              }`}
+              title="Toggle Academic & Evaluator Presentation Mode"
+            >
+              <GraduationCap size={15} className={isEvaluatorView ? 'text-violet-300' : 'text-[#73758B]'} />
+              <span>Evaluator View</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded font-bold uppercase tracking-wider ${
+                isEvaluatorView ? 'bg-violet-600 text-white' : 'bg-[#E6E5F0] text-[#73758B]'
+              }`}>
+                {isEvaluatorView ? 'ON' : 'OFF'}
+              </span>
+            </button>
+          )}
+
           <a
             href={`/api/v1/documents/${analysis.document_id}/original`}
             target="_blank"

@@ -9,7 +9,8 @@ import Card from '@/components/ui/Card';
 import { DocumentIdentityHeader } from '../components/DocumentIdentityHeader';
 import { InvestigationSummaryCard } from '../components/InvestigationSummaryCard';
 import { MLIntelligenceSection } from '../components/MLIntelligenceSection';
-import { WhyWeReachedAssessment } from '../components/WhyWeReachedAssessment';
+import { EvidenceOverviewSection } from '../components/EvidenceOverviewSection';
+import { FeatureAnalysisWorkspace } from '../components/FeatureAnalysisWorkspace';
 import { InvestigationTimeline } from '../components/InvestigationTimeline';
 import { DocumentPreviewCard } from '../components/DocumentPreviewCard';
 import { AdvancedForensicEvidence } from '../components/AdvancedForensicEvidence';
@@ -27,6 +28,9 @@ export default function InvestigationDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [is404, setIs404] = useState(false);
+
+  // Evaluator Presentation Mode Toggle
+  const [isEvaluatorView, setIsEvaluatorView] = useState(false);
 
   // Multi-page document navigation state
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -157,6 +161,8 @@ export default function InvestigationDashboardPage() {
         pageCount={pageCount}
         onOpenReportModal={() => setIsReportModalOpen(true)}
         onNavigateComparison={() => navigate(`/comparison?docA=${analysis.document_id}`)}
+        isEvaluatorView={isEvaluatorView}
+        onToggleEvaluatorView={() => setIsEvaluatorView(!isEvaluatorView)}
       />
 
       {/* ------------------------------------------------------------- */}
@@ -165,50 +171,94 @@ export default function InvestigationDashboardPage() {
       <InvestigationSummaryCard analysis={analysis} />
 
       {/* ------------------------------------------------------------- */}
-      {/* SECTION C & D: TWO-COLUMN MAIN ANALYSIS AREA                  */}
+      {/* CONDITIONAL LAYOUT: EVALUATOR VIEW vs. ANALYST VIEW           */}
       {/* ------------------------------------------------------------- */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* LEFT COLUMN: ML Screening Result + Key Findings + Workflow (7 cols) */}
-        <div className="lg:col-span-7 space-y-6">
-          {/* Top Row: ML Screening Result + Key Findings */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <MLIntelligenceSection analysis={analysis} />
-            <WhyWeReachedAssessment 
-              analysis={analysis} 
-              onSelectInsightTab={(tab) => setAdvancedTab(tab)}
-            />
+      {isEvaluatorView ? (
+        /* EVALUATOR PRESENTATION MODE: LINEAR SCIENTIFIC NARRATIVE */
+        <div className="space-y-6">
+          {/* 1. Machine Learning Analysis with Threshold Bar */}
+          <MLIntelligenceSection analysis={analysis} />
+
+          {/* 2. Structured 5-Category Evidence Overview */}
+          <EvidenceOverviewSection 
+            analysis={analysis} 
+            onNavigateDetail={(tab) => setAdvancedTab(tab)}
+          />
+
+          {/* 3. Complete 18 Numerical Features Workspace */}
+          <FeatureAnalysisWorkspace analysis={analysis} />
+
+          {/* 4. Document Preview & Suspicious Region Inspector */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="lg:col-span-7">
+              <DocumentPreviewCard
+                imageUrl={imageUrl}
+                heatmapUrl={heatmapUrl}
+                regions={regions}
+                currentPage={currentPage}
+                pageCount={pageCount}
+                onPageChange={setCurrentPage}
+                originalFilename={analysis.original_filename}
+              />
+            </div>
+            <div className="lg:col-span-5">
+              <InvestigationTimeline analysis={analysis} />
+            </div>
           </div>
 
-          {/* Bottom Card: Investigation Workflow Stepper */}
-          <InvestigationTimeline analysis={analysis} />
-        </div>
-
-        {/* RIGHT COLUMN: Document Preview Card (5 cols) */}
-        <div className="lg:col-span-5 h-full">
-          <DocumentPreviewCard
-            imageUrl={imageUrl}
-            heatmapUrl={heatmapUrl}
-            regions={regions}
-            currentPage={currentPage}
+          {/* 5. Comprehensive 7-Module Advanced Forensic Evidence */}
+          <AdvancedForensicEvidence
+            analysis={analysis}
             pageCount={pageCount}
-            onPageChange={setCurrentPage}
-            originalFilename={analysis.original_filename}
+            custodyLogs={custodyLogs}
+            custodyLoading={custodyLoading}
+            activeTab={advancedTab}
+            onTabChange={setAdvancedTab}
+            onPageSelect={setCurrentPage}
           />
         </div>
-      </div>
+      ) : (
+        /* STANDARD ANALYST VIEW: BALANCED 2-COLUMN DASHBOARD */
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            {/* LEFT COLUMN: ML Screening Result + Structured Evidence + Stepper (7 cols) */}
+            <div className="lg:col-span-7 space-y-6">
+              <MLIntelligenceSection analysis={analysis} />
 
-      {/* ------------------------------------------------------------- */}
-      {/* SECTION E: EXPLORE ADVANCED FORENSIC ANALYSIS (ACCORDION)     */}
-      {/* ------------------------------------------------------------- */}
-      <AdvancedForensicEvidence
-        analysis={analysis}
-        pageCount={pageCount}
-        custodyLogs={custodyLogs}
-        custodyLoading={custodyLoading}
-        activeTab={advancedTab}
-        onTabChange={setAdvancedTab}
-        onPageSelect={setCurrentPage}
-      />
+              <EvidenceOverviewSection 
+                analysis={analysis} 
+                onNavigateDetail={(tab) => setAdvancedTab(tab)}
+              />
+
+              <InvestigationTimeline analysis={analysis} />
+            </div>
+
+            {/* RIGHT COLUMN: Document Preview Card (5 cols) */}
+            <div className="lg:col-span-5 h-full space-y-6">
+              <DocumentPreviewCard
+                imageUrl={imageUrl}
+                heatmapUrl={heatmapUrl}
+                regions={regions}
+                currentPage={currentPage}
+                pageCount={pageCount}
+                onPageChange={setCurrentPage}
+                originalFilename={analysis.original_filename}
+              />
+            </div>
+          </div>
+
+          {/* BOTTOM SECTION: EXPLORE ADVANCED FORENSIC ANALYSIS (ACCORDION) */}
+          <AdvancedForensicEvidence
+            analysis={analysis}
+            pageCount={pageCount}
+            custodyLogs={custodyLogs}
+            custodyLoading={custodyLoading}
+            activeTab={advancedTab}
+            onTabChange={setAdvancedTab}
+            onPageSelect={setCurrentPage}
+          />
+        </div>
+      )}
 
       {/* Report Generation Modal */}
       {isReportModalOpen && (

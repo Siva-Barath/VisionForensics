@@ -16,11 +16,11 @@ export default function DashboardLayout() {
     return () => document.removeEventListener('keydown', closeOnEscape);
   }, [navigationOpen]);
   return (
-    <div className="app-shell flex min-h-screen bg-ink-base">
+    <div className="app-shell flex min-h-screen bg-[#F8F9FF] relative overflow-x-hidden">
       <a href="#workspace-content" className="skip-link">Skip to workspace</a>
       {navigationOpen && <button className="navigation-scrim" aria-label="Close navigation" onClick={() => setNavigationOpen(false)} />}
       <Sidebar open={navigationOpen} onClose={() => setNavigationOpen(false)} />
-      <div className="workspace-body flex flex-col flex-1 min-w-0">
+      <div className="workspace-body flex flex-col flex-1 min-w-0 min-h-screen bg-[#F8F9FF]">
         <Topbar navigationOpen={navigationOpen} onToggleNavigation={() => setNavigationOpen(!navigationOpen)} />
         <main id="workspace-content" tabIndex={-1} className="workspace-content flex-1">
           <Outlet />
