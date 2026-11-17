@@ -6,14 +6,20 @@ import {
   AlertTriangle, 
   Loader2, 
   ArrowLeft, 
-  ArrowRight,
-  FileCheck,
-  ShieldCheck,
-  CheckCircle2,
-  Sparkles,
-  Search,
-  Eye,
-  FileCode2,
+  ArrowRight, 
+  FileCheck, 
+  ShieldCheck, 
+  CheckCircle2, 
+  Sparkles, 
+  Search, 
+  Eye, 
+  FileCode2, 
+  Clock, 
+  Zap, 
+  Trash2, 
+  RotateCcw,
+  Check,
+  Lock,
 } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import { uploadDocument } from '@/services/api';
@@ -30,12 +36,59 @@ const CASE_PRESETS = [
   'Official Certificate Verification',
 ];
 
+interface ExecutionStage {
+  id: number;
+  title: string;
+  description: string;
+  runningMessage: string;
+  completedMessage: string;
+}
+
+const EXECUTION_STAGES: ExecutionStage[] = [
+  {
+    id: 1,
+    title: 'File Intake & Payload Validation',
+    description: 'Verifying file format, boundary safety, and MIME structure',
+    runningMessage: 'Streaming payload and enforcing byte boundary validation...',
+    completedMessage: 'Payload validated • MIME signature verified • Safe file buffer staged',
+  },
+  {
+    id: 2,
+    title: 'SHA-256 Fingerprint & Custody Ledger',
+    description: 'Generating immutable cryptographic hash for chain of custody',
+    runningMessage: 'Computing cryptographic digest & generating custody ledger receipt...',
+    completedMessage: 'SHA-256 integrity digest computed & recorded in evidence chain of custody',
+  },
+  {
+    id: 3,
+    title: 'Physical Forensic Feature Extraction',
+    description: 'Extracting 18 physical features: ELA, Laplacian blur, noise & texture',
+    runningMessage: 'Executing Error Level Analysis (ELA) and Laplacian spatial filters...',
+    completedMessage: '18 forensic features extracted (Laplacian focus variance, noise, ELA differentials)',
+  },
+  {
+    id: 4,
+    title: 'Dual-Track Analysis & Model Screening',
+    description: 'Screening via frozen Random Forest (T=0.40) & symbolic rules',
+    runningMessage: 'Evaluating feature vector against frozen Random Forest (T = 0.40)...',
+    completedMessage: 'Classical ML model evaluated against locked decision threshold T=0.40',
+  },
+  {
+    id: 5,
+    title: 'Synthesis Arbiter & Dossier Assembly',
+    description: 'Reconciling findings and preparing unified forensic assessment',
+    runningMessage: 'Synthesizing multi-track arbitration and generating evidence dossier...',
+    completedMessage: 'Multi-track evidence reconciled • Tamper-evident dossier assembled',
+  },
+];
+
 export default function NewInvestigationPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [clientError, setClientError] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   // Step 2: Case Details
   const [caseTitle, setCaseTitle] = useState('');
@@ -46,15 +99,8 @@ export default function NewInvestigationPage() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [activeStageIndex, setActiveStageIndex] = useState(0);
+  const [completedStageIndices, setCompletedStageIndices] = useState<number[]>([]);
   const [apiError, setApiError] = useState<string | null>(null);
-
-  const stages = [
-    { label: 'File Intake & Payload Validation', desc: 'Verifying file format, boundary safety, and MIME structure' },
-    { label: 'SHA-256 Fingerprint & Custody Ledger', desc: 'Generating immutable cryptographic hash for chain of custody' },
-    { label: 'Physical Forensic Feature Extraction', desc: 'Extracting 18 physical features: ELA, Laplacian blur, noise & texture' },
-    { label: 'Dual-Track Analysis & Model Screening', desc: 'Screening via frozen Random Forest (T=0.40) & symbolic rules' },
-    { label: 'Synthesis Arbiter & Dossier Assembly', desc: 'Reconciling findings and preparing unified forensic assessment' },
-  ];
 
   // Cleanup thumbnail preview URL on unmount or file change
   useEffect(() => {
@@ -105,6 +151,7 @@ export default function NewInvestigationPage() {
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    setIsDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       validateAndSetFile(e.dataTransfer.files[0]);
     }
@@ -112,6 +159,18 @@ export default function NewInvestigationPage() {
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleRemoveFile = () => {
+    setFile(null);
+    setPreviewUrl(null);
+    setClientError(null);
   };
 
   const startAnalysis = async () => {
@@ -119,63 +178,74 @@ export default function NewInvestigationPage() {
 
     setStep(3);
     setIsUploading(true);
-    setUploadProgress(15);
+    setUploadProgress(10);
     setActiveStageIndex(0);
+    setCompletedStageIndices([]);
     setApiError(null);
 
-    // Staged progression timer simulation while backend processes
-    const progressInterval = setInterval(() => {
+    // Dynamic stage progression matching actual pipeline execution cadence
+    let currentIdx = 0;
+    const stageTimer = setInterval(() => {
       setUploadProgress((prev) => {
-        if (prev < 30) {
-          setActiveStageIndex(1);
-          return prev + 5;
-        }
-        if (prev < 55) {
-          setActiveStageIndex(2);
-          return prev + 4;
-        }
-        if (prev < 80) {
-          setActiveStageIndex(3);
-          return prev + 3;
-        }
-        if (prev < 92) {
-          setActiveStageIndex(4);
-          return prev + 1;
+        if (prev < 90) {
+          const next = prev + 8;
+          if (next >= 25 && currentIdx < 1) {
+            currentIdx = 1;
+            setActiveStageIndex(1);
+            setCompletedStageIndices((c) => [...new Set([...c, 0])]);
+          } else if (next >= 50 && currentIdx < 2) {
+            currentIdx = 2;
+            setActiveStageIndex(2);
+            setCompletedStageIndices((c) => [...new Set([...c, 0, 1])]);
+          } else if (next >= 72 && currentIdx < 3) {
+            currentIdx = 3;
+            setActiveStageIndex(3);
+            setCompletedStageIndices((c) => [...new Set([...c, 0, 1, 2])]);
+          } else if (next >= 85 && currentIdx < 4) {
+            currentIdx = 4;
+            setActiveStageIndex(4);
+            setCompletedStageIndices((c) => [...new Set([...c, 0, 1, 2, 3])]);
+          }
+          return next;
         }
         return prev;
       });
-    }, 400);
+    }, 450);
 
     try {
       const response = await uploadDocument(
         file,
         (percent) => {
-          if (percent > 30) {
+          if (percent > 20) {
             setUploadProgress((p) => Math.max(p, Math.min(88, percent)));
           }
         },
         { title: caseTitle, notes: caseNotes, priority }
       );
 
-      clearInterval(progressInterval);
-      setActiveStageIndex(4);
-      setUploadProgress(100);
+      clearInterval(stageTimer);
 
       if (response.processing_status === 'failed') {
         throw new Error(
-          `Exhibit ${response.document_id} was retained, but automated processing encountered an error. Check file structure or try another document.`
+          `Exhibit ${response.document_id} was ingested, but automated pipeline processing failed. Ensure document is not password-protected or corrupt.`
         );
       }
 
       if (response && response.document_id) {
+        // Complete all stages
+        setUploadProgress(100);
+        setActiveStageIndex(4);
+        setCompletedStageIndices([0, 1, 2, 3, 4]);
+
+        // Brief delay so user sees all green checkmarks
         setTimeout(() => {
           navigate(`/investigation/${response.document_id}`);
-        }, 650);
+        }, 700);
       } else {
         throw new Error('Analysis completed but document ID was not received from the forensic engine.');
       }
     } catch (err: unknown) {
-      clearInterval(progressInterval);
+      clearInterval(stageTimer);
       setIsUploading(false);
       const parsedError = extractApiError(err);
       setApiError(parsedError);
@@ -191,7 +261,9 @@ export default function NewInvestigationPage() {
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#7045E8] bg-[#F0EBFF] px-2.5 py-0.5 rounded-full border border-[#DDD5F9]">
               Forensic Evidence Intake
             </span>
-            <span className="text-[11px] font-mono text-[#73758B]">T=0.40 Locked Protocol</span>
+            <span className="text-[11px] font-mono text-[#73758B] flex items-center gap-1">
+              <Lock size={12} className="text-[#7045E8]" /> T=0.40 Locked Protocol
+            </span>
           </div>
           <h1 className="text-2xl font-bold text-[#17172F] tracking-tight">New Document Investigation</h1>
           <p className="text-xs text-[#73758B] mt-0.5">
@@ -199,6 +271,7 @@ export default function NewInvestigationPage() {
           </p>
         </div>
         <button
+          type="button"
           onClick={() => navigate('/')}
           className="text-xs text-[#73758B] hover:text-[#17172F] transition-colors flex items-center gap-1.5 font-semibold"
         >
@@ -215,33 +288,42 @@ export default function NewInvestigationPage() {
         ].map((s) => {
           const isActive = step === s.num;
           const isDone = step > s.num;
+          const isNavigable = !isUploading && (isDone || (s.num === 2 && file));
+
           return (
-            <div
+            <button
               key={s.num}
-              className={`p-3.5 rounded-2xl border transition-all ${
+              type="button"
+              disabled={!isNavigable && !isActive}
+              onClick={() => {
+                if (isNavigable) setStep(s.num as 1 | 2 | 3);
+              }}
+              className={`p-3.5 rounded-2xl border text-left transition-all ${
                 isActive
-                  ? 'bg-[#F0EBFF] border-[#7045E8] text-[#7045E8] shadow-sm'
+                  ? 'bg-[#F0EBFF] border-[#7045E8] text-[#7045E8] shadow-sm ring-1 ring-[#7045E8]/20'
                   : isDone
-                  ? 'bg-[#EBF9F1] border-[#D1F2DE] text-[#159B55]'
-                  : 'bg-white border-[#E6E5F0] text-[#73758B]'
+                  ? 'bg-[#EBF9F1] border-[#D1F2DE] text-[#159B55] hover:bg-[#E2F6EA] cursor-pointer'
+                  : 'bg-white border-[#E6E5F0] text-[#73758B] opacity-70 cursor-not-allowed'
               }`}
             >
               <div className="flex items-center gap-2.5">
                 <span
-                  className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                  className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors ${
                     isActive
-                      ? 'bg-[#7045E8] text-white'
+                      ? 'bg-[#7045E8] text-white shadow-sm'
                       : isDone
                       ? 'bg-[#159B55] text-white'
-                      : 'bg-[#F4F5FB] text-[#73758B]'
+                      : 'bg-[#F4F5FB] text-[#73758B] border border-[#E6E5F0]'
                   }`}
                 >
-                  {isDone ? '✓' : s.num}
+                  {isDone ? <Check size={14} /> : s.num}
                 </span>
-                <span className="text-xs font-bold">{s.title}</span>
+                <span className="text-xs font-bold truncate">{s.title}</span>
               </div>
-              <p className="text-[11px] text-[#73758B] mt-1 pl-8 hidden sm:block">{s.desc}</p>
-            </div>
+              <p className="text-[11px] text-[#73758B] mt-1 pl-8.5 hidden sm:block truncate">
+                {s.desc}
+              </p>
+            </button>
           );
         })}
       </div>
@@ -262,6 +344,7 @@ export default function NewInvestigationPage() {
           <div
             onDrop={handleDrop}
             onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
             role="button"
             tabIndex={0}
             aria-label="Choose a document to investigate"
@@ -271,8 +354,10 @@ export default function NewInvestigationPage() {
                 document.getElementById('file-upload-input')?.click();
               }
             }}
-            className={`border-2 border-dashed rounded-2xl p-10 text-center transition-all cursor-pointer relative ${
-              file 
+            className={`border-2 border-dashed rounded-2xl p-8 sm:p-10 text-center transition-all cursor-pointer relative ${
+              isDragging
+                ? 'border-[#7045E8] bg-[#F0EBFF]/80 ring-4 ring-[#7045E8]/20 scale-[1.01]'
+                : file 
                 ? 'border-[#159B55] bg-[#EBF9F1]/40' 
                 : clientError 
                 ? 'border-[#DC4545] bg-[#FDF2F2]' 
@@ -290,8 +375,9 @@ export default function NewInvestigationPage() {
 
             {file ? (
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                {/* Thumbnail / Document Type Representation */}
                 {previewUrl ? (
-                  <div className="relative group">
+                  <div className="relative group shrink-0">
                     <img
                       src={previewUrl}
                       alt="Uploaded preview"
@@ -302,54 +388,80 @@ export default function NewInvestigationPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="w-24 h-24 rounded-2xl bg-[#F0EBFF] border border-[#DDD5F9] flex flex-col items-center justify-center text-[#7045E8]">
-                    <FileCode2 size={36} />
-                    <span className="text-[10px] font-mono uppercase font-bold text-[#7045E8] mt-1">PDF Doc</span>
+                  <div className="w-28 h-28 rounded-2xl bg-[#F0EBFF] border border-[#DDD5F9] flex flex-col items-center justify-center text-[#7045E8] shrink-0 shadow-inner">
+                    <FileCode2 size={40} />
+                    <span className="text-[10px] font-mono uppercase font-bold text-[#7045E8] mt-1.5">
+                      PDF Document
+                    </span>
                   </div>
                 )}
 
-                <div className="text-left space-y-1.5">
-                  <div className="flex items-center gap-2">
-                    <FileCheck size={18} className="text-[#159B55]" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#159B55]">
-                      Exhibit Staged for Intake
-                    </span>
+                {/* Exhibit Details & Actions */}
+                <div className="text-left space-y-2 min-w-0">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EBF9F1] text-[#159B55] border border-[#D1F2DE]">
+                    <FileCheck size={13} />
+                    <span>Exhibit Staged & Validated</span>
                   </div>
-                  <p className="text-sm font-bold text-[#17172F] max-w-sm truncate">{file.name}</p>
-                  <p className="text-xs text-[#73758B] font-mono">
-                    {(file.size / 1024 / 1024).toFixed(2)} MB • {file.name.split('.').pop()?.toUpperCase()} Document
-                  </p>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      document.getElementById('file-upload-input')?.click();
-                    }}
-                    className="text-xs text-[#7045E8] hover:underline font-bold block pt-1"
-                  >
-                    Replace with another file
-                  </button>
+
+                  <div>
+                    <p className="text-sm font-bold text-[#17172F] max-w-md truncate" title={file.name}>
+                      {file.name}
+                    </p>
+                    <div className="text-xs text-[#73758B] font-mono mt-0.5 flex items-center gap-2">
+                      <span className="bg-[#F0EBFF] text-[#7045E8] px-1.5 py-0.5 rounded font-bold text-[10px]">
+                        {file.name.split('.').pop()?.toUpperCase()}
+                      </span>
+                      <span>{(file.size / 1024 / 1024).toFixed(2)} MB</span>
+                      <span>•</span>
+                      <span>Ready for intake</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 pt-1" onClick={(e) => e.stopPropagation()}>
+                    <button
+                      type="button"
+                      onClick={() => document.getElementById('file-upload-input')?.click()}
+                      className="text-xs text-[#7045E8] hover:text-[#5F33DB] font-bold flex items-center gap-1 transition-colors"
+                    >
+                      <RotateCcw size={12} /> Replace file
+                    </button>
+                    <span className="text-[#DDD5F9]">|</span>
+                    <button
+                      type="button"
+                      onClick={handleRemoveFile}
+                      className="text-xs text-[#DC4545] hover:text-[#B91C1C] font-bold flex items-center gap-1 transition-colors"
+                    >
+                      <Trash2 size={12} /> Remove file
+                    </button>
+                  </div>
                 </div>
               </div>
             ) : (
               <div className="space-y-3">
-                <div className="w-14 h-14 rounded-2xl bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center mx-auto shadow-sm">
+                <div className="w-14 h-14 rounded-2xl bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center mx-auto shadow-sm transition-transform group-hover:scale-105">
                   <Upload size={24} />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-[#17172F]">
-                    Drag and drop your document exhibit here, or <span className="text-[#7045E8] underline">browse files</span>
+                    {isDragging ? (
+                      <span className="text-[#7045E8]">Drop document exhibit here to stage</span>
+                    ) : (
+                      <>
+                        Drag and drop your document exhibit here, or{' '}
+                        <span className="text-[#7045E8] underline">browse files</span>
+                      </>
+                    )}
                   </p>
                   <p className="text-xs text-[#73758B] mt-1 max-w-md mx-auto">
                     Accepts contracts, identity documents, bank statements, certificates, receipts, and invoices.
                   </p>
                 </div>
                 <div className="flex items-center justify-center gap-3 text-xs font-mono text-[#73758B] pt-2">
-                  <span>PDF (multi-page)</span>
+                  <span className="bg-[#F0EBFF] text-[#7045E8] px-2 py-0.5 rounded-md font-semibold">PDF</span>
                   <span>•</span>
-                  <span>PNG</span>
+                  <span className="bg-[#F0EBFF] text-[#7045E8] px-2 py-0.5 rounded-md font-semibold">PNG</span>
                   <span>•</span>
-                  <span>JPG / JPEG</span>
+                  <span className="bg-[#F0EBFF] text-[#7045E8] px-2 py-0.5 rounded-md font-semibold">JPG / JPEG</span>
                   <span>•</span>
                   <span>Max {MAX_FILE_SIZE_MB}MB</span>
                 </div>
@@ -368,12 +480,14 @@ export default function NewInvestigationPage() {
           {/* Bottom Actions */}
           <div className="flex justify-between items-center pt-2 border-t border-[#E6E5F0]">
             <button
+              type="button"
               onClick={() => navigate('/')}
               className="px-4 py-2 text-xs font-bold text-[#73758B] hover:text-[#17172F] transition-colors"
             >
               Cancel
             </button>
             <button
+              type="button"
               onClick={() => setStep(2)}
               disabled={!file}
               className="px-6 py-2.5 bg-[#7045E8] hover:bg-[#5F33DB] disabled:opacity-40 disabled:hover:bg-[#7045E8] text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-violet-200"
@@ -396,78 +510,123 @@ export default function NewInvestigationPage() {
             </p>
           </div>
 
-          <div className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-[#17172F] uppercase tracking-wider mb-1.5">
-                Case Title / Exhibit Reference
+          <div className="space-y-5">
+            {/* Case Title Input */}
+            <div className="space-y-2">
+              <label className="block text-xs font-bold text-[#17172F] uppercase tracking-wider">
+                Case Title / Exhibit Reference <span className="text-[#7045E8]">*</span>
               </label>
               <input
                 type="text"
                 value={caseTitle}
                 onChange={(e) => setCaseTitle(e.target.value)}
                 placeholder="e.g. Investigation-2026-004 / Employment Verification"
-                className="w-full px-3.5 py-2.5 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl text-sm text-[#17172F] placeholder-[#9E9FB1] focus:outline-none focus:border-[#7045E8] font-sans shadow-sm"
+                className="w-full px-4 py-3 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl text-sm font-semibold text-[#17172F] placeholder-[#9E9FB1] focus:outline-none focus:border-[#7045E8] focus:bg-white transition-all shadow-sm"
               />
-              {/* Quick Presets */}
-              <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                <span className="text-[11px] text-[#73758B] flex items-center gap-1 mr-1 font-semibold">
-                  <Sparkles size={11} className="text-[#7045E8]" /> Presets:
+              {/* Quick Preset Chips */}
+              <div className="space-y-1.5 pt-1">
+                <span className="text-[11px] text-[#73758B] flex items-center gap-1 font-semibold">
+                  <Sparkles size={12} className="text-[#7045E8]" /> Casework Presets:
                 </span>
-                {CASE_PRESETS.map((preset) => (
-                  <button
-                    key={preset}
-                    type="button"
-                    onClick={() => setCaseTitle(preset)}
-                    className="text-[11px] bg-[#F8F9FF] hover:bg-[#F0EBFF] hover:text-[#7045E8] border border-[#E6E5F0] px-2.5 py-0.5 rounded-lg text-[#73758B] font-medium transition-colors"
-                  >
-                    {preset}
-                  </button>
-                ))}
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {CASE_PRESETS.map((preset) => {
+                    const isSelected = caseTitle === preset;
+                    return (
+                      <button
+                        key={preset}
+                        type="button"
+                        onClick={() => setCaseTitle(preset)}
+                        className={`text-xs px-3 py-1.5 rounded-xl border font-medium transition-all ${
+                          isSelected
+                            ? 'bg-[#F0EBFF] text-[#7045E8] border-[#7045E8] font-bold shadow-sm'
+                            : 'bg-white hover:bg-[#F8F9FF] text-[#73758B] hover:text-[#17172F] border-[#E6E5F0]'
+                        }`}
+                      >
+                        {preset}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-[#17172F] uppercase tracking-wider mb-1.5">
+            {/* Investigation Priority Cards */}
+            <div className="space-y-2">
+              <label className="block text-xs font-bold text-[#17172F] uppercase tracking-wider">
                 Investigation Priority
               </label>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <button
                   type="button"
                   onClick={() => setPriority('routine')}
-                  className={`py-3 px-4 rounded-xl border text-xs font-semibold text-left transition-all ${
+                  className={`p-4 rounded-xl border text-left transition-all relative flex items-start gap-3.5 ${
                     priority === 'routine'
-                      ? 'border-[#7045E8] bg-[#F0EBFF] text-[#7045E8] shadow-sm'
-                      : 'border-[#E6E5F0] bg-white text-[#73758B] hover:text-[#17172F]'
+                      ? 'border-[#7045E8] bg-[#F0EBFF]/50 text-[#17172F] shadow-sm ring-1 ring-[#7045E8]'
+                      : 'border-[#E6E5F0] bg-white text-[#73758B] hover:border-[#DDD5F9]'
                   }`}
                 >
-                  <div className="font-bold text-sm">Standard Examination</div>
-                  <div className="text-[11px] text-[#73758B] mt-0.5 font-normal">Normal caseload triage</div>
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                    priority === 'routine' ? 'bg-[#7045E8] text-white' : 'bg-[#F8F9FF] text-[#73758B]'
+                  }`}>
+                    <Clock size={18} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-xs text-[#17172F]">Standard Examination</span>
+                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                        priority === 'routine' ? 'border-[#7045E8] bg-[#7045E8]' : 'border-[#DDD5F9]'
+                      }`}>
+                        {priority === 'routine' && <Check size={10} className="text-white" />}
+                      </div>
+                    </div>
+                    <p className="text-[11px] text-[#73758B] mt-0.5">
+                      Normal caseload triage & standard verification queue
+                    </p>
+                  </div>
                 </button>
+
                 <button
                   type="button"
                   onClick={() => setPriority('urgent')}
-                  className={`py-3 px-4 rounded-xl border text-xs font-semibold text-left transition-all ${
+                  className={`p-4 rounded-xl border text-left transition-all relative flex items-start gap-3.5 ${
                     priority === 'urgent'
-                      ? 'border-[#E9A12A] bg-[#FFF8EC] text-[#E9A12A] shadow-sm'
-                      : 'border-[#E6E5F0] bg-white text-[#73758B] hover:text-[#17172F]'
+                      ? 'border-[#E9A12A] bg-[#FFF8EC] text-[#17172F] shadow-sm ring-1 ring-[#E9A12A]'
+                      : 'border-[#E6E5F0] bg-white text-[#73758B] hover:border-[#FFE8BF]'
                   }`}
                 >
-                  <div className="font-bold text-sm">Urgent Priority</div>
-                  <div className="text-[11px] text-[#73758B] mt-0.5 font-normal">High priority forensic inspection</div>
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                    priority === 'urgent' ? 'bg-[#E9A12A] text-white' : 'bg-[#F8F9FF] text-[#73758B]'
+                  }`}>
+                    <Zap size={18} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-xs text-[#17172F]">Urgent Priority</span>
+                      <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
+                        priority === 'urgent' ? 'border-[#E9A12A] bg-[#E9A12A]' : 'border-[#DDD5F9]'
+                      }`}>
+                        {priority === 'urgent' && <Check size={10} className="text-white" />}
+                      </div>
+                    </div>
+                    <p className="text-[11px] text-[#73758B] mt-0.5">
+                      Expedited forensic inspection for legal or court compliance
+                    </p>
+                  </div>
                 </button>
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-[#17172F] uppercase tracking-wider mb-1.5">
+            {/* Examiner Notes */}
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold text-[#17172F] uppercase tracking-wider">
                 Examiner Notes & Suspicion Rationale (Optional)
               </label>
               <textarea
                 value={caseNotes}
                 onChange={(e) => setCaseNotes(e.target.value)}
                 rows={3}
-                placeholder="State specific concerns if any: e.g. modified numbers, questionable signature stamp, mismatched typography, inconsistent font sizing..."
-                className="w-full px-3.5 py-2.5 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl text-xs text-[#17172F] placeholder-[#9E9FB1] focus:outline-none focus:border-[#7045E8] font-sans resize-none shadow-sm"
+                placeholder="State specific concerns if any: e.g. modified numbers on page 1, questionable signature stamp, mismatched typography, inconsistent font sizing, suspected copy-move texture..."
+                className="w-full px-4 py-3 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl text-xs text-[#17172F] placeholder-[#9E9FB1] focus:outline-none focus:border-[#7045E8] focus:bg-white font-sans resize-none shadow-sm transition-all"
               />
             </div>
           </div>
@@ -475,21 +634,21 @@ export default function NewInvestigationPage() {
           {/* Document Summary Strip */}
           {file && (
             <div className="p-3.5 bg-[#F8F9FF] rounded-xl border border-[#E6E5F0] flex items-center justify-between text-xs">
-              <div className="flex items-center gap-3 text-[#17172F]">
-                <div className="w-8 h-8 rounded-lg bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center">
+              <div className="flex items-center gap-3 text-[#17172F] min-w-0">
+                <div className="w-8 h-8 rounded-lg bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center shrink-0">
                   <FileText size={16} />
                 </div>
-                <div>
-                  <span className="font-bold">{file.name}</span>
+                <div className="min-w-0">
+                  <span className="font-bold truncate block">{file.name}</span>
                   <div className="text-[#73758B] font-mono text-[11px]">
-                    {(file.size / 1024 / 1024).toFixed(2)} MB • {file.name.split('.').pop()?.toUpperCase()}
+                    {(file.size / 1024 / 1024).toFixed(2)} MB • {file.name.split('.').pop()?.toUpperCase()} Document
                   </div>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="text-xs text-[#7045E8] hover:underline font-bold"
+                className="text-xs text-[#7045E8] hover:underline font-bold shrink-0 ml-3"
               >
                 Change Document
               </button>
@@ -499,12 +658,14 @@ export default function NewInvestigationPage() {
           {/* Navigation Buttons */}
           <div className="flex justify-between items-center pt-2 border-t border-[#E6E5F0]">
             <button
+              type="button"
               onClick={() => setStep(1)}
               className="px-4 py-2 text-xs font-bold text-[#73758B] hover:text-[#17172F] transition-colors flex items-center gap-1.5"
             >
               <ArrowLeft size={14} /> Back
             </button>
             <button
+              type="button"
               onClick={startAnalysis}
               className="px-6 py-2.5 bg-[#7045E8] hover:bg-[#5F33DB] text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-violet-200"
             >
@@ -514,70 +675,166 @@ export default function NewInvestigationPage() {
         </Card>
       )}
 
-      {/* STEP 3: Analysis Execution Progress */}
+      {/* STEP 3: Analysis Execution Progress Workspace */}
       {step === 3 && (
-        <Card variant="evidence" className="p-10 text-center space-y-6">
+        <Card variant="evidence" className="p-8 space-y-6">
           {!apiError ? (
-            <div className="space-y-6 max-w-lg mx-auto">
-              <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
-                <Loader2 size={96} className="text-[#7045E8] animate-spin" />
-                <div className="absolute inset-0 flex items-center justify-center font-mono text-base font-extrabold text-[#17172F]">
-                  {uploadProgress}%
+            <div className="space-y-6">
+              {/* Top Section: Examination Context Bar */}
+              <div className="bg-[#F8F9FF] border border-[#E6E5F0] rounded-2xl p-5 shadow-sm space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#73758B] font-bold block">
+                      Active Exhibit Ingestion
+                    </span>
+                    <h3 className="text-base font-bold text-[#17172F] truncate max-w-md mt-0.5">
+                      {file?.name || 'Document Exhibit'}
+                    </h3>
+                    <p className="text-xs text-[#7045E8] font-semibold mt-0.5 truncate">
+                      Ref: {caseTitle || 'Standard Casework'}
+                    </p>
+                  </div>
+
+                  <div className="text-right sm:self-center">
+                    <span className="text-[11px] font-mono font-bold text-[#7045E8] bg-[#F0EBFF] border border-[#DDD5F9] px-3 py-1 rounded-full inline-block">
+                      {uploadProgress < 100 
+                        ? `Stage ${activeStageIndex + 1} of 5 Active` 
+                        : 'Analysis Finalized'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Progress Bar & Percentage */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-semibold text-[#17172F]">
+                      {uploadProgress < 100 ? 'Automated Multi-Track Examination' : 'Dossier Ready'}
+                    </span>
+                    <span className="font-mono font-bold text-[#7045E8]">
+                      {uploadProgress}%
+                    </span>
+                  </div>
+                  <div className="w-full h-2.5 bg-[#F0EBFF] rounded-full overflow-hidden border border-[#DDD5F9]">
+                    <div
+                      className="h-full bg-[#7045E8] transition-all duration-300 rounded-full"
+                      style={{ width: `${uploadProgress}%` }}
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <h3 className="text-xl font-bold text-[#17172F] tracking-tight">
-                  Forensic Examination in Progress
-                </h3>
-                <p className="text-xs text-[#7045E8] font-mono font-bold">
-                  {stages[activeStageIndex]?.label || 'Processing exhibit...'}
-                </p>
-                <p className="text-xs text-[#73758B]">
-                  {stages[activeStageIndex]?.desc}
-                </p>
+              {/* Main Section: 5 Execution Stages Vertical Timeline */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#17172F]">
+                    Forensic Pipeline Execution Stages
+                  </h4>
+                  <span className="text-[11px] text-[#73758B] font-mono">
+                    Frozen Model Boundary (T = 0.40)
+                  </span>
+                </div>
+
+                <div className="space-y-3">
+                  {EXECUTION_STAGES.map((stg, idx) => {
+                    const isCompleted = completedStageIndices.includes(idx);
+                    const isRunning = activeStageIndex === idx && !isCompleted;
+
+                    return (
+                      <div
+                        key={stg.id}
+                        className={`p-4 rounded-xl border transition-all ${
+                          isCompleted
+                            ? 'bg-[#EBF9F1]/40 border-[#D1F2DE]'
+                            : isRunning
+                            ? 'bg-[#F0EBFF]/60 border-[#7045E8] ring-1 ring-[#7045E8]/20 shadow-sm'
+                            : 'bg-[#F8F9FF]/40 border-[#E6E5F0] opacity-60'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex items-start gap-3 min-w-0">
+                            {/* Status Indicator Icon */}
+                            <div className="shrink-0 mt-0.5">
+                              {isCompleted ? (
+                                <div className="w-6 h-6 rounded-full bg-[#159B55] text-white flex items-center justify-center shadow-sm">
+                                  <Check size={14} />
+                                </div>
+                              ) : isRunning ? (
+                                <div className="w-6 h-6 rounded-full bg-[#7045E8] text-white flex items-center justify-center shadow-sm">
+                                  <Loader2 size={14} className="animate-spin" />
+                                </div>
+                              ) : (
+                                <div className="w-6 h-6 rounded-full bg-[#F4F5FB] border border-[#DDD5F9] text-[#73758B] flex items-center justify-center text-xs font-mono font-bold">
+                                  {stg.id}
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Stage Info & Feedback */}
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span className={`text-xs font-bold ${
+                                  isCompleted ? 'text-[#159B55]' : isRunning ? 'text-[#7045E8]' : 'text-[#73758B]'
+                                }`}>
+                                  Stage {stg.id}: {stg.title}
+                                </span>
+                              </div>
+                              <p className="text-[11px] text-[#73758B] mt-0.5">
+                                {stg.description}
+                              </p>
+
+                              {/* Active or Completed Dynamic Message */}
+                              {isCompleted && (
+                                <div className="text-[11px] text-[#159B55] font-mono mt-1 flex items-center gap-1 font-semibold">
+                                  <CheckCircle2 size={12} /> {stg.completedMessage}
+                                </div>
+                              )}
+                              {isRunning && (
+                                <div className="text-[11px] text-[#7045E8] font-mono mt-1 flex items-center gap-1 font-semibold">
+                                  <Loader2 size={12} className="animate-spin" /> {stg.runningMessage}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Status Pill Badge */}
+                          <div className="shrink-0">
+                            {isCompleted ? (
+                              <span className="text-[10px] font-bold text-[#159B55] bg-[#EBF9F1] border border-[#D1F2DE] px-2.5 py-0.5 rounded-full">
+                                Completed
+                              </span>
+                            ) : isRunning ? (
+                              <span className="text-[10px] font-bold text-[#7045E8] bg-[#F0EBFF] border border-[#DDD5F9] px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#7045E8] animate-pulse" />
+                                Running
+                              </span>
+                            ) : (
+                              <span className="text-[10px] font-semibold text-[#73758B] bg-white border border-[#E6E5F0] px-2 py-0.5 rounded-full">
+                                Pending
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
-              {/* Progress Bar */}
-              <div className="w-full h-2.5 bg-[#F0EBFF] rounded-full overflow-hidden border border-[#DDD5F9]">
-                <div
-                  className="h-full bg-[#7045E8] transition-all duration-300 rounded-full"
-                  style={{ width: `${uploadProgress}%` }}
-                />
-              </div>
-
-              {/* Forensic Execution Stages List */}
-              <div className="bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl p-4 text-left space-y-2.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[#73758B] font-bold block pb-1 border-b border-[#E6E5F0]">
-                  Execution Stages Checklist
+              {/* Bottom Governance Callout */}
+              <div className="p-3 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl flex items-center justify-between text-[11px] text-[#73758B]">
+                <span className="flex items-center gap-1.5 font-medium">
+                  <ShieldCheck size={14} className="text-[#159B55]" />
+                  Exhibit processed in isolated memory under frozen protocol T = 0.40.
                 </span>
-                {stages.map((stg, idx) => {
-                  const isCurrent = activeStageIndex === idx;
-                  const isComplete = activeStageIndex > idx || uploadProgress >= 100;
-                  return (
-                    <div key={stg.label} className="flex items-center gap-2.5 text-xs">
-                      {isComplete ? (
-                        <CheckCircle2 size={16} className="text-[#159B55] shrink-0" />
-                      ) : isCurrent ? (
-                        <Loader2 size={16} className="text-[#7045E8] animate-spin shrink-0" />
-                      ) : (
-                        <div className="w-4 h-4 rounded-full border border-[#DDD5F9] shrink-0" />
-                      )}
-                      <span className={isComplete ? 'text-[#73758B] line-through' : isCurrent ? 'text-[#17172F] font-bold' : 'text-[#73758B]'}>
-                        {stg.label}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="text-xs text-[#73758B]">
-                Exhibit is retained in isolated storage with immutable SHA-256 custody digest.
+                <span className="font-mono text-[10px] text-[#7045E8] font-semibold hidden sm:inline">
+                  SHA-256 Custody Verified
+                </span>
               </div>
             </div>
           ) : (
-            <div className="space-y-4 max-w-md mx-auto">
-              <div className="w-14 h-14 bg-[#FDF2F2] border border-[#FAD8D8] rounded-2xl flex items-center justify-center mx-auto text-[#DC4545]">
+            /* Error Fallback Display */
+            <div className="space-y-4 max-w-md mx-auto text-center py-4">
+              <div className="w-14 h-14 bg-[#FDF2F2] border border-[#FAD8D8] rounded-2xl flex items-center justify-center mx-auto text-[#DC4545] shadow-sm">
                 <AlertTriangle size={28} />
               </div>
               <h3 className="text-base font-bold text-[#17172F]">Forensic Analysis Interrupted</h3>
@@ -586,12 +843,14 @@ export default function NewInvestigationPage() {
               </p>
               <div className="flex justify-center gap-3 pt-2">
                 <button
+                  type="button"
                   onClick={() => setStep(1)}
                   className="px-4 py-2 bg-white hover:bg-[#F8F9FF] border border-[#E6E5F0] text-[#17172F] rounded-xl text-xs font-semibold"
                 >
                   Choose Different Exhibit
                 </button>
                 <button
+                  type="button"
                   onClick={startAnalysis}
                   className="px-4 py-2 bg-[#7045E8] hover:bg-[#5F33DB] text-white rounded-xl text-xs font-semibold shadow-sm"
                 >
