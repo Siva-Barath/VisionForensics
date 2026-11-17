@@ -43,7 +43,7 @@ export default function Topbar({
     switch (location.pathname) {
       case '/': return 'Investigation Dashboard';
       case '/new': return 'New Document Investigation';
-      case '/comparison': return 'Document Comparison Workspace';
+      case '/comparison': return 'Document Comparison & Differential Analysis';
       case '/cases': return 'Case Management';
       case '/analytics': return 'Caseload & Scientific Analytics';
       case '/reports': return 'Investigation Reports Archive';
@@ -109,6 +109,11 @@ export default function Topbar({
           {location.pathname === '/' && (
             <p className="text-xs text-[#73758B] mt-0.5 hidden sm:block">
               Monitor investigations, analyze results, and manage forensic workflows.
+            </p>
+          )}
+          {location.pathname === '/comparison' && (
+            <p className="text-xs text-[#73758B] mt-0.5 hidden sm:block">
+              Visually compare two document exhibits, quantify similarities, and highlight differences with forensic insights.
             </p>
           )}
         </div>
