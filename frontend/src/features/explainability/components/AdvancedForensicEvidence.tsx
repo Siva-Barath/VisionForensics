@@ -390,8 +390,12 @@ export function AdvancedForensicEvidence({
                       <p className="text-[11px] text-[#73758B] leading-relaxed">
                         Evaluates physical substrate metrics. P<sub>ML</sub> = {(analysis.track_1_ml?.forgery_probability ? (analysis.track_1_ml.forgery_probability * 100).toFixed(1) : '25.2')}% (T = 0.40).
                       </p>
-                      <span className="inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-[#EBF9F1] text-[#159B55] font-semibold">
-                        {analysis.track_1_ml?.predicted_class || 'AUTHENTIC'}
+                      <span className={`inline-block text-[10px] font-mono px-2 py-0.5 rounded font-semibold ${
+                        (analysis.track_1_ml?.forgery_probability ?? 0) >= 0.40
+                          ? 'bg-[#FFF8EC] text-[#E9A12A] border border-[#FFE8BF]'
+                          : 'bg-[#EBF9F1] text-[#159B55] border border-[#D1F2DE]'
+                      }`}>
+                        {(analysis.track_1_ml?.forgery_probability ?? 0) >= 0.40 ? 'SCREENING ALERT (>40%)' : 'AUTHENTIC BASELINE'}
                       </span>
                     </div>
 

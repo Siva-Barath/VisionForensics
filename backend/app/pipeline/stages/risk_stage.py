@@ -265,14 +265,23 @@ class RiskStage(BaseStage):
             })
 
         # Step 5: Synthesize Unified Operational Risk Tier
-        if (
-            (not is_compression_borderline and ml_prob is not None and ml_prob >= 0.55)
+        is_corroborated_tampering = (
+            visual_tier == RiskTier.HIGH_RISK
+            or symbolic_max_severity >= 60.0
+            or (ml_prob is not None and ml_prob >= 0.75)
+        )
+
+        if is_corroborated_tampering:
+            unified_tier = RiskTier.HIGH_RISK
+            risk_description = "Significant forensic tampering indicators corroborated across physical and symbolic tracks."
+            overall_verdict = "SUSPICIOUS / HIGH_RISK"
+        elif (
+            (not is_compression_borderline and ml_prob is not None and ml_prob >= 0.40)
             or (ml_class == "FORGED" and not is_compression_borderline)
-            or (symbolic_max_severity >= 60.0)
-            or (visual_tier == RiskTier.HIGH_RISK)
+            or (symbolic_max_severity >= 40.0)
         ):
             unified_tier = RiskTier.HIGH_RISK
-            risk_description = "Strong forgery indicators detected. Priority forensic review is recommended."
+            risk_description = "ML screening threshold exceeded. Supporting forensic evidence is mixed."
             overall_verdict = "SUSPICIOUS / HIGH_RISK"
         elif is_compression_borderline:
             unified_tier = RiskTier.SUSPICIOUS
@@ -322,6 +331,8 @@ class RiskStage(BaseStage):
             "risk_description": risk_description,
             "overall_verdict": overall_verdict,
             "composite_display_score": composite_display_score,
+            "is_corroborated_tampering": is_corroborated_tampering,
+            "is_mixed_evidence": (unified_tier == RiskTier.HIGH_RISK and not is_corroborated_tampering),
             "track_1_ml": {
                 "available": ml_available,
                 "status": ml_status,
