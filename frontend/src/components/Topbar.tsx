@@ -41,7 +41,7 @@ export default function Topbar({
 
   const getPageTitle = () => {
     switch (location.pathname) {
-      case '/': return 'Investigation Overview';
+      case '/': return 'Investigation Dashboard';
       case '/new': return 'New Document Investigation';
       case '/comparison': return 'Document Comparison Workspace';
       case '/cases': return 'Case Management';
@@ -62,7 +62,7 @@ export default function Topbar({
       return `Cases > Exhibit ${docId.substring(0, 8)}...`;
     }
     switch (location.pathname) {
-      case '/': return 'Workspace > Overview';
+      case '/': return 'Workspace > Home';
       case '/new': return 'Workspace > New Investigation';
       case '/comparison': return 'Workspace > Differential Analysis';
       case '/cases': return 'Workspace > Cases';
@@ -106,6 +106,11 @@ export default function Topbar({
           <h1 className="text-xl font-bold text-[#17172F] tracking-tight mt-0.5 truncate">
             {getPageTitle()}
           </h1>
+          {location.pathname === '/' && (
+            <p className="text-xs text-[#73758B] mt-0.5 hidden sm:block">
+              Monitor investigations, analyze results, and manage forensic workflows.
+            </p>
+          )}
         </div>
       </div>
 
