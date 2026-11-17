@@ -1,14 +1,6 @@
 import { 
-  CheckCircle2, 
-  AlertCircle, 
-  FileUp, 
-  Lock, 
-  Cpu, 
-  FileSpreadsheet, 
-  ShieldCheck, 
-  Scale, 
-  Award,
-  MinusCircle
+  GitBranch, 
+  Check, 
 } from 'lucide-react';
 import type { DocumentAnalysisResponse } from '@/types';
 
@@ -16,119 +8,66 @@ interface Props {
   analysis: DocumentAnalysisResponse;
 }
 
-export function InvestigationTimeline({ analysis }: Props) {
-  const isFailed = analysis.status === 'FAILED';
-  const completeness = analysis.track_1_ml?.feature_completeness ?? 1.0;
-  const isDegraded = analysis.track_1_ml?.status === 'DEGRADED';
-
-  const stages = [
-    {
-      id: 1,
-      name: 'Document Uploaded',
-      desc: `Ingested ${analysis.file_type.toUpperCase()} file (${analysis.original_filename})`,
-      status: 'completed',
-      icon: FileUp,
-    },
-    {
-      id: 2,
-      name: 'Integrity Verified',
-      desc: 'Computed & verified SHA-256 fingerprint on disk',
-      status: 'completed',
-      icon: Lock,
-    },
-    {
-      id: 3,
-      name: 'Feature Extraction',
-      desc: isDegraded 
-        ? `${(completeness * 100).toFixed(0)}% extracted (non-critical medians imputed)`
-        : 'All 18 numerical substrate features successfully extracted',
-      status: isDegraded ? 'partial' : 'completed',
-      icon: FileSpreadsheet,
-    },
-    {
-      id: 4,
-      name: 'Random Forest Screening',
-      desc: `Classified via frozen model at T=0.40 (${analysis.track_1_ml?.predicted_class || 'COMPLETE'})`,
-      status: analysis.track_1_ml?.available ? 'completed' : 'unavailable',
-      icon: Cpu,
-    },
-    {
-      id: 5,
-      name: 'Symbolic Analysis',
-      desc: 'Screened container metadata, ELA layers & keypoint clusters',
-      status: analysis.track_2_symbolic?.available ? 'completed' : 'partial',
-      icon: ShieldCheck,
-    },
-    {
-      id: 6,
-      name: 'Evidence Synthesis',
-      desc: 'Corroborated ML probability with deterministic forensic rules',
-      status: 'completed',
-      icon: Scale,
-    },
-    {
-      id: 7,
-      name: 'Final Assessment',
-      desc: `Calibrated into ${analysis.unified_risk_tier.replace('_', ' ')} tier`,
-      status: isFailed ? 'failed' : 'completed',
-      icon: Award,
-    },
+export function InvestigationTimeline({ analysis: _analysis }: Props) {
+  const steps = [
+    { id: 1, name: 'Upload', desc: 'File Ingested' },
+    { id: 2, name: 'Integrity Check', sub: '(SHA-256)' },
+    { id: 3, name: 'Feature', sub: 'Extraction' },
+    { id: 4, name: 'ML Screening', sub: '(Random Forest)' },
+    { id: 5, name: 'Symbolic', sub: 'Analysis' },
+    { id: 6, name: 'Synthesis', sub: 'Arbiter' },
+    { id: 7, name: 'Final', sub: 'Assessment', isFinal: true },
   ];
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return <CheckCircle2 size={16} className="text-emerald-400" />;
-      case 'partial':
-        return <AlertCircle size={16} className="text-amber-400" />;
-      case 'failed':
-        return <AlertCircle size={16} className="text-red-400" />;
-      default:
-        return <MinusCircle size={16} className="text-gray-500" />;
-    }
-  };
-
   return (
-    <section className="space-y-4" aria-labelledby="timeline-title">
-      <div>
-        <h2 id="timeline-title" className="text-lg font-bold text-white tracking-tight">
-          Investigation Workflow & Verification Timeline
-        </h2>
-        <p className="text-xs text-gray-400 mt-1">
-          Chronological progression through the multi-stage forensic analysis pipeline.
-        </p>
+    <div className="bg-white border border-[#E6E5F0] rounded-2xl p-5 shadow-sm space-y-4">
+      {/* Header */}
+      <div className="flex items-center gap-2.5 pb-2">
+        <div className="w-8 h-8 rounded-xl bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center shrink-0">
+          <GitBranch size={18} />
+        </div>
+        <h2 className="text-sm font-bold text-[#17172F]">Investigation Workflow</h2>
       </div>
 
-      <div className="bg-ink-panel border border-ink-border rounded-xl p-5 shadow-md">
-        <div className="grid grid-cols-1 md:grid-cols-7 gap-3 relative">
-          {stages.map((stage) => {
-            const Icon = stage.icon;
+      {/* Stepper Bar */}
+      <div className="relative pt-2 pb-1 overflow-x-auto">
+        <div className="flex items-center justify-between min-w-[620px] relative">
+          {/* Continuous Connecting Line */}
+          <div className="absolute top-4 left-6 right-6 h-0.5 bg-[#DDD5F9] -translate-y-1/2 z-0" />
 
-            return (
-              <div key={stage.id} className="relative flex flex-col justify-between p-3 rounded-lg bg-ink-base border border-ink-border space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="w-7 h-7 rounded-md bg-ink-panel border border-ink-border flex items-center justify-center text-brand">
-                    <Icon size={14} />
-                  </div>
-                  {getStatusIcon(stage.status)}
-                </div>
-
-                <div>
-                  <span className="text-[10px] font-mono text-gray-500 block">
-                    Step {stage.id}
-                  </span>
-                  <span className="text-xs font-bold text-white block mt-0.5">
-                    {stage.name}
-                  </span>
-                  <p className="text-[10px] text-gray-400 mt-1 leading-snug">
-                    {stage.desc}
-                  </p>
-                </div>
+          {/* Stepper Nodes */}
+          {steps.map((step) => (
+            <div key={step.id} className="relative z-10 flex flex-col items-center text-center px-1">
+              {/* Checkmark Node Circle */}
+              <div
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-white shadow-sm transition-all ${
+                  step.isFinal
+                    ? 'bg-[#7045E8] ring-4 ring-[#F0EBFF]'
+                    : 'bg-[#7045E8]'
+                }`}
+              >
+                <Check size={14} strokeWidth={3} />
               </div>
-            );
-          })}
+
+              {/* Step Label */}
+              <div
+                className={`mt-2 rounded-lg px-2 py-0.5 ${
+                  step.isFinal
+                    ? 'bg-[#F0EBFF] text-[#7045E8] font-bold'
+                    : 'text-[#17172F] font-semibold'
+                }`}
+              >
+                <span className="text-[11px] block leading-tight">{step.name}</span>
+                {step.sub && (
+                  <span className="text-[10px] text-[#73758B] block leading-tight mt-0.5 font-normal">
+                    {step.sub}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

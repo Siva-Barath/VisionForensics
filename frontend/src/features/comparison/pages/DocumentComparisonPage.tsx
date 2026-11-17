@@ -122,22 +122,19 @@ export const DocumentComparisonPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-ink-bg text-gray-200 overflow-hidden font-sans">
+    <div className="flex flex-col h-screen bg-[#F8F9FF] text-[#17172F] overflow-hidden font-sans">
       {/* Top Workspace Header */}
-      <header className="flex items-center justify-between px-6 py-3 bg-ink-panel border-b border-ink-border shrink-0 z-20">
+      <header className="flex items-center justify-between px-6 py-3 bg-white border-b border-[#E6E5F0] shrink-0 z-20 shadow-sm">
       <datalist id="comparison-exhibits">{exhibits.map(doc => <option key={doc.id} value={doc.id}>{doc.original_filename}</option>)}</datalist>
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-brand/20 border border-brand text-brand">
+          <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-[#F0EBFF] text-[#7045E8]">
             <GitCompare size={18} />
           </div>
           <div>
-            <h1 className="text-sm font-bold text-white tracking-wide flex items-center gap-2">
+            <h1 className="text-sm font-bold text-[#17172F] tracking-wide flex items-center gap-2">
               DOCUMENT COMPARISON & DIFFERENTIAL WORKSPACE
-              <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-brand/20 text-brand border border-brand/40">
-                Milestone 7D
-              </span>
             </h1>
-            <p className="text-[11px] text-gray-400 font-mono">
+            <p className="text-[11px] text-[#73758B] font-mono">
               Geometric Registration • Structural SSIM • Differential Heatmaps
             </p>
           </div>
@@ -145,34 +142,34 @@ export const DocumentComparisonPage: React.FC = () => {
 
         {/* Document Selection Inputs Bar */}
         <form onSubmit={handleStartComparison} className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 bg-ink-bg border border-ink-border rounded-lg px-2.5 py-1 text-xs font-mono">
-            <span className="text-blue-400 font-bold">Doc A:</span>
+          <div className="flex items-center gap-1.5 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl px-2.5 py-1 text-xs font-mono">
+            <span className="text-[#7045E8] font-bold">Doc A:</span>
             <input
               type="text"
               list="comparison-exhibits" aria-label="First exhibit" placeholder="Select or enter exhibit ID"
               value={docAId}
               onChange={(e) => setDocAId(e.target.value)}
-              className="bg-transparent text-white outline-none w-36 placeholder-gray-500"
+              className="bg-transparent text-[#17172F] outline-none w-36 placeholder-[#9E9FB1]"
             />
           </div>
 
-          <div className="text-gray-500 font-mono text-xs">vs</div>
+          <div className="text-[#73758B] font-mono text-xs">vs</div>
 
-          <div className="flex items-center gap-1.5 bg-ink-bg border border-ink-border rounded-lg px-2.5 py-1 text-xs font-mono">
-            <span className="text-amber-400 font-bold">Doc B:</span>
+          <div className="flex items-center gap-1.5 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl px-2.5 py-1 text-xs font-mono">
+            <span className="text-[#E9A12A] font-bold">Doc B:</span>
             <input
               type="text"
               list="comparison-exhibits" aria-label="Second exhibit" placeholder="Select or enter exhibit ID"
               value={docBId}
               onChange={(e) => setDocBId(e.target.value)}
-              className="bg-transparent text-white outline-none w-36 placeholder-gray-500"
+              className="bg-transparent text-[#17172F] outline-none w-36 placeholder-[#9E9FB1]"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading || !docAId.trim() || !docBId.trim()}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-brand hover:bg-brand/90 disabled:opacity-50 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#7045E8] hover:bg-[#5F33DB] disabled:opacity-50 text-white rounded-xl text-xs font-semibold shadow-sm transition-all"
           >
             {loading ? <RefreshCw size={13} className="animate-spin" /> : <GitCompare size={13} />}
             <span>Compare</span>
@@ -182,14 +179,14 @@ export const DocumentComparisonPage: React.FC = () => {
 
       {/* Main Workspace Body */}
       {error && (
-        <div className="mx-6 mt-3 p-3 bg-red-950/40 border border-red-800/80 rounded-lg flex items-center justify-between text-xs text-red-300">
+        <div className="mx-6 mt-3 p-3 bg-[#FDF2F2] border border-[#FAD8D8] rounded-xl flex items-center justify-between text-xs text-[#DC4545]">
           <div className="flex items-center gap-2">
-            <AlertCircle size={16} className="text-red-400 shrink-0" />
+            <AlertCircle size={16} className="text-[#DC4545] shrink-0" />
             <span className="font-mono">{error}</span>
           </div>
           <button
             onClick={() => setError(null)}
-            className="text-gray-400 hover:text-white font-mono text-xs"
+            className="text-[#73758B] hover:text-[#17172F] font-mono text-xs font-bold"
           >
             Dismiss
           </button>
@@ -198,31 +195,31 @@ export const DocumentComparisonPage: React.FC = () => {
 
       {!comparison && !loading ? (
         // Empty State: Prompt user to select documents
-        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-ink-bg overflow-y-auto">
-          <div className="w-16 h-16 rounded-2xl bg-brand/10 border border-brand/30 flex items-center justify-center text-brand mb-4">
+        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#F8F9FF] overflow-y-auto">
+          <div className="w-16 h-16 rounded-2xl bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center mb-4 shadow-sm">
             <GitCompare size={32} />
           </div>
-          <h2 className="text-xl font-bold text-white mb-1">Dual-Document Forensic Comparison</h2>
-          <p className="text-xs text-gray-400 max-w-lg mb-6 leading-relaxed">
+          <h2 className="text-xl font-bold text-[#17172F] mb-1">Dual-Document Forensic Comparison</h2>
+          <p className="text-xs text-[#73758B] max-w-lg mb-6 leading-relaxed">
             Select two document exhibits to perform automated geometric image registration, calculate structural similarity (SSIM), generate pixel-level difference heatmaps, and inspect localized modifications.
           </p>
 
           {/* Quick Exhibit Selection Card */}
           {exhibits.length > 0 && (
-            <div className="w-full max-w-2xl bg-ink-panel border border-ink-border rounded-lg p-6 mb-8 text-left shadow-lg">
-              <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-                <GitCompare size={15} className="text-brand" /> Select Exhibits to Compare
+            <div className="w-full max-w-2xl bg-white border border-[#E6E5F0] rounded-2xl p-6 mb-8 text-left shadow-sm">
+              <h3 className="text-xs font-bold text-[#17172F] uppercase tracking-wider mb-4 flex items-center gap-2">
+                <GitCompare size={15} className="text-[#7045E8]" /> Select Exhibits to Compare
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-[11px] font-semibold text-blue-400 uppercase tracking-wider mb-1.5">
+                  <label className="block text-[11px] font-bold text-[#7045E8] uppercase tracking-wider mb-1.5">
                     Exhibit A (Reference / Baseline)
                   </label>
                   <select
                     value={docAId}
                     onChange={(e) => setDocAId(e.target.value)}
-                    className="w-full px-3 py-2 bg-ink-bg border border-ink-border rounded-md text-xs text-white focus:outline-none focus:border-brand font-sans"
+                    className="w-full px-3 py-2 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl text-xs text-[#17172F] focus:outline-none focus:border-[#7045E8] font-sans"
                   >
                     <option value="">-- Choose First Exhibit --</option>
                     {exhibits.map((d) => (
@@ -232,18 +229,18 @@ export const DocumentComparisonPage: React.FC = () => {
                     ))}
                   </select>
                   {docAId && (
-                    <p className="text-[10px] text-gray-400 font-mono mt-1 truncate">ID: {docAId}</p>
+                    <p className="text-[10px] text-[#73758B] font-mono mt-1 truncate">ID: {docAId}</p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold text-amber-400 uppercase tracking-wider mb-1.5">
+                  <label className="block text-[11px] font-bold text-[#E9A12A] uppercase tracking-wider mb-1.5">
                     Exhibit B (Questioned Document)
                   </label>
                   <select
                     value={docBId}
                     onChange={(e) => setDocBId(e.target.value)}
-                    className="w-full px-3 py-2 bg-ink-bg border border-ink-border rounded-md text-xs text-white focus:outline-none focus:border-brand font-sans"
+                    className="w-full px-3 py-2 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl text-xs text-[#17172F] focus:outline-none focus:border-[#7045E8] font-sans"
                   >
                     <option value="">-- Choose Second Exhibit --</option>
                     {exhibits.map((d) => (
@@ -253,7 +250,7 @@ export const DocumentComparisonPage: React.FC = () => {
                     ))}
                   </select>
                   {docBId && (
-                    <p className="text-[10px] text-gray-400 font-mono mt-1 truncate">ID: {docBId}</p>
+                    <p className="text-[10px] text-[#73758B] font-mono mt-1 truncate">ID: {docBId}</p>
                   )}
                 </div>
               </div>
@@ -263,13 +260,13 @@ export const DocumentComparisonPage: React.FC = () => {
                   type="button"
                   disabled={!docAId || !docBId || docAId === docBId}
                   onClick={() => runComparison(docAId, docBId, pageA, pageB, alignImages)}
-                  className="px-6 py-2.5 bg-brand hover:bg-brand-hover disabled:opacity-40 text-white rounded-md text-xs font-bold transition-all flex items-center gap-2 shadow-sm"
+                  className="px-6 py-2.5 bg-[#7045E8] hover:bg-[#5F33DB] disabled:opacity-40 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-violet-200"
                 >
                   <GitCompare size={15} /> Run Differential Comparison
                 </button>
               </div>
               {docAId && docBId && docAId === docBId && (
-                <p className="text-[11px] text-amber-400 mt-2">
+                <p className="text-[11px] text-[#E9A12A] mt-2">
                   * Please select two different exhibits to perform differential comparison.
                 </p>
               )}
@@ -277,31 +274,31 @@ export const DocumentComparisonPage: React.FC = () => {
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl text-left">
-            <div className="p-3 bg-ink-panel border border-ink-border rounded-lg">
-              <div className="text-brand font-mono text-xs font-semibold mb-1 flex items-center gap-1.5">
+            <div className="p-4 bg-white border border-[#E6E5F0] rounded-2xl shadow-sm">
+              <div className="text-[#7045E8] font-mono text-xs font-semibold mb-1 flex items-center gap-1.5">
                 <Shield size={14} /> Defensible Isolation
               </div>
-              <p className="text-[11px] text-gray-400 leading-relaxed">
+              <p className="text-[11px] text-[#73758B] leading-relaxed">
                 Original files and SHA-256 hashes are immutable. All comparison artifacts are isolated
                 in dedicated storage.
               </p>
             </div>
 
-            <div className="p-3 bg-ink-panel border border-ink-border rounded-lg">
-              <div className="text-brand font-mono text-xs font-semibold mb-1 flex items-center gap-1.5">
+            <div className="p-4 bg-white border border-[#E6E5F0] rounded-2xl shadow-sm">
+              <div className="text-[#7045E8] font-mono text-xs font-semibold mb-1 flex items-center gap-1.5">
                 <Layers size={14} /> Geometric Registration
               </div>
-              <p className="text-[11px] text-gray-400 leading-relaxed">
+              <p className="text-[11px] text-[#73758B] leading-relaxed">
                 ORB feature alignment and RANSAC homography align exhibits with varying dimensions or
                 scanner tilts.
               </p>
             </div>
 
-            <div className="p-3 bg-ink-panel border border-ink-border rounded-lg">
-              <div className="text-brand font-mono text-xs font-semibold mb-1 flex items-center gap-1.5">
+            <div className="p-4 bg-white border border-[#E6E5F0] rounded-2xl shadow-sm">
+              <div className="text-[#7045E8] font-mono text-xs font-semibold mb-1 flex items-center gap-1.5">
                 <FileCheck2 size={14} /> Multi-Page Support
               </div>
-              <p className="text-[11px] text-gray-400 leading-relaxed">
+              <p className="text-[11px] text-[#73758B] leading-relaxed">
                 Compare multi-page PDFs page-by-page with independent or synchronized page navigation.
               </p>
             </div>

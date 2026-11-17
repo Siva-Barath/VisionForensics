@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface CardProps {
   children: React.ReactNode;
   className?: string;
@@ -16,24 +18,24 @@ export default function Card({
   icon
 }: CardProps) {
   const variantClasses = {
-    default: 'bg-ink-panel border border-ink-border',
-    evidence: 'evidence-card',
-    metrics: 'metric-card bg-ink-panel border border-ink-border'
+    default: 'bg-white border border-[#E6E5F0]',
+    evidence: 'bg-white border border-[#E6E5F0]',
+    metrics: 'bg-white border border-[#E6E5F0]'
   };
   const contentSpacing = className.split(/\s+/).filter((name) => name.startsWith('space-y-')).join(' ');
 
   return (
-    <div className={`ui-card ${variantClasses[variant]} rounded-xl overflow-hidden flex flex-col ${className}`}>
+    <div className={`ui-card ${variantClasses[variant]} rounded-2xl shadow-sm overflow-hidden flex flex-col ${className}`}>
       {title && (
-        <div className="px-5 py-3 border-b border-ink-border bg-ink-base/50 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {icon && <span className="text-gray-500">{icon}</span>}
-            <h3 className="text-xs font-semibold text-gray-200 uppercase tracking-widest">{title}</h3>
+        <div className="px-6 py-4 border-b border-[#E6E5F0] bg-white flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            {icon && <span className="text-violet-600">{icon}</span>}
+            <h3 className="text-sm font-bold text-[#17172F] tracking-tight">{title}</h3>
           </div>
           {headerAction && <div>{headerAction}</div>}
         </div>
       )}
-      <div className={`card-content flex-1 ${!title && !/(?:^|\s)p-\d/.test(className) ? 'p-5' : ''} ${contentSpacing}`}>
+      <div className={`card-content flex-1 ${!title && !/(?:^|\s)p-\d/.test(className) ? 'p-6' : ''} ${contentSpacing}`}>
         {children}
       </div>
     </div>

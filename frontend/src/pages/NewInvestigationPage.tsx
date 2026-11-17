@@ -170,7 +170,7 @@ export default function NewInvestigationPage() {
       if (response && response.document_id) {
         setTimeout(() => {
           navigate(`/investigation/${response.document_id}`);
-        }, 750);
+        }, 650);
       } else {
         throw new Error('Analysis completed but document ID was not received from the forensic engine.');
       }
@@ -183,24 +183,24 @@ export default function NewInvestigationPage() {
   };
 
   return (
-    <div className="investigation-intake max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6">
       {/* Top Header */}
-      <div className="border-b border-ink-border pb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 border-b border-[#E6E5F0]">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-brand font-semibold bg-brand/10 px-2 py-0.5 rounded-sm border border-brand/20">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#7045E8] bg-[#F0EBFF] px-2.5 py-0.5 rounded-full border border-[#DDD5F9]">
               Forensic Evidence Intake
             </span>
-            <span className="text-[11px] font-mono text-gray-500">T=0.40 Locked Protocol</span>
+            <span className="text-[11px] font-mono text-[#73758B]">T=0.40 Locked Protocol</span>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight mt-1">New Document Investigation</h1>
-          <p className="text-sm text-gray-400 mt-1">
+          <h1 className="text-2xl font-bold text-[#17172F] tracking-tight">New Document Investigation</h1>
+          <p className="text-xs text-[#73758B] mt-0.5">
             Submit a physical or digital document exhibit for automated tamper detection, ELA, and ML classification.
           </p>
         </div>
         <button
           onClick={() => navigate('/')}
-          className="text-xs text-gray-400 hover:text-gray-200 transition-colors flex items-center gap-1.5"
+          className="text-xs text-[#73758B] hover:text-[#17172F] transition-colors flex items-center gap-1.5 font-semibold"
         >
           <ArrowLeft size={14} /> Back to Overview
         </button>
@@ -218,29 +218,29 @@ export default function NewInvestigationPage() {
           return (
             <div
               key={s.num}
-              className={`p-3 rounded-sm border transition-all ${
+              className={`p-3.5 rounded-2xl border transition-all ${
                 isActive
-                  ? 'bg-brand/15 border-brand text-brand shadow-sm shadow-brand/10'
+                  ? 'bg-[#F0EBFF] border-[#7045E8] text-[#7045E8] shadow-sm'
                   : isDone
-                  ? 'bg-ink-panel border-emerald-800/80 text-emerald-400'
-                  : 'bg-ink-base border-ink-border text-gray-400'
+                  ? 'bg-[#EBF9F1] border-[#D1F2DE] text-[#159B55]'
+                  : 'bg-white border-[#E6E5F0] text-[#73758B]'
               }`}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <span
-                  className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                  className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                     isActive
-                      ? 'bg-brand text-white'
+                      ? 'bg-[#7045E8] text-white'
                       : isDone
-                      ? 'bg-emerald-500 text-black'
-                      : 'bg-ink-border text-gray-400'
+                      ? 'bg-[#159B55] text-white'
+                      : 'bg-[#F4F5FB] text-[#73758B]'
                   }`}
                 >
                   {isDone ? '✓' : s.num}
                 </span>
                 <span className="text-xs font-bold">{s.title}</span>
               </div>
-              <p className="text-[10px] text-gray-400 mt-1 pl-7 hidden sm:block">{s.desc}</p>
+              <p className="text-[11px] text-[#73758B] mt-1 pl-8 hidden sm:block">{s.desc}</p>
             </div>
           );
         })}
@@ -248,12 +248,12 @@ export default function NewInvestigationPage() {
 
       {/* STEP 1: Upload Document */}
       {step === 1 && (
-        <Card variant="evidence" className="p-6 space-y-6">
+        <Card variant="evidence" className="p-8 space-y-6">
           <div className="space-y-1">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <Upload size={18} className="text-brand" /> Select Document Exhibit
+            <h2 className="text-base font-bold text-[#17172F] flex items-center gap-2">
+              <Upload size={18} className="text-[#7045E8]" /> Select Document Exhibit
             </h2>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-[#73758B]">
               Upload original files for authentic forensic evaluation. Supported formats: PDF, PNG, JPG, JPEG (up to {MAX_FILE_SIZE_MB} MB).
             </p>
           </div>
@@ -271,12 +271,12 @@ export default function NewInvestigationPage() {
                 document.getElementById('file-upload-input')?.click();
               }
             }}
-            className={`upload-dropzone border-2 border-dashed rounded-md p-8 text-center transition-all cursor-pointer relative ${
+            className={`border-2 border-dashed rounded-2xl p-10 text-center transition-all cursor-pointer relative ${
               file 
-                ? 'border-emerald-500/70 bg-emerald-950/20' 
+                ? 'border-[#159B55] bg-[#EBF9F1]/40' 
                 : clientError 
-                ? 'border-red-500/70 bg-red-950/20' 
-                : 'border-ink-border hover:border-brand/70 hover:bg-ink-hover/40 bg-ink-base/80'
+                ? 'border-[#DC4545] bg-[#FDF2F2]' 
+                : 'border-[#DDD5F9] hover:border-[#7045E8] bg-[#F8F9FF] hover:bg-[#F0EBFF]/30'
             }`}
             onClick={() => document.getElementById('file-upload-input')?.click()}
           >
@@ -295,28 +295,28 @@ export default function NewInvestigationPage() {
                     <img
                       src={previewUrl}
                       alt="Uploaded preview"
-                      className="w-28 h-28 object-cover rounded-md border border-emerald-500/50 shadow-md"
+                      className="w-28 h-28 object-cover rounded-xl border border-[#159B55] shadow-md"
                     />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-md flex items-center justify-center text-white text-[11px] font-semibold">
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center text-white text-xs font-bold">
                       <Eye size={14} className="mr-1" /> Preview
                     </div>
                   </div>
                 ) : (
-                  <div className="w-24 h-24 rounded-md bg-ink-panel border border-ink-border flex flex-col items-center justify-center text-brand">
+                  <div className="w-24 h-24 rounded-2xl bg-[#F0EBFF] border border-[#DDD5F9] flex flex-col items-center justify-center text-[#7045E8]">
                     <FileCode2 size={36} />
-                    <span className="text-[10px] font-mono uppercase font-bold text-gray-400 mt-1">PDF Doc</span>
+                    <span className="text-[10px] font-mono uppercase font-bold text-[#7045E8] mt-1">PDF Doc</span>
                   </div>
                 )}
 
                 <div className="text-left space-y-1.5">
                   <div className="flex items-center gap-2">
-                    <FileCheck size={18} className="text-emerald-400" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                    <FileCheck size={18} className="text-[#159B55]" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#159B55]">
                       Exhibit Staged for Intake
                     </span>
                   </div>
-                  <p className="text-sm font-bold text-white max-w-sm truncate">{file.name}</p>
-                  <p className="text-xs text-gray-400 font-mono">
+                  <p className="text-sm font-bold text-[#17172F] max-w-sm truncate">{file.name}</p>
+                  <p className="text-xs text-[#73758B] font-mono">
                     {(file.size / 1024 / 1024).toFixed(2)} MB • {file.name.split('.').pop()?.toUpperCase()} Document
                   </p>
                   <button
@@ -325,7 +325,7 @@ export default function NewInvestigationPage() {
                       e.stopPropagation();
                       document.getElementById('file-upload-input')?.click();
                     }}
-                    className="text-[11px] text-brand hover:underline font-semibold block pt-1"
+                    className="text-xs text-[#7045E8] hover:underline font-bold block pt-1"
                   >
                     Replace with another file
                   </button>
@@ -333,18 +333,18 @@ export default function NewInvestigationPage() {
               </div>
             ) : (
               <div className="space-y-3">
-                <div className="w-14 h-14 rounded-full bg-brand/10 border border-brand/30 flex items-center justify-center mx-auto text-brand">
+                <div className="w-14 h-14 rounded-2xl bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center mx-auto shadow-sm">
                   <Upload size={24} />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-200">
-                    Drag and drop your document exhibit here, or <span className="text-brand underline">browse files</span>
+                  <p className="text-sm font-bold text-[#17172F]">
+                    Drag and drop your document exhibit here, or <span className="text-[#7045E8] underline">browse files</span>
                   </p>
-                  <p className="text-xs text-gray-400 mt-1 max-w-md mx-auto">
+                  <p className="text-xs text-[#73758B] mt-1 max-w-md mx-auto">
                     Accepts contracts, identity documents, bank statements, certificates, receipts, and invoices.
                   </p>
                 </div>
-                <div className="flex items-center justify-center gap-4 text-[11px] font-mono text-gray-400 pt-2">
+                <div className="flex items-center justify-center gap-3 text-xs font-mono text-[#73758B] pt-2">
                   <span>PDF (multi-page)</span>
                   <span>•</span>
                   <span>PNG</span>
@@ -359,24 +359,24 @@ export default function NewInvestigationPage() {
 
           {/* Client Error Notice */}
           {clientError && (
-            <div className="p-3 bg-red-950/30 border border-red-800/60 rounded-md text-xs text-red-300 flex items-center gap-2">
-              <AlertTriangle size={16} className="text-red-400 shrink-0" />
+            <div className="p-3.5 bg-[#FDF2F2] border border-[#FAD8D8] rounded-xl text-xs text-[#DC4545] flex items-center gap-2">
+              <AlertTriangle size={16} className="text-[#DC4545] shrink-0" />
               <span>{clientError}</span>
             </div>
           )}
 
           {/* Bottom Actions */}
-          <div className="flex justify-between items-center pt-2 border-t border-ink-border">
+          <div className="flex justify-between items-center pt-2 border-t border-[#E6E5F0]">
             <button
               onClick={() => navigate('/')}
-              className="px-4 py-2 text-xs font-semibold text-gray-400 hover:text-gray-200 transition-colors"
+              className="px-4 py-2 text-xs font-bold text-[#73758B] hover:text-[#17172F] transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={() => setStep(2)}
               disabled={!file}
-              className="px-5 py-2 bg-brand hover:bg-brand-hover disabled:opacity-40 disabled:hover:bg-brand text-white rounded-md text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm"
+              className="px-6 py-2.5 bg-[#7045E8] hover:bg-[#5F33DB] disabled:opacity-40 disabled:hover:bg-[#7045E8] text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-violet-200"
             >
               Next: Case Details <ArrowRight size={14} />
             </button>
@@ -386,19 +386,19 @@ export default function NewInvestigationPage() {
 
       {/* STEP 2: Enter Case Details */}
       {step === 2 && (
-        <Card variant="evidence" className="p-6 space-y-6">
+        <Card variant="evidence" className="p-8 space-y-6">
           <div className="space-y-1">
-            <h2 className="text-base font-bold text-white flex items-center gap-2">
-              <ShieldCheck size={18} className="text-brand" /> Case Metadata & Examiner Notes
+            <h2 className="text-base font-bold text-[#17172F] flex items-center gap-2">
+              <ShieldCheck size={18} className="text-[#7045E8]" /> Case Metadata & Examiner Notes
             </h2>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-[#73758B]">
               Record case classification details to establish chain-of-custody documentation and report indexing.
             </p>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-[#17172F] uppercase tracking-wider mb-1.5">
                 Case Title / Exhibit Reference
               </label>
               <input
@@ -406,19 +406,19 @@ export default function NewInvestigationPage() {
                 value={caseTitle}
                 onChange={(e) => setCaseTitle(e.target.value)}
                 placeholder="e.g. Investigation-2026-004 / Employment Verification"
-                className="w-full px-3 py-2 bg-ink-base border border-ink-border rounded-md text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand font-sans"
+                className="w-full px-3.5 py-2.5 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl text-sm text-[#17172F] placeholder-[#9E9FB1] focus:outline-none focus:border-[#7045E8] font-sans shadow-sm"
               />
               {/* Quick Presets */}
               <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                <span className="text-[11px] text-gray-400 flex items-center gap-1 mr-1">
-                  <Sparkles size={11} className="text-brand" /> Presets:
+                <span className="text-[11px] text-[#73758B] flex items-center gap-1 mr-1 font-semibold">
+                  <Sparkles size={11} className="text-[#7045E8]" /> Presets:
                 </span>
                 {CASE_PRESETS.map((preset) => (
                   <button
                     key={preset}
                     type="button"
                     onClick={() => setCaseTitle(preset)}
-                    className="text-[10px] bg-ink-panel hover:bg-ink-hover border border-ink-border px-2 py-0.5 rounded text-gray-300 transition-colors"
+                    className="text-[11px] bg-[#F8F9FF] hover:bg-[#F0EBFF] hover:text-[#7045E8] border border-[#E6E5F0] px-2.5 py-0.5 rounded-lg text-[#73758B] font-medium transition-colors"
                   >
                     {preset}
                   </button>
@@ -427,39 +427,39 @@ export default function NewInvestigationPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-[#17172F] uppercase tracking-wider mb-1.5">
                 Investigation Priority
               </label>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 <button
                   type="button"
                   onClick={() => setPriority('routine')}
-                  className={`py-2.5 px-3 rounded-md border text-xs font-semibold text-left transition-all ${
+                  className={`py-3 px-4 rounded-xl border text-xs font-semibold text-left transition-all ${
                     priority === 'routine'
-                      ? 'border-brand bg-brand/10 text-brand shadow-sm'
-                      : 'border-ink-border bg-ink-base text-gray-400 hover:text-gray-200'
+                      ? 'border-[#7045E8] bg-[#F0EBFF] text-[#7045E8] shadow-sm'
+                      : 'border-[#E6E5F0] bg-white text-[#73758B] hover:text-[#17172F]'
                   }`}
                 >
-                  <div className="font-bold">Standard Examination</div>
-                  <div className="text-[10px] text-gray-400 mt-0.5 font-normal">Normal caseload triage</div>
+                  <div className="font-bold text-sm">Standard Examination</div>
+                  <div className="text-[11px] text-[#73758B] mt-0.5 font-normal">Normal caseload triage</div>
                 </button>
                 <button
                   type="button"
                   onClick={() => setPriority('urgent')}
-                  className={`py-2.5 px-3 rounded-md border text-xs font-semibold text-left transition-all ${
+                  className={`py-3 px-4 rounded-xl border text-xs font-semibold text-left transition-all ${
                     priority === 'urgent'
-                      ? 'border-amber-500 bg-amber-950/30 text-amber-300 shadow-sm'
-                      : 'border-ink-border bg-ink-base text-gray-400 hover:text-gray-200'
+                      ? 'border-[#E9A12A] bg-[#FFF8EC] text-[#E9A12A] shadow-sm'
+                      : 'border-[#E6E5F0] bg-white text-[#73758B] hover:text-[#17172F]'
                   }`}
                 >
-                  <div className="font-bold">Urgent Priority</div>
-                  <div className="text-[10px] text-amber-400/70 mt-0.5 font-normal">High priority forensic inspection</div>
+                  <div className="font-bold text-sm">Urgent Priority</div>
+                  <div className="text-[11px] text-[#73758B] mt-0.5 font-normal">High priority forensic inspection</div>
                 </button>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-bold text-[#17172F] uppercase tracking-wider mb-1.5">
                 Examiner Notes & Suspicion Rationale (Optional)
               </label>
               <textarea
@@ -467,21 +467,21 @@ export default function NewInvestigationPage() {
                 onChange={(e) => setCaseNotes(e.target.value)}
                 rows={3}
                 placeholder="State specific concerns if any: e.g. modified numbers, questionable signature stamp, mismatched typography, inconsistent font sizing..."
-                className="w-full px-3 py-2 bg-ink-base border border-ink-border rounded-md text-xs text-white placeholder-gray-500 focus:outline-none focus:border-brand font-sans resize-none"
+                className="w-full px-3.5 py-2.5 bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl text-xs text-[#17172F] placeholder-[#9E9FB1] focus:outline-none focus:border-[#7045E8] font-sans resize-none shadow-sm"
               />
             </div>
           </div>
 
           {/* Document Summary Strip */}
           {file && (
-            <div className="p-3 bg-ink-base rounded-md border border-ink-border flex items-center justify-between text-xs">
-              <div className="flex items-center gap-3 text-gray-300">
-                <div className="w-8 h-8 rounded bg-brand/10 border border-brand/30 flex items-center justify-center text-brand">
+            <div className="p-3.5 bg-[#F8F9FF] rounded-xl border border-[#E6E5F0] flex items-center justify-between text-xs">
+              <div className="flex items-center gap-3 text-[#17172F]">
+                <div className="w-8 h-8 rounded-lg bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center">
                   <FileText size={16} />
                 </div>
                 <div>
-                  <span className="font-semibold text-white">{file.name}</span>
-                  <div className="text-gray-400 font-mono text-[11px]">
+                  <span className="font-bold">{file.name}</span>
+                  <div className="text-[#73758B] font-mono text-[11px]">
                     {(file.size / 1024 / 1024).toFixed(2)} MB • {file.name.split('.').pop()?.toUpperCase()}
                   </div>
                 </div>
@@ -489,7 +489,7 @@ export default function NewInvestigationPage() {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="text-[11px] text-brand hover:underline font-semibold"
+                className="text-xs text-[#7045E8] hover:underline font-bold"
               >
                 Change Document
               </button>
@@ -497,16 +497,16 @@ export default function NewInvestigationPage() {
           )}
 
           {/* Navigation Buttons */}
-          <div className="flex justify-between items-center pt-2 border-t border-ink-border">
+          <div className="flex justify-between items-center pt-2 border-t border-[#E6E5F0]">
             <button
               onClick={() => setStep(1)}
-              className="px-4 py-2 text-xs font-semibold text-gray-400 hover:text-gray-200 transition-colors flex items-center gap-1.5"
+              className="px-4 py-2 text-xs font-bold text-[#73758B] hover:text-[#17172F] transition-colors flex items-center gap-1.5"
             >
               <ArrowLeft size={14} /> Back
             </button>
             <button
               onClick={startAnalysis}
-              className="px-6 py-2.5 bg-brand hover:bg-brand-hover text-white rounded-md text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-brand/20"
+              className="px-6 py-2.5 bg-[#7045E8] hover:bg-[#5F33DB] text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-violet-200"
             >
               <Search size={14} /> Start Forensic Analysis
             </button>
@@ -516,39 +516,39 @@ export default function NewInvestigationPage() {
 
       {/* STEP 3: Analysis Execution Progress */}
       {step === 3 && (
-        <Card variant="evidence" className="p-8 text-center space-y-6">
+        <Card variant="evidence" className="p-10 text-center space-y-6">
           {!apiError ? (
             <div className="space-y-6 max-w-lg mx-auto">
-              <div className="relative w-20 h-20 mx-auto">
-                <Loader2 size={80} className="text-brand animate-spin" />
-                <div className="absolute inset-0 flex items-center justify-center font-mono text-sm font-bold text-white">
+              <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
+                <Loader2 size={96} className="text-[#7045E8] animate-spin" />
+                <div className="absolute inset-0 flex items-center justify-center font-mono text-base font-extrabold text-[#17172F]">
                   {uploadProgress}%
                 </div>
               </div>
 
               <div className="space-y-1">
-                <h3 className="text-lg font-bold text-white tracking-tight">
+                <h3 className="text-xl font-bold text-[#17172F] tracking-tight">
                   Forensic Examination in Progress
                 </h3>
-                <p className="text-xs text-brand font-mono">
+                <p className="text-xs text-[#7045E8] font-mono font-bold">
                   {stages[activeStageIndex]?.label || 'Processing exhibit...'}
                 </p>
-                <p className="text-[11px] text-gray-400">
+                <p className="text-xs text-[#73758B]">
                   {stages[activeStageIndex]?.desc}
                 </p>
               </div>
 
               {/* Progress Bar */}
-              <div className="w-full h-2.5 bg-ink-base rounded-full overflow-hidden border border-ink-border">
+              <div className="w-full h-2.5 bg-[#F0EBFF] rounded-full overflow-hidden border border-[#DDD5F9]">
                 <div
-                  className="h-full bg-gradient-to-r from-brand to-cyan-400 transition-all duration-300"
+                  className="h-full bg-[#7045E8] transition-all duration-300 rounded-full"
                   style={{ width: `${uploadProgress}%` }}
                 />
               </div>
 
               {/* Forensic Execution Stages List */}
-              <div className="bg-ink-base/80 border border-ink-border rounded-md p-3 text-left space-y-2">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-gray-400 block pb-1 border-b border-ink-border">
+              <div className="bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl p-4 text-left space-y-2.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#73758B] font-bold block pb-1 border-b border-[#E6E5F0]">
                   Execution Stages Checklist
                 </span>
                 {stages.map((stg, idx) => {
@@ -557,13 +557,13 @@ export default function NewInvestigationPage() {
                   return (
                     <div key={stg.label} className="flex items-center gap-2.5 text-xs">
                       {isComplete ? (
-                        <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+                        <CheckCircle2 size={16} className="text-[#159B55] shrink-0" />
                       ) : isCurrent ? (
-                        <Loader2 size={14} className="text-brand animate-spin shrink-0" />
+                        <Loader2 size={16} className="text-[#7045E8] animate-spin shrink-0" />
                       ) : (
-                        <div className="w-3.5 h-3.5 rounded-full border border-ink-border shrink-0" />
+                        <div className="w-4 h-4 rounded-full border border-[#DDD5F9] shrink-0" />
                       )}
-                      <span className={isComplete ? 'text-gray-300 line-through opacity-75' : isCurrent ? 'text-white font-bold' : 'text-gray-500'}>
+                      <span className={isComplete ? 'text-[#73758B] line-through' : isCurrent ? 'text-[#17172F] font-bold' : 'text-[#73758B]'}>
                         {stg.label}
                       </span>
                     </div>
@@ -571,29 +571,29 @@ export default function NewInvestigationPage() {
                 })}
               </div>
 
-              <div className="text-[11px] text-gray-400 pt-1">
+              <div className="text-xs text-[#73758B]">
                 Exhibit is retained in isolated storage with immutable SHA-256 custody digest.
               </div>
             </div>
           ) : (
             <div className="space-y-4 max-w-md mx-auto">
-              <div className="w-14 h-14 bg-red-950/40 border border-red-800 rounded-md flex items-center justify-center mx-auto text-red-400">
+              <div className="w-14 h-14 bg-[#FDF2F2] border border-[#FAD8D8] rounded-2xl flex items-center justify-center mx-auto text-[#DC4545]">
                 <AlertTriangle size={28} />
               </div>
-              <h3 className="text-base font-bold text-white">Forensic Analysis Interrupted</h3>
-              <p className="text-xs text-red-300 bg-red-950/20 border border-red-800/40 p-3 rounded-md leading-relaxed text-left font-mono">
+              <h3 className="text-base font-bold text-[#17172F]">Forensic Analysis Interrupted</h3>
+              <p className="text-xs text-[#DC4545] bg-[#FDF2F2] border border-[#FAD8D8] p-3.5 rounded-xl leading-relaxed text-left font-mono">
                 {apiError}
               </p>
               <div className="flex justify-center gap-3 pt-2">
                 <button
                   onClick={() => setStep(1)}
-                  className="px-4 py-2 bg-ink-panel hover:bg-ink-hover border border-ink-border text-gray-300 rounded-md text-xs font-semibold"
+                  className="px-4 py-2 bg-white hover:bg-[#F8F9FF] border border-[#E6E5F0] text-[#17172F] rounded-xl text-xs font-semibold"
                 >
                   Choose Different Exhibit
                 </button>
                 <button
                   onClick={startAnalysis}
-                  className="px-4 py-2 bg-brand hover:bg-brand-hover text-white rounded-md text-xs font-semibold"
+                  className="px-4 py-2 bg-[#7045E8] hover:bg-[#5F33DB] text-white rounded-xl text-xs font-semibold shadow-sm"
                 >
                   Retry Analysis
                 </button>

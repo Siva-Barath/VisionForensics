@@ -58,7 +58,7 @@ export default function CasesPage() {
       case 'LOW_RISK':
         return <Badge variant="verified" label="LOW RISK" size="sm" />;
       default:
-        return <Badge variant="low" label="PENDING" size="sm" />;
+        return <Badge variant="default" label="PENDING" size="sm" />;
     }
   };
 
@@ -74,27 +74,59 @@ export default function CasesPage() {
 
   return (
     <div className="cases-page space-y-6">
-      {error && <div role="alert" className="p-4 border border-red-400/30 rounded-xl text-red-300 text-sm">Unable to load the workspace. <button onClick={fetchCases} className="underline">Retry</button></div>}
+      {error && (
+        <div role="alert" className="p-3.5 bg-[#FDF2F2] border border-[#FAD8D8] rounded-2xl text-xs text-[#DC4545]">
+          Unable to load the workspace. <button onClick={fetchCases} className="underline font-bold">Retry</button>
+        </div>
+      )}
+
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-ink-border pb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2 border-b border-[#E6E5F0]">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">Document Cases</h1>
-          <p className="text-sm text-gray-400 mt-1">
-            Browse your cases and the latest 100 evidence exhibits. Search applies to the loaded exhibits.
+          <h1 className="text-2xl font-bold tracking-tight text-[#17172F]">Document Cases</h1>
+          <p className="text-xs text-[#73758B] mt-0.5">
+            Browse registered investigation dockets and recent evidence exhibits.
           </p>
         </div>
         <button
           onClick={() => navigate('/new')}
-          className="px-4 py-2 bg-brand hover:bg-brand-hover text-white rounded-sm text-xs font-semibold flex items-center gap-2 shadow-sm transition-colors"
+          className="px-4 py-2 bg-[#7045E8] hover:bg-[#5F33DB] text-white rounded-xl text-xs font-semibold flex items-center gap-2 shadow-sm transition-all"
         >
           <FolderPlus size={15} /> Add New Document
         </button>
       </div>
 
+      {/* Case Dockets Cards Grid */}
+      {cases.length > 0 && (
+        <section aria-label="Investigation cases" className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-bold text-[#17172F]">Active Investigation Cases</h2>
+            <span className="text-xs text-[#73758B] font-mono">{cases.length} cases registered</span>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {cases.map((item) => (
+              <article key={item.id} className="p-5 rounded-2xl border border-[#E6E5F0] bg-white space-y-2 shadow-sm hover:border-[#DDD5F9] transition-all">
+                <div className="flex justify-between items-center gap-2 text-[11px] font-mono">
+                  <span className="font-bold text-[#7045E8]">{item.case_number}</span>
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
+                    item.priority === 'urgent' ? 'bg-[#FFF8EC] text-[#E9A12A]' : 'bg-[#F0EBFF] text-[#7045E8]'
+                  }`}>
+                    {item.priority}
+                  </span>
+                </div>
+                <h3 className="font-bold text-sm text-[#17172F]">{item.title}</h3>
+                {item.notes && <p className="text-xs text-[#73758B] whitespace-pre-wrap leading-relaxed">{item.notes}</p>}
+                <p className="text-xs text-[#73758B] pt-1 border-t border-[#E6E5F0]">{item.document_count} exhibit(s) • {item.status}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row gap-3 justify-between items-stretch sm:items-center">
+      <div className="flex flex-col sm:flex-row gap-3 justify-between items-stretch sm:items-center pt-2">
         {/* Risk Filter Tabs */}
-        <div aria-label="Filter by risk" className="risk-filters flex gap-1.5 bg-ink-base p-1 rounded-lg border border-ink-border">
+        <div aria-label="Filter by risk" className="risk-filters flex gap-1.5 bg-[#F0EBFF] p-1 rounded-xl border border-[#DDD5F9]">
           {[
             { id: 'ALL', label: `All (${documents.length})` },
             { id: 'HIGH_RISK', label: `High Risk (${documents.filter(d => d.unified_risk_tier === 'HIGH_RISK').length})` },
@@ -105,10 +137,10 @@ export default function CasesPage() {
               key={tab.id}
               onClick={() => setSelectedFilter(tab.id as typeof selectedFilter)}
               aria-pressed={selectedFilter === tab.id}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-sm transition-colors ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                 selectedFilter === tab.id
-                  ? 'bg-brand text-white shadow-sm'
-                  : 'text-gray-400 hover:text-gray-200'
+                  ? 'bg-[#7045E8] text-white shadow-sm'
+                  : 'text-[#73758B] hover:text-[#17172F]'
               }`}
             >
               {tab.label}
@@ -116,27 +148,16 @@ export default function CasesPage() {
           ))}
         </div>
 
-        <section aria-label="Investigation cases" className="space-y-3">
-        <h2 className="text-lg font-semibold">Investigation cases</h2>
-        <p className="text-xs text-muted">Latest 100 cases visible to your account. Create a case with New investigation.</p>
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">{cases.map(item => <article key={item.id} className="p-5 rounded-xl border border-ink-border bg-ink-panel space-y-2">
-          <div className="flex justify-between gap-2 text-[10px] text-muted"><span>{item.case_number}</span><span className="uppercase text-brand">{item.priority}</span></div>
-          <h3 className="font-semibold text-sm">{item.title}</h3>
-          {item.notes && <p className="text-xs text-muted whitespace-pre-wrap">{item.notes}</p>}
-          <p className="text-xs text-muted">{item.document_count} exhibit(s) · {item.status}</p>
-        </article>)}</div>
-        {!loading && !error && cases.length === 0 && <p className="text-sm text-muted">No investigation cases yet.</p>}
-      </section>
-      {/* Search Input */}
+        {/* Search Input */}
         <div className="relative min-w-[280px]">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#73758B]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by filename or ID..."
             aria-label="Search documents by filename or ID"
-            className="w-full pl-9 pr-3 py-1.5 bg-ink-base border border-ink-border rounded-sm text-xs text-white placeholder-gray-500 focus:outline-none focus:border-brand"
+            className="w-full pl-9 pr-3 py-1.5 bg-white border border-[#E6E5F0] rounded-xl text-xs text-[#17172F] placeholder-[#9E9FB1] focus:outline-none focus:border-[#7045E8] shadow-sm"
           />
         </div>
       </div>
@@ -144,21 +165,21 @@ export default function CasesPage() {
       {/* Case Table Card */}
       <Card variant="evidence">
         {loading ? (
-          <div className="p-16 text-center text-gray-400 flex flex-col items-center gap-2">
-            <Loader2 size={24} className="animate-spin text-brand" />
+          <div className="p-16 text-center text-[#73758B] flex flex-col items-center gap-2">
+            <Loader2 size={24} className="animate-spin text-[#7045E8]" />
             <span className="text-xs">Loading case database...</span>
           </div>
         ) : filteredDocs.length === 0 ? (
           <div className="p-12 text-center space-y-3">
-            <FileText size={36} className="mx-auto text-gray-500 opacity-60" />
-            <p className="text-sm font-semibold text-gray-300">No documents found matching criteria</p>
-            <p className="text-xs text-gray-400">Try adjusting your search query or risk filter.</p>
+            <FileText size={36} className="mx-auto text-slate-300" />
+            <p className="text-sm font-bold text-[#17172F]">No documents found matching criteria</p>
+            <p className="text-xs text-[#73758B]">Try adjusting your search query or risk filter.</p>
             <button
               onClick={() => {
                 setSearchQuery('');
                 setSelectedFilter('ALL');
               }}
-              className="px-3 py-1.5 bg-ink-panel hover:bg-ink-hover border border-ink-border rounded-sm text-xs font-semibold text-gray-300 mt-2"
+              className="px-3.5 py-1.5 bg-white hover:bg-[#F8F9FF] border border-[#E6E5F0] rounded-xl text-xs font-semibold text-[#17172F] mt-2 shadow-sm"
             >
               Reset Filters
             </button>
@@ -166,7 +187,7 @@ export default function CasesPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-ink-base border-b border-ink-border text-gray-400 font-medium">
+              <thead className="bg-[#F8F9FF] border-b border-[#E6E5F0] text-[#73758B] font-semibold uppercase text-[10px]">
                 <tr>
                   <th className="py-3 px-4">Document Exhibit</th>
                   <th className="py-3 px-3">Date Added</th>
@@ -176,44 +197,44 @@ export default function CasesPage() {
                   <th className="py-3 px-4 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-ink-border">
+              <tbody className="divide-y divide-[#E6E5F0]">
                 {filteredDocs.map((doc) => {
                   const score = doc.composite_risk_score == null ? 'Unavailable' : `${Math.round(doc.composite_risk_score)}/100`;
                   return (
                     <tr
                       key={doc.id}
-                      className="hover:bg-ink-hover/50 cursor-pointer transition-colors"
+                      className="hover:bg-[#F8F9FF] cursor-pointer transition-colors"
                       onClick={() => navigate(`/investigation/${doc.id}`)}
                     >
-                      <td className="py-3 px-4">
-                        <div className="font-semibold text-white truncate max-w-[280px]">
+                      <td className="py-3.5 px-4">
+                        <div className="font-bold text-[#17172F] truncate max-w-[280px]">
                           {doc.original_filename}
                         </div>
-                        <div className="text-[11px] text-gray-400 font-mono mt-0.5">
+                        <div className="text-[11px] text-[#73758B] font-mono mt-0.5">
                           ID: {doc.id.slice(0, 8)}... | {doc.file_type.toUpperCase()}
                         </div>
                       </td>
-                      <td className="py-3 px-3 text-gray-400 font-mono whitespace-nowrap">
+                      <td className="py-3.5 px-3 text-[#73758B] font-mono whitespace-nowrap">
                         {formatTimestamp(doc.created_at)}
                       </td>
-                      <td className="py-3 px-3 text-gray-300 font-mono whitespace-nowrap">
+                      <td className="py-3.5 px-3 text-[#17172F] font-mono whitespace-nowrap">
                         {doc.page_count || 1} {doc.page_count === 1 ? 'page' : 'pages'}
                       </td>
-                      <td className="py-3 px-3 whitespace-nowrap">
+                      <td className="py-3.5 px-3 whitespace-nowrap">
                         {getAssessmentBadge(doc.unified_risk_tier)}
                       </td>
-                      <td className="py-3 px-3 text-center whitespace-nowrap">
-                        <span className="font-mono font-bold text-gray-200">
+                      <td className="py-3.5 px-3 text-center whitespace-nowrap">
+                        <span className="font-mono font-bold text-[#17172F]">
                           {score}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-right whitespace-nowrap">
+                      <td className="py-3.5 px-4 text-right whitespace-nowrap">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             navigate(`/investigation/${doc.id}`);
                           }}
-                          className="px-3 py-1 bg-ink-panel hover:bg-brand hover:text-white border border-ink-border rounded-sm text-xs font-semibold text-gray-300 transition-colors inline-flex items-center gap-1"
+                          className="px-3 py-1.5 bg-[#7045E8] hover:bg-[#5F33DB] text-white rounded-lg text-xs font-semibold transition-all inline-flex items-center gap-1 shadow-sm"
                         >
                           Inspect <ChevronRight size={13} />
                         </button>

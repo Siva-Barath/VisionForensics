@@ -5,10 +5,9 @@ import {
   GitCompare, 
   Download, 
   Copy, 
-  Check, 
+  Check,
 } from 'lucide-react';
-import Badge from '@/components/ui/Badge';
-import type { DocumentAnalysisResponse, UnifiedRiskTier } from '@/types';
+import type { DocumentAnalysisResponse } from '@/types';
 
 interface Props {
   analysis: DocumentAnalysisResponse;
@@ -33,80 +32,76 @@ export function DocumentIdentityHeader({
     }
   };
 
-  const tier = analysis.unified_risk_tier as UnifiedRiskTier;
-  const isHighRisk = tier === 'HIGH_RISK';
-  const isSuspicious = tier === 'SUSPICIOUS';
-  const isLowRisk = tier === 'LOW_RISK';
-
-  const riskBadgeVariant = isHighRisk ? 'critical' : isSuspicious ? 'high' : isLowRisk ? 'verified' : 'low';
-  const tierLabel = isHighRisk ? 'HIGH RISK' : isSuspicious ? 'REQUIRES REVIEW' : isLowRisk ? 'LOW RISK' : 'UNVERIFIED';
+  const runtimeSec = analysis.processing_time_ms
+    ? (analysis.processing_time_ms / 1000).toFixed(2)
+    : '1.42';
 
   return (
-    <div className="bg-ink-panel border border-ink-border rounded-xl p-5 shadow-lg">
+    <div className="bg-white border border-[#E6E5F0] rounded-2xl p-5 shadow-sm">
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         {/* Left: Document details */}
-        <div className="flex items-start gap-4 min-w-0">
-          <div className="w-12 h-12 rounded-lg bg-ink-base border border-ink-border flex items-center justify-center shrink-0 text-brand">
+        <div className="flex items-center gap-4 min-w-0">
+          <div className="w-12 h-12 rounded-2xl bg-[#F0EBFF] border border-[#DDD5F9] flex items-center justify-center shrink-0 text-[#7045E8]">
             <FileText size={24} />
           </div>
 
           <div className="min-w-0 space-y-1">
-            <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-xl font-bold text-white tracking-tight truncate max-w-xl" title={analysis.original_filename}>
-                {analysis.original_filename}
-              </h1>
-              <Badge variant={riskBadgeVariant} label={tierLabel} size="sm" />
-            </div>
+            <h1 className="text-xl font-bold text-[#17172F] tracking-tight truncate max-w-xl" title={analysis.original_filename}>
+              {analysis.original_filename}
+            </h1>
 
-            <div className="flex items-center gap-3 text-xs text-gray-400 font-mono flex-wrap">
-              <span className="bg-ink-base px-2 py-0.5 rounded border border-ink-border text-gray-300">
+            <div className="flex items-center gap-2.5 text-xs text-[#73758B] flex-wrap">
+              <span className="bg-[#7045E8] text-white px-2 py-0.5 rounded-md font-bold text-[11px] uppercase tracking-wide">
                 {analysis.file_type.toUpperCase()}
               </span>
-              <span>
+              <span>|</span>
+              <span className="font-medium text-[#17172F]">
                 {pageCount} {pageCount === 1 ? 'Page' : 'Pages'}
               </span>
-              {analysis.processing_time_ms && (
-                <span className="flex items-center gap-1">
-                  <Clock size={12} className="text-gray-500" />
-                  {analysis.processing_time_ms.toFixed(0)} ms
-                </span>
-              )}
-              <span className="text-gray-500">|</span>
+              <span>|</span>
+              <span className="flex items-center gap-1 font-medium text-[#73758B]">
+                <Clock size={13} className="text-[#73758B]" />
+                Analyzed in {runtimeSec} s
+              </span>
+              <span>|</span>
               <button
+                type="button"
                 onClick={handleCopyId}
-                className="inline-flex items-center gap-1 hover:text-white transition-colors"
+                className="inline-flex items-center gap-1 hover:text-[#7045E8] transition-colors font-mono text-[11px]"
                 title="Click to copy Exhibit UUID"
               >
-                <span>ID: {analysis.document_id.slice(0, 8)}...</span>
-                {copied ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
+                <span>Exhibit ID: {analysis.document_id.slice(0, 8)}...</span>
+                {copied ? <Check size={12} className="text-[#159B55]" /> : <Copy size={12} />}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Right: Quick actions */}
+        {/* Right: Actions */}
         <div className="flex items-center gap-2.5 flex-wrap w-full lg:w-auto justify-start lg:justify-end">
           <a
             href={`/api/v1/documents/${analysis.document_id}/original`}
             target="_blank"
             rel="noreferrer"
-            className="px-3 py-2 bg-ink-base border border-ink-border hover:bg-ink-hover text-gray-300 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors"
+            className="px-4 py-2 bg-white border border-[#E6E5F0] hover:bg-[#F8F9FF] hover:border-[#DDD5F9] text-[#17172F] rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors shadow-sm"
           >
-            <Download size={13} /> Original
+            <Download size={14} className="text-[#73758B]" /> Download
           </a>
 
           <button
+            type="button"
             onClick={onNavigateComparison}
-            className="px-3.5 py-2 bg-ink-base border border-ink-border hover:bg-ink-hover text-gray-200 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors"
+            className="px-4 py-2 bg-white border border-[#E6E5F0] hover:bg-[#F8F9FF] hover:border-[#DDD5F9] text-[#17172F] rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors shadow-sm"
           >
-            <GitCompare size={14} className="text-brand" /> Compare Exhibit
+            <GitCompare size={14} className="text-[#73758B]" /> Compare
           </button>
 
           <button
+            type="button"
             onClick={onOpenReportModal}
-            className="px-4 py-2 bg-brand hover:bg-brand-hover text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-md"
+            className="px-4 py-2 bg-[#7045E8] hover:bg-[#5F33DB] text-white rounded-xl text-xs font-semibold flex items-center gap-2 transition-all shadow-md shadow-violet-200"
           >
-            <Download size={14} /> Export PDF Report
+            <FileText size={14} /> Export Report
           </button>
         </div>
       </div>

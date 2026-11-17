@@ -7,7 +7,7 @@ import {
   FileText,
   Settings,
   ShieldCheck,
-  User,
+  Zap,
   X,
   GitCompare,
   LogOut,
@@ -25,7 +25,7 @@ const navItems = [
 ];
 
 export default function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -33,85 +33,79 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
     navigate('/login', { replace: true });
   };
 
-  const formatRole = (role?: string) => {
-    switch (role) {
-      case 'SYSTEM_ADMINISTRATOR':
-        return 'System Admin';
-      case 'SENIOR_INVESTIGATOR':
-        return 'Sr. Investigator';
-      case 'FORENSIC_ANALYST':
-        return 'Forensic Analyst';
-      default:
-        return 'Analyst';
-    }
-  };
-
   return (
-    <aside id="workspace-navigation" className={`app-sidebar flex flex-col bg-ink-panel border-r border-ink-border shrink-0 ${open ? 'is-open' : ''}`}>
-      {/* Logo */}
-      <div className="sidebar-brand flex items-center gap-3 px-6 py-6">
-        <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-brand/20 border border-brand shadow-inner shadow-brand/20">
-          <ShieldCheck size={22} className="text-brand" />
+    <aside
+      id="workspace-navigation"
+      className={`app-sidebar flex flex-col shrink-0 ${open ? 'is-open' : ''}`}
+    >
+      {/* Brand Header */}
+      <div className="sidebar-brand flex items-center justify-between px-6 py-6 border-b border-white/5">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-violet-600/30 border border-violet-500/40 text-violet-300 shadow-inner">
+            <ShieldCheck size={20} className="text-violet-300" />
+          </div>
+          <div>
+            <h1 className="text-[15px] font-bold text-white tracking-tight leading-tight">
+              VisionForensics AI
+            </h1>
+            <p className="text-[11px] text-[#9E9AB8] font-normal leading-tight mt-0.5">
+              Document Forgery Analysis
+            </p>
+          </div>
         </div>
-        <div>
-          <p className="text-[15px] font-bold text-white tracking-tight">VisionForensics<span className="text-brand">.</span></p>
-          <p className="text-[10px] text-muted uppercase tracking-widest font-medium mt-1">Document intelligence</p>
-        </div>
-        <button type="button" className="navigation-close" onClick={onClose} aria-label="Close navigation"><X size={18} /></button>
+        <button
+          type="button"
+          className="navigation-close text-gray-400 hover:text-white"
+          onClick={onClose}
+          aria-label="Close navigation"
+        >
+          <X size={18} />
+        </button>
       </div>
 
-      {/* Navigation */}
-      <nav aria-label="Main navigation" className="flex-1 px-4 py-6 space-y-1">
-        <p className="nav-section-label">Workspace</p>
+      {/* Navigation Items */}
+      <nav aria-label="Main navigation" className="flex-1 px-3.5 py-6 space-y-1">
         {navItems.map(({ to, label, icon: Icon, end }) => (
           <NavLink
             key={to}
             to={to}
             end={end}
             className={({ isActive }) =>
-              `nav-item flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+              `nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13px] font-medium transition-all ${
                 isActive
-                  ? 'is-active bg-brand/10 text-brand'
-                  : 'text-gray-400 hover:bg-ink-hover hover:text-gray-100'
+                  ? 'is-active bg-[#7045E8] text-white font-semibold shadow-md shadow-violet-900/30'
+                  : 'text-[#A29EBC] hover:bg-white/[0.07] hover:text-white'
               }`
             }
           >
             <Icon size={18} />
-            {label}
+            <span>{label}</span>
           </NavLink>
         ))}
       </nav>
 
-      {/* Footer */}
-      <div className="px-6 py-4 border-t border-ink-border flex flex-col gap-4">
-        <div className="sidebar-note">
-          <ShieldCheck size={17} className="text-brand shrink-0" />
-          <div><p className="text-xs font-medium text-gray-200">Evidence matters.</p><p className="text-[11px] text-muted mt-1 leading-relaxed">Examine with clarity. Investigate with confidence.</p></div>
+      {/* Bottom Footer Callout & Sign Out */}
+      <div className="p-4 mx-3 mb-4 rounded-xl bg-white/[0.04] border border-white/[0.08] space-y-3">
+        <div className="flex items-start gap-2.5">
+          <Zap size={16} className="text-amber-400 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-xs font-bold text-white">Evidence First.</p>
+            <p className="text-[10px] text-[#9E9AB8] leading-relaxed mt-0.5">
+              AI-powered document forensics for trusted decisions.
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center justify-between mt-1">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-brand/20 border border-brand/40 text-brand font-semibold text-xs shrink-0">
-              {user?.full_name ? user.full_name.charAt(0).toUpperCase() : <User size={16} />}
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs font-semibold text-gray-200 truncate">
-                {user?.full_name || 'Analyst'}
-              </p>
-              <p className="text-[11px] text-gray-400 font-medium truncate">
-                {formatRole(user?.role)}
-              </p>
-            </div>
-          </div>
-
+        <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between">
+          <span className="text-[10px] text-[#79749A] font-mono">T=0.40 Locked Protocol</span>
           <button
             type="button"
             onClick={handleLogout}
-            title="Sign Out"
+            title="Sign Out Session"
             aria-label="Sign out"
-            className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-ink-hover rounded-md transition-colors"
+            className="p-1 text-gray-400 hover:text-red-400 hover:bg-white/10 rounded transition-colors"
           >
-            <LogOut size={16} />
+            <LogOut size={13} />
           </button>
         </div>
       </div>

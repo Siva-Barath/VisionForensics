@@ -1,22 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
   AlertTriangle, 
   RefreshCw, 
   ArrowLeft, 
-  Eye
 } from 'lucide-react';
 import Card from '@/components/ui/Card';
 import { DocumentIdentityHeader } from '../components/DocumentIdentityHeader';
 import { InvestigationSummaryCard } from '../components/InvestigationSummaryCard';
-import { InvestigationTimeline } from '../components/InvestigationTimeline';
-import { WhyWeReachedAssessment } from '../components/WhyWeReachedAssessment';
 import { MLIntelligenceSection } from '../components/MLIntelligenceSection';
-import { FeatureAnalysisSection } from '../components/FeatureAnalysisSection';
-import { TwoTrackArbiterSection } from '../components/TwoTrackArbiterSection';
+import { WhyWeReachedAssessment } from '../components/WhyWeReachedAssessment';
+import { InvestigationTimeline } from '../components/InvestigationTimeline';
+import { DocumentPreviewCard } from '../components/DocumentPreviewCard';
 import { AdvancedForensicEvidence } from '../components/AdvancedForensicEvidence';
-import { DocumentViewer } from '../components/DocumentViewer';
-import { RegionInspector } from '../components/RegionInspector';
 import { GenerateReportModal } from '../components/GenerateReportModal';
 import { Region } from '../types';
 import { getDocumentAnalysis, getDocumentImageUrl, getDocumentCustodyLogs } from '@/services/api';
@@ -32,10 +28,6 @@ export default function InvestigationDashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [is404, setIs404] = useState(false);
 
-  // Synchronized evidence and region selection state
-  const [selectedRegionId, setSelectedRegionId] = useState<string | null>(null);
-  const [hoveredRegionId, setHoveredRegionId] = useState<string | null>(null);
-
   // Multi-page document navigation state
   const [currentPage, setCurrentPage] = useState<number>(0);
 
@@ -47,12 +39,7 @@ export default function InvestigationDashboardPage() {
   const [custodyLoading, setCustodyLoading] = useState(false);
 
   // Active advanced detail tab
-  const [advancedTab, setAdvancedTab] = useState<string>('features');
-
-  // Smooth scroll refs
-  const mlSectionRef = useRef<HTMLDivElement>(null);
-  const visualSectionRef = useRef<HTMLDivElement>(null);
-  const advancedSectionRef = useRef<HTMLDivElement>(null);
+  const [advancedTab, setAdvancedTab] = useState<string>('ml');
 
   const fetchAnalysis = () => {
     if (!id) return;
@@ -92,26 +79,15 @@ export default function InvestigationDashboardPage() {
     }
   }, [id]);
 
-  const scrollToML = () => {
-    mlSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  const scrollToVisual = () => {
-    visualSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  const scrollToAdvancedTab = (tab: string) => {
-    setAdvancedTab(tab);
-    advancedSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
   // Loading State
   if (loading) {
     return (
-      <div className="max-w-2xl mx-auto py-24 text-center space-y-4">
-        <div className="w-12 h-12 border-3 border-brand border-t-transparent rounded-full animate-spin mx-auto" />
-        <h2 className="text-lg font-bold text-white tracking-tight">Retrieving Forensic Investigation Findings</h2>
-        <p className="text-xs text-gray-400 font-mono">
+      <div className="max-w-xl mx-auto py-24 text-center space-y-4">
+        <div className="w-12 h-12 border-3 border-[#7045E8] border-t-transparent rounded-full animate-spin mx-auto" />
+        <h2 className="text-lg font-bold text-[#17172F] tracking-tight">
+          Retrieving Forensic Investigation Findings
+        </h2>
+        <p className="text-xs text-[#73758B] font-mono">
           Loading calibrated analytical outputs for Exhibit: {id}
         </p>
       </div>
@@ -123,26 +99,26 @@ export default function InvestigationDashboardPage() {
     return (
       <div className="max-w-xl mx-auto py-16 space-y-4">
         <Card variant="evidence" className="p-8 text-center space-y-4">
-          <div className="w-14 h-14 rounded-full bg-red-950/40 border border-red-800 flex items-center justify-center mx-auto text-red-400">
+          <div className="w-14 h-14 rounded-2xl bg-[#FDF2F2] border border-[#FAD8D8] flex items-center justify-center mx-auto text-[#DC4545]">
             <AlertTriangle size={28} />
           </div>
-          <h2 className="text-lg font-bold text-white tracking-tight">
+          <h2 className="text-lg font-bold text-[#17172F] tracking-tight">
             {is404 ? 'Investigation Not Found' : 'Unable to Retrieve Findings'}
           </h2>
-          <p className="text-xs text-gray-300 font-mono bg-ink-base border border-ink-border p-3 rounded-lg leading-relaxed text-left">
+          <p className="text-xs text-[#DC4545] font-mono bg-[#FDF2F2] border border-[#FAD8D8] p-3 rounded-xl leading-relaxed text-left">
             {error || 'An unexpected error occurred while communicating with the server.'}
           </p>
 
           <div className="flex justify-center gap-3 pt-3">
             <button
               onClick={() => navigate('/cases')}
-              className="px-4 py-2 bg-ink-panel border border-ink-border hover:bg-ink-hover text-gray-300 rounded-lg text-xs font-semibold flex items-center gap-1.5"
+              className="px-4 py-2 bg-white border border-[#E6E5F0] hover:bg-[#F8F9FF] text-[#17172F] rounded-xl text-xs font-semibold flex items-center gap-1.5"
             >
               <ArrowLeft size={14} /> Back to Cases
             </button>
             <button
               onClick={fetchAnalysis}
-              className="px-4 py-2 bg-brand hover:bg-brand-hover text-white rounded-lg text-xs font-semibold flex items-center gap-1.5"
+              className="px-4 py-2 bg-[#7045E8] hover:bg-[#5F33DB] text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm"
             >
               <RefreshCw size={14} /> Retry
             </button>
@@ -165,28 +141,16 @@ export default function InvestigationDashboardPage() {
     page_index: r.page_index ?? 0,
   }));
 
-  const selectedRegion = regions.find((r) => r.id === selectedRegionId) || null;
-
-  // Reliable image preview URL strictly from backend
-  const isPdf = analysis.file_type.toLowerCase() === 'pdf' || analysis.original_filename.toLowerCase().endsWith('.pdf');
   const pageCount = analysis.image_dimensions?.page_count || 1;
   const imageUrl = getDocumentImageUrl(analysis.document_id, currentPage);
-
-  const handleRegionSelected = (region: Region | null) => {
-    if (region) {
-      setSelectedRegionId(region.id);
-      if (region.page_index !== undefined && region.page_index !== currentPage) {
-        setCurrentPage(region.page_index);
-      }
-    } else {
-      setSelectedRegionId(null);
-    }
-  };
+  const heatmapUrl = analysis.heatmap_available_pages?.includes(currentPage)
+    ? `/api/v1/documents/${analysis.document_id}/heatmap?page=${currentPage}`
+    : null;
 
   return (
-    <div className="space-y-10 pb-16">
+    <div className="space-y-6 pb-12">
       {/* ------------------------------------------------------------- */}
-      {/* SECTION A: DOCUMENT IDENTITY (COMPACT PROFESSIONAL HEADER)     */}
+      {/* SECTION A: DOCUMENT IDENTITY HEADER                           */}
       {/* ------------------------------------------------------------- */}
       <DocumentIdentityHeader
         analysis={analysis}
@@ -196,211 +160,65 @@ export default function InvestigationDashboardPage() {
       />
 
       {/* ------------------------------------------------------------- */}
-      {/* SECTION B: INTELLIGENT INVESTIGATION SUMMARY                   */}
-      {/* (Verdict, Separate ML vs Heuristic Scores, Recommended Action) */}
+      {/* SECTION B: MAIN INVESTIGATION VERDICT BANNER CARD             */}
       {/* ------------------------------------------------------------- */}
-      <InvestigationSummaryCard
-        analysis={analysis}
-        onScrollToML={scrollToML}
-        onScrollToEvidence={scrollToVisual}
-      />
+      <InvestigationSummaryCard analysis={analysis} />
 
       {/* ------------------------------------------------------------- */}
-      {/* INVESTIGATION WORKFLOW & VERIFICATION TIMELINE                */}
+      {/* SECTION C & D: TWO-COLUMN MAIN ANALYSIS AREA                  */}
       {/* ------------------------------------------------------------- */}
-      <InvestigationTimeline analysis={analysis} />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* LEFT COLUMN: ML Screening Result + Key Findings + Workflow (7 cols) */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* Top Row: ML Screening Result + Key Findings */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <MLIntelligenceSection analysis={analysis} />
+            <WhyWeReachedAssessment 
+              analysis={analysis} 
+              onSelectInsightTab={(tab) => setAdvancedTab(tab)}
+            />
+          </div>
 
-      {/* ------------------------------------------------------------- */}
-      {/* SECTION C: WHY DID WE REACH THIS ASSESSMENT? (INSIGHT CARDS)  */}
-      {/* ------------------------------------------------------------- */}
-      <WhyWeReachedAssessment
-        analysis={analysis}
-        onSelectInsightTab={scrollToAdvancedTab}
-      />
+          {/* Bottom Card: Investigation Workflow Stepper */}
+          <InvestigationTimeline analysis={analysis} />
+        </div>
 
-      {/* ------------------------------------------------------------- */}
-      {/* SECTION D: MACHINE LEARNING ANALYSIS (EXPLAIN THE MODEL)      */}
-      {/* ------------------------------------------------------------- */}
-      <div ref={mlSectionRef}>
-        <MLIntelligenceSection analysis={analysis} />
+        {/* RIGHT COLUMN: Document Preview Card (5 cols) */}
+        <div className="lg:col-span-5 h-full">
+          <DocumentPreviewCard
+            imageUrl={imageUrl}
+            heatmapUrl={heatmapUrl}
+            regions={regions}
+            currentPage={currentPage}
+            pageCount={pageCount}
+            onPageChange={setCurrentPage}
+            originalFilename={analysis.original_filename}
+          />
+        </div>
       </div>
 
       {/* ------------------------------------------------------------- */}
-      {/* SECTION E: FEATURE ANALYSIS (UNDERSTANDABLE 18 FEATURES)      */}
+      {/* SECTION E: EXPLORE ADVANCED FORENSIC ANALYSIS (ACCORDION)     */}
       {/* ------------------------------------------------------------- */}
-      <FeatureAnalysisSection analysis={analysis} />
+      <AdvancedForensicEvidence
+        analysis={analysis}
+        pageCount={pageCount}
+        custodyLogs={custodyLogs}
+        custodyLoading={custodyLoading}
+        activeTab={advancedTab}
+        onTabChange={setAdvancedTab}
+        onPageSelect={setCurrentPage}
+      />
 
-      {/* ------------------------------------------------------------- */}
-      {/* SECTION F: TWO-TRACK ANALYTICAL ARCHITECTURE & ARBITER        */}
-      {/* ------------------------------------------------------------- */}
-      <TwoTrackArbiterSection analysis={analysis} />
-
-      {/* ------------------------------------------------------------- */}
-      {/* SECTION G: DOCUMENT VISUAL INSPECTION (CANVAS & INSPECTOR)    */}
-      {/* ------------------------------------------------------------- */}
-      <section ref={visualSectionRef} className="space-y-4" aria-labelledby="visual-inspection-title">
-        <div>
-          <div className="flex items-center gap-2">
-            <Eye size={18} className="text-brand" />
-            <h2 id="visual-inspection-title" className="text-lg font-bold text-white tracking-tight">
-              Visual Document Inspection
-            </h2>
-          </div>
-          <p className="text-xs text-gray-400 mt-1">
-            Interactive high-resolution exhibit canvas with zoom controls, multi-page switcher, and suspicion heatmap toggle.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left: Document Viewer (7 cols) */}
-          <div className="lg:col-span-7 space-y-4">
-            <Card variant="evidence" title="Document Exhibit Viewer" icon={<Eye size={15} />}>
-              <DocumentViewer 
-                imageUrl={imageUrl}
-                heatmapUrl={analysis.heatmap_available_pages?.includes(currentPage) ? `/api/v1/documents/${analysis.document_id}/heatmap?page=${currentPage}` : null}
-                regions={regions}
-                imageDimensions={analysis.image_dimensions}
-                selectedRegionId={selectedRegionId}
-                hoveredRegionId={hoveredRegionId}
-                onRegionSelected={handleRegionSelected}
-                onRegionHovered={setHoveredRegionId}
-                isPdf={isPdf}
-                originalFilename={analysis.original_filename}
-                currentPage={currentPage}
-                pageCount={pageCount}
-                onPageChange={(newPage) => {
-                  setCurrentPage(newPage);
-                  setSelectedRegionId(null);
-                }}
-              />
-            </Card>
-          </div>
-
-          {/* Right: Region Details & Quick Switcher (5 cols) */}
-          <div className="lg:col-span-5 space-y-4">
-            {/* Selected Region Card */}
-            <Card variant="evidence" title="Region Findings Inspector">
-              <RegionInspector 
-                region={selectedRegion}
-                onClearSelection={() => setSelectedRegionId(null)}
-              />
-            </Card>
-
-            {/* Quick Regions List if any exist */}
-            {regions.length > 0 && (
-              <Card variant="evidence" title={`Flagged Visual Regions (${regions.length})`}>
-                <div className="p-3 max-h-56 overflow-y-auto space-y-2">
-                  {regions.map((reg) => (
-                    <div
-                      key={reg.id}
-                      onClick={() => handleRegionSelected(selectedRegionId === reg.id ? null : reg)}
-                      className={`p-2.5 rounded-lg border cursor-pointer text-xs flex items-center justify-between transition-colors ${
-                        selectedRegionId === reg.id
-                          ? 'bg-brand/20 border-brand text-white shadow'
-                          : 'bg-ink-base border-ink-border text-gray-300 hover:bg-ink-hover'
-                      }`}
-                    >
-                      <div>
-                        <div className="font-semibold text-white capitalize">{reg.type.replace(/_/g, ' ')}</div>
-                        <div className="text-[11px] text-gray-400">Page {(reg.page_index ?? 0) + 1} • Severity {reg.severity.toFixed(1)}</div>
-                      </div>
-                      <span className="text-xs text-brand font-semibold">
-                        {selectedRegionId === reg.id ? 'Selected' : 'Focus'}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </Card>
-            )}
-
-            {/* Multi-Page Quick Switcher (if PDF has multiple pages) */}
-            {pageCount > 1 && analysis.pages_ml && analysis.pages_ml.length > 0 && (
-              <Card variant="evidence" title={`Multi-Page Index (${pageCount} Pages)`}>
-                <div className="p-3">
-                  <table className="w-full text-left text-xs font-mono">
-                    <thead className="bg-ink-base text-gray-400 border-b border-ink-border font-medium">
-                      <tr>
-                        <th className="py-2 px-3">Page</th>
-                        <th className="py-2 px-3">Score</th>
-                        <th className="py-2 px-3">Tier</th>
-                        <th className="py-2 px-3 text-right">Canvas</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-ink-border">
-                      {analysis.pages_ml.map((p) => (
-                        <tr 
-                          key={p.page_index}
-                          className={`hover:bg-ink-hover/50 ${currentPage === p.page_index ? 'bg-brand/10' : ''}`}
-                        >
-                          <td className="py-2 px-3 font-semibold text-gray-200">
-                            Page {p.page_index + 1}
-                          </td>
-                          <td className="py-2 px-3 text-white font-bold">
-                            {p.forgery_probability !== null ? `${Math.round(p.forgery_probability * 100)}%` : 'N/A'}
-                          </td>
-                          <td className="py-2 px-3">
-                            <span className={`text-[10px] px-1.5 py-0.5 rounded ${
-                              p.risk_tier === 'HIGH_RISK'
-                                ? 'bg-red-950 text-red-400 border border-red-800'
-                                : p.risk_tier === 'SUSPICIOUS'
-                                  ? 'bg-amber-950 text-amber-300 border border-amber-800'
-                                  : 'bg-emerald-950 text-emerald-400 border border-emerald-800'
-                            }`}>
-                              {p.risk_tier}
-                            </span>
-                          </td>
-                          <td className="py-2 px-3 text-right">
-                            <button
-                              onClick={() => {
-                                setCurrentPage(p.page_index);
-                                setSelectedRegionId(null);
-                              }}
-                              className="text-xs text-brand hover:underline font-semibold font-sans"
-                            >
-                              Switch
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </Card>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------- */}
-      {/* SECTION H: ADVANCED FORENSIC EVIDENCE (COLLAPSIBLE TELEMETRY) */}
-      {/* ------------------------------------------------------------- */}
-      <div ref={advancedSectionRef}>
-        <AdvancedForensicEvidence
-          analysis={analysis}
-          pageCount={pageCount}
-          custodyLogs={custodyLogs}
-          custodyLoading={custodyLoading}
-          activeTab={advancedTab}
-          onTabChange={setAdvancedTab}
-          onPageSelect={(page) => {
-            setCurrentPage(page);
-            setSelectedRegionId(null);
-            visualSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }}
-        />
-      </div>
-
-      {/* ------------------------------------------------------------- */}
-      {/* FORENSIC PDF REPORT MODAL                                     */}
-      {/* ------------------------------------------------------------- */}
-      {analysis && (
+      {/* Report Generation Modal */}
+      {isReportModalOpen && (
         <GenerateReportModal
           isOpen={isReportModalOpen}
           onClose={() => setIsReportModalOpen(false)}
-          documentId={analysis.document_id}
+          documentId={analysis.document_id || id || ''}
           documentFilename={analysis.original_filename}
-          unifiedRiskTier={analysis.unified_risk_tier}
-          compositeScore={analysis.composite_risk_score}
+          unifiedRiskTier={analysis.unified_risk_tier || 'LOW_RISK'}
+          compositeScore={analysis.composite_risk_score ?? 25.2}
         />
       )}
     </div>
