@@ -26,6 +26,20 @@ export interface ReportSummaryResponse {
   ml_probability?: number | null;
   download_url: string;
   created_at: string;
+  case_id?: string | null;
+  case_number?: string | null;
+  case_title?: string | null;
+  report_type?: string;
+  key_findings?: string[];
+  composite_risk_score?: number | null;
+}
+
+export interface ReportStats {
+  total_reports: number;
+  finalized: number;
+  in_progress: number;
+  under_review: number;
+  requires_action: number;
 }
 
 export interface ReportDetailResponse {

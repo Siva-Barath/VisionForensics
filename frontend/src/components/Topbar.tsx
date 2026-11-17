@@ -121,6 +121,11 @@ export default function Topbar({
               Organize, track, and manage investigation cases from intake to closure.
             </p>
           )}
+          {location.pathname === '/reports' && (
+            <p className="text-xs text-[#73758B] mt-0.5 hidden sm:block">
+              Access, review, and download finalized forensic investigation reports.
+            </p>
+          )}
         </div>
       </div>
 

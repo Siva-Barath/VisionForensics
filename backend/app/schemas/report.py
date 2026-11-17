@@ -33,6 +33,12 @@ class ReportSummaryResponse(BaseModel):
     ml_probability: Optional[float]
     download_url: str
     created_at: str
+    case_id: Optional[str] = None
+    case_number: Optional[str] = None
+    case_title: Optional[str] = None
+    report_type: Optional[str] = "Forensic Examination"
+    key_findings: Optional[List[str]] = None
+    composite_risk_score: Optional[float] = None
 
 
 class ReportDetailResponse(BaseModel):

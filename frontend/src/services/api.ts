@@ -274,17 +274,28 @@ export async function getReport(
 }
 
 export async function listReports(
-  limit: number = 50,
-  offset: number = 0
+  limit: number = 150,
+  offset: number = 0,
+  status?: string,
+  search?: string
 ): Promise<import('@/types').ReportSummaryResponse[]> {
   const { data } = await api.get<import('@/types').ReportSummaryResponse[]>('/reports', {
-    params: { limit, offset },
+    params: { limit, offset, status, search },
   });
+  return data;
+}
+
+export async function getReportStats(): Promise<import('@/types').ReportStats> {
+  const { data } = await api.get<import('@/types').ReportStats>('/reports/stats');
   return data;
 }
 
 export function getReportDownloadUrl(reportId: string): string {
   return `/api/v1/reports/${reportId}/download`;
+}
+
+export function getReportPreviewPdfUrl(reportId: string): string {
+  return `/api/v1/reports/${reportId}/pdf`;
 }
 
 export async function checkHealth(): Promise<HealthResponse> {
