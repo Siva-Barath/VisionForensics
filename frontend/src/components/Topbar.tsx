@@ -116,6 +116,11 @@ export default function Topbar({
               Visually compare two document exhibits, quantify similarities, and highlight differences with forensic insights.
             </p>
           )}
+          {location.pathname === '/cases' && (
+            <p className="text-xs text-[#73758B] mt-0.5 hidden sm:block">
+              Organize, track, and manage investigation cases from intake to closure.
+            </p>
+          )}
         </div>
       </div>
 

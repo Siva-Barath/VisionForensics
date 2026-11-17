@@ -10,6 +10,7 @@ import type {
   DocumentSummary,
   WorkspaceStats,
   InvestigationCase,
+  CaseStats,
 } from '@/types';
 
 const TOKEN_KEY = 'vf_access_token';
@@ -302,8 +303,16 @@ export async function getWorkspaceStats(): Promise<WorkspaceStats> {
   return (await api.get<WorkspaceStats>('/workspace/stats')).data;
 }
 
-export async function listCases(): Promise<InvestigationCase[]> {
-  return (await api.get<InvestigationCase[]>('/cases', { params: { limit: 100 } })).data;
+export async function listCases(params?: { limit?: number; skip?: number; status?: string; search?: string }): Promise<InvestigationCase[]> {
+  return (await api.get<InvestigationCase[]>('/cases', { params: { limit: 150, ...params } })).data;
+}
+
+export async function getCaseStats(): Promise<CaseStats> {
+  return (await api.get<CaseStats>('/cases/stats')).data;
+}
+
+export async function createCase(payload: { title: string; notes?: string; priority?: string; status?: string }): Promise<InvestigationCase> {
+  return (await api.post<InvestigationCase>('/cases', payload)).data;
 }
 
 export default api;

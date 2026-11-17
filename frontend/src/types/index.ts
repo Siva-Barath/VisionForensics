@@ -41,6 +41,18 @@ export interface InvestigationCase {
   priority: string;
   document_count: number;
   created_at: string;
+  updated_at?: string;
+  final_assessment?: 'HIGH_RISK' | 'SUSPICIOUS' | 'LOW_RISK' | 'PENDING' | string;
+  primary_document_id?: string | null;
+  exhibit_filenames?: string[];
+}
+
+export interface CaseStats {
+  total_cases: number;
+  active: number;
+  under_review: number;
+  completed: number;
+  escalated: number;
 }
 
 export interface ApiError {
