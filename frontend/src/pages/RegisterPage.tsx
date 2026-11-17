@@ -80,7 +80,19 @@ export default function RegisterPage() {
 
   return (
     <AuthShell registration>
-      <div className="space-y-5">
+      <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-[#E6E5F0] w-full space-y-5">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F0EBFF] text-[#6D35E8] border border-[#DDD5F9] text-xs font-semibold mb-1">
+            <span>Institutional Provisioning</span>
+          </div>
+          <h1 className="text-3xl font-extrabold text-[#17172F] tracking-tight">
+            Create Analyst Profile
+          </h1>
+          <p className="text-xs sm:text-sm text-[#73758B] mt-0.5">
+            Provision your examiner credentials to access the workspace
+          </p>
+        </div>
+
         {errorMessage && (
           <div className="p-3.5 bg-[#FDF2F2] border border-[#FAD8D8] rounded-xl flex items-start gap-3 text-xs text-[#DC4545]">
             <AlertCircle size={18} className="text-[#DC4545] shrink-0 mt-0.5" />
