@@ -198,16 +198,83 @@ export const DocumentComparisonPage: React.FC = () => {
 
       {!comparison && !loading ? (
         // Empty State: Prompt user to select documents
-        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-ink-bg">
+        <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-ink-bg overflow-y-auto">
           <div className="w-16 h-16 rounded-2xl bg-brand/10 border border-brand/30 flex items-center justify-center text-brand mb-4">
             <GitCompare size={32} />
           </div>
-          <h2 className="text-base font-bold text-white mb-1">Dual-Document Forensic Comparison</h2>
-          <p className="text-xs text-gray-400 max-w-md mb-6 leading-relaxed">
-            Enter the UUIDs of two uploaded document exhibits above to perform feature-based image
-            registration, calculate structural similarity (SSIM), generate differential heatmaps, and
-            inspect localized content discrepancies.
+          <h2 className="text-xl font-bold text-white mb-1">Dual-Document Forensic Comparison</h2>
+          <p className="text-xs text-gray-400 max-w-lg mb-6 leading-relaxed">
+            Select two document exhibits to perform automated geometric image registration, calculate structural similarity (SSIM), generate pixel-level difference heatmaps, and inspect localized modifications.
           </p>
+
+          {/* Quick Exhibit Selection Card */}
+          {exhibits.length > 0 && (
+            <div className="w-full max-w-2xl bg-ink-panel border border-ink-border rounded-lg p-6 mb-8 text-left shadow-lg">
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                <GitCompare size={15} className="text-brand" /> Select Exhibits to Compare
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label className="block text-[11px] font-semibold text-blue-400 uppercase tracking-wider mb-1.5">
+                    Exhibit A (Reference / Baseline)
+                  </label>
+                  <select
+                    value={docAId}
+                    onChange={(e) => setDocAId(e.target.value)}
+                    className="w-full px-3 py-2 bg-ink-bg border border-ink-border rounded-md text-xs text-white focus:outline-none focus:border-brand font-sans"
+                  >
+                    <option value="">-- Choose First Exhibit --</option>
+                    {exhibits.map((d) => (
+                      <option key={d.id} value={d.id}>
+                        {d.original_filename} ({d.file_type.toUpperCase()})
+                      </option>
+                    ))}
+                  </select>
+                  {docAId && (
+                    <p className="text-[10px] text-gray-400 font-mono mt-1 truncate">ID: {docAId}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-amber-400 uppercase tracking-wider mb-1.5">
+                    Exhibit B (Questioned Document)
+                  </label>
+                  <select
+                    value={docBId}
+                    onChange={(e) => setDocBId(e.target.value)}
+                    className="w-full px-3 py-2 bg-ink-bg border border-ink-border rounded-md text-xs text-white focus:outline-none focus:border-brand font-sans"
+                  >
+                    <option value="">-- Choose Second Exhibit --</option>
+                    {exhibits.map((d) => (
+                      <option key={d.id} value={d.id}>
+                        {d.original_filename} ({d.file_type.toUpperCase()})
+                      </option>
+                    ))}
+                  </select>
+                  {docBId && (
+                    <p className="text-[10px] text-gray-400 font-mono mt-1 truncate">ID: {docBId}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-end pt-2">
+                <button
+                  type="button"
+                  disabled={!docAId || !docBId || docAId === docBId}
+                  onClick={() => runComparison(docAId, docBId, pageA, pageB, alignImages)}
+                  className="px-6 py-2.5 bg-brand hover:bg-brand-hover disabled:opacity-40 text-white rounded-md text-xs font-bold transition-all flex items-center gap-2 shadow-sm"
+                >
+                  <GitCompare size={15} /> Run Differential Comparison
+                </button>
+              </div>
+              {docAId && docBId && docAId === docBId && (
+                <p className="text-[11px] text-amber-400 mt-2">
+                  * Please select two different exhibits to perform differential comparison.
+                </p>
+              )}
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl text-left">
             <div className="p-3 bg-ink-panel border border-ink-border rounded-lg">

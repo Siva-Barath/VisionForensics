@@ -91,19 +91,35 @@ export default function SettingsPage() {
                     </p>
                   </div>
 
-                  <div className="p-3 bg-ink-base rounded-sm border border-ink-border space-y-1 font-mono">
-                    <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider font-sans">
-                      Frozen Random Forest SHA-256 Digest
-                    </span>
+                  <div className="p-3 bg-ink-base rounded-md border border-ink-border space-y-1 font-mono">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider font-sans">
+                        Frozen Random Forest SHA-256 Digest
+                      </span>
+                      <button
+                        onClick={() => navigator.clipboard.writeText('f274d4a93661ce8c5fd95f41a43e629edac41ab16d771355e7decacf0040e280')}
+                        className="text-[10px] text-brand hover:underline font-sans"
+                      >
+                        Copy
+                      </button>
+                    </div>
                     <div className="text-brand text-xs font-bold break-all">
                       f274d4a93661ce8c5fd95f41a43e629edac41ab16d771355e7decacf0040e280
                     </div>
                   </div>
 
-                  <div className="p-3 bg-ink-base rounded-sm border border-ink-border space-y-1 font-mono">
-                    <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider font-sans">
-                      18-Feature Schema Integrity Checksum
-                    </span>
+                  <div className="p-3 bg-ink-base rounded-md border border-ink-border space-y-1 font-mono">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider font-sans">
+                        18-Feature Schema Integrity Checksum
+                      </span>
+                      <button
+                        onClick={() => navigator.clipboard.writeText('eaef52167d829396728b78af848acae3ef62097538cb8433de29aa635c45c3dc')}
+                        className="text-[10px] text-emerald-400 hover:underline font-sans"
+                      >
+                        Copy
+                      </button>
+                    </div>
                     <div className="text-emerald-400 text-xs font-bold break-all">
                       eaef52167d829396728b78af848acae3ef62097538cb8433de29aa635c45c3dc
                     </div>
