@@ -188,9 +188,9 @@ export default function InvestigationDashboardPage() {
           {/* 3. Complete 18 Numerical Features Workspace */}
           <FeatureAnalysisWorkspace analysis={analysis} />
 
-          {/* 4. Document Preview & Suspicious Region Inspector */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-7">
+          {/* 4. Document Preview & Suspicious Region Inspector (Balanced 55% / 45% grid) */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1.22fr_1fr] gap-6 items-start">
+            <div className="min-w-0">
               <DocumentPreviewCard
                 imageUrl={imageUrl}
                 heatmapUrl={heatmapUrl}
@@ -201,7 +201,7 @@ export default function InvestigationDashboardPage() {
                 originalFilename={analysis.original_filename}
               />
             </div>
-            <div className="lg:col-span-5">
+            <div className="min-w-0">
               <InvestigationTimeline analysis={analysis} />
             </div>
           </div>
@@ -218,11 +218,11 @@ export default function InvestigationDashboardPage() {
           />
         </div>
       ) : (
-        /* STANDARD ANALYST VIEW: BALANCED 2-COLUMN DASHBOARD */
+        /* STANDARD ANALYST VIEW: BALANCED 2-COLUMN DASHBOARD (55% / 45%) */
         <div className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* LEFT COLUMN: ML Screening Result + Structured Evidence + Stepper (7 cols) */}
-            <div className="lg:col-span-7 space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.22fr_1fr] gap-6 items-start">
+            {/* LEFT COLUMN: ML Screening Result + Structured Evidence + Stepper (approx 55% width) */}
+            <div className="space-y-6 min-w-0">
               <MLIntelligenceSection analysis={analysis} />
 
               <EvidenceOverviewSection 
@@ -233,8 +233,8 @@ export default function InvestigationDashboardPage() {
               <InvestigationTimeline analysis={analysis} />
             </div>
 
-            {/* RIGHT COLUMN: Document Preview Card (5 cols) */}
-            <div className="lg:col-span-5 h-full space-y-6">
+            {/* RIGHT COLUMN: Document Preview Card (approx 45% width) */}
+            <div className="space-y-6 min-w-0 lg:sticky lg:top-24">
               <DocumentPreviewCard
                 imageUrl={imageUrl}
                 heatmapUrl={heatmapUrl}

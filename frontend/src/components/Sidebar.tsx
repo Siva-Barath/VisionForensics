@@ -85,7 +85,7 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
       </nav>
 
       {/* Bottom Footer Callout & Sign Out */}
-      <div className="p-4 mx-3 mb-4 rounded-xl bg-white/[0.04] border border-white/[0.08] space-y-3">
+      <div className="p-4 mx-3 mb-4 rounded-xl bg-white/[0.04] border border-white/[0.08] space-y-3 mt-auto">
         <div className="flex items-start gap-2.5">
           <Zap size={16} className="text-amber-400 shrink-0 mt-0.5" />
           <div>

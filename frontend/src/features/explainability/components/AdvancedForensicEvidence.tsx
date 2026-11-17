@@ -143,17 +143,17 @@ export function AdvancedForensicEvidence({
         {/* Collapsible Content */}
         {isOpen && (
           <div className="border-t border-[#E6E5F0] p-6 space-y-6 bg-[#F8F9FF]">
-            {/* Tab Navigation */}
-            <div className="flex border-b border-[#E6E5F0] overflow-x-auto gap-2 pb-2 text-xs">
+            {/* Tab Navigation (Responsive Wrapping & Unclipped) */}
+            <div className="flex flex-wrap items-center gap-2 pb-3 border-b border-[#E6E5F0] text-xs">
               {tabs.map((t) => (
                 <button
                   key={t.id}
                   type="button"
                   onClick={() => setTab(t.id)}
-                  className={`px-3.5 py-2 rounded-xl font-semibold transition-all whitespace-nowrap ${
+                  className={`px-3.5 py-2 rounded-xl font-semibold transition-all text-xs whitespace-nowrap flex items-center gap-1.5 ${
                     currentTab === t.id
                       ? 'bg-[#7045E8] text-white shadow-sm shadow-violet-200'
-                      : 'bg-white border border-[#E6E5F0] text-[#73758B] hover:text-[#17172F] hover:border-[#DDD5F9]'
+                      : 'bg-white border border-[#E6E5F0] text-[#73758B] hover:text-[#17172F] hover:border-[#DDD5F9] hover:bg-[#F8F9FF]'
                   }`}
                 >
                   {t.label}
