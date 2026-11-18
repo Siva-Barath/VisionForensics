@@ -203,8 +203,9 @@ async def login(
         expires_at=expires_at,
     )
 
-    # 6. Set secure cookies (enforce Secure=True in pilot and production)
-    is_secure_cookie = settings.app_env.lower() in ("production", "pilot")
+    # 6. Set secure cookies (only enforce Secure=True when accessing over HTTPS)
+    req_scheme = request.headers.get("x-forwarded-proto", request.url.scheme).lower()
+    is_secure_cookie = (req_scheme == "https")
     response.set_cookie(
         key="refresh_token",
         value=refresh_token,
@@ -237,6 +238,7 @@ async def login(
         access_token=access_token,
         token_type="bearer",
         expires_in=settings.access_token_expire_minutes * 60,
+        refresh_token=refresh_token,
         user=UserResponse.model_validate(user),
     )
 
@@ -356,8 +358,9 @@ async def refresh_token_endpoint(
         expires_delta=timedelta(minutes=settings.access_token_expire_minutes),
     )
 
-    # Set rotated cookies (enforce Secure=True in pilot and production)
-    is_secure_cookie = settings.app_env.lower() in ("production", "pilot")
+    # Set rotated cookies (only enforce Secure=True when accessing over HTTPS)
+    req_scheme = request.headers.get("x-forwarded-proto", request.url.scheme).lower()
+    is_secure_cookie = (req_scheme == "https")
     response.set_cookie(
         key="refresh_token",
         value=new_refresh_token,
@@ -389,6 +392,7 @@ async def refresh_token_endpoint(
         access_token=new_access_token,
         token_type="bearer",
         expires_in=settings.access_token_expire_minutes * 60,
+        refresh_token=new_refresh_token,
         user=UserResponse.model_validate(user),
     )
 

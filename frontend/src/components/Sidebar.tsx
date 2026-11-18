@@ -7,7 +7,6 @@ import {
   FileText,
   Settings,
   ShieldCheck,
-  Zap,
   X,
   GitCompare,
   LogOut,
@@ -25,7 +24,7 @@ const navItems = [
 ];
 
 export default function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -84,30 +83,26 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
         ))}
       </nav>
 
-      {/* Bottom Footer Callout & Sign Out */}
-      <div className="p-4 mx-3 mb-4 rounded-xl bg-white/[0.04] border border-white/[0.08] space-y-3 mt-auto">
-        <div className="flex items-start gap-2.5">
-          <Zap size={16} className="text-amber-400 shrink-0 mt-0.5" />
-          <div>
-            <p className="text-xs font-bold text-white">Evidence First.</p>
-            <p className="text-[10px] text-[#9E9AB8] leading-relaxed mt-0.5">
-              AI-powered document forensics for trusted decisions.
-            </p>
+      {/* Bottom Sign Out Bar */}
+      <div className="p-3 mx-3 mb-4 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-between mt-auto">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-7 h-7 rounded-lg bg-violet-600/30 flex items-center justify-center text-xs font-bold text-violet-300">
+            {user?.full_name ? user.full_name.charAt(0) : 'P'}
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs font-semibold text-white truncate">{user?.full_name || 'Pilot Analyst A'}</p>
+            <p className="text-[10px] text-[#9E9AB8] truncate">{user?.role?.replace(/_/g, ' ') || 'Forensic Analyst'}</p>
           </div>
         </div>
-
-        <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between">
-          <span className="text-[10px] text-[#79749A] font-mono">T=0.40 Locked Protocol</span>
-          <button
-            type="button"
-            onClick={handleLogout}
-            title="Sign Out Session"
-            aria-label="Sign out"
-            className="p-1 text-gray-400 hover:text-red-400 hover:bg-white/10 rounded transition-colors"
-          >
-            <LogOut size={13} />
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={handleLogout}
+          title="Sign Out Session"
+          aria-label="Sign out"
+          className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-white/10 rounded-lg transition-colors"
+        >
+          <LogOut size={14} />
+        </button>
       </div>
     </aside>
   );

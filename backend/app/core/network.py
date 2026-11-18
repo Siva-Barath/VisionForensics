@@ -95,19 +95,27 @@ def validate_request_origin(request: Request) -> bool:
     settings = get_settings()
     origin = request.headers.get("Origin")
     referer = request.headers.get("Referer")
+    allowed = [o.rstrip("/") for o in settings.allowed_origins_list]
 
-    # If Origin is present, must match allowed origins
+    # If Origin is present, must match allowed origins or loopback
     if origin:
         clean_origin = origin.rstrip("/")
-        allowed = [o.rstrip("/") for o in settings.allowed_origins_list]
-        return clean_origin in allowed
+        if clean_origin in allowed:
+            return True
+        parsed = urlparse(clean_origin)
+        if parsed.hostname in ("localhost", "127.0.0.1", "::1"):
+            return True
+        return False
 
     # If Referer is present, parse origin from it
     if referer:
         parsed = urlparse(referer)
         ref_origin = f"{parsed.scheme}://{parsed.netloc}".rstrip("/")
-        allowed = [o.rstrip("/") for o in settings.allowed_origins_list]
-        return ref_origin in allowed
+        if ref_origin in allowed:
+            return True
+        if parsed.hostname in ("localhost", "127.0.0.1", "::1"):
+            return True
+        return False
 
     # Check Sec-Fetch-Site (modern browsers)
     sec_fetch_site = request.headers.get("Sec-Fetch-Site")

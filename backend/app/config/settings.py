@@ -19,7 +19,7 @@ class Settings(BaseSettings):
 
     # Security & JWT
     jwt_algorithm: str = "HS256"
-    access_token_expire_minutes: int = 15
+    access_token_expire_minutes: int = 720
     refresh_token_expire_days: int = 7
     refresh_token_grace_window_seconds: int = 15
 
@@ -61,7 +61,7 @@ class Settings(BaseSettings):
     max_pdf_pages: int = 50
 
     # CORS
-    allowed_origins: str = "http://localhost:5173,http://localhost:3000"
+    allowed_origins: str = "http://localhost:5173,http://localhost:3000,http://localhost:8080,http://127.0.0.1:8080,https://localhost:8443,https://127.0.0.1:8443,http://visionforensics.local:8080,https://visionforensics.local:8443"
 
     @property
     def allowed_origins_list(self) -> list[str]:

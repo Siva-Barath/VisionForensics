@@ -68,7 +68,8 @@ class UserResponse(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
-    expires_in: int = Field(900, description="Token validity in seconds (default 15 minutes)")
+    expires_in: int = Field(43200, description="Token validity in seconds (default 12 hours)")
+    refresh_token: Optional[str] = Field(None, description="Cryptographic refresh token string")
     user: UserResponse
 
 

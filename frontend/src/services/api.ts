@@ -16,6 +16,7 @@ import type {
 } from '@/types';
 
 const TOKEN_KEY = 'vf_access_token';
+const REFRESH_TOKEN_KEY = 'vf_refresh_token';
 
 export function getStoredToken(): string | null {
   try {
@@ -37,9 +38,30 @@ export function setStoredToken(token: string | null): void {
   }
 }
 
+export function getStoredRefreshToken(): string | null {
+  try {
+    return localStorage.getItem(REFRESH_TOKEN_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function setStoredRefreshToken(token: string | null): void {
+  try {
+    if (token) {
+      localStorage.setItem(REFRESH_TOKEN_KEY, token);
+    } else {
+      localStorage.removeItem(REFRESH_TOKEN_KEY);
+    }
+  } catch {
+    // ignore
+  }
+}
+
 export function clearStoredToken(): void {
   try {
     localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
   } catch {
     // ignore
   }
@@ -117,8 +139,15 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const { data } = await api.post<TokenResponse>('/auth/refresh');
+        const refreshToken = getStoredRefreshToken();
+        const { data } = await api.post<TokenResponse>(
+          '/auth/refresh',
+          refreshToken ? { refresh_token: refreshToken } : {}
+        );
         setStoredToken(data.access_token);
+        if (data.refresh_token) {
+          setStoredRefreshToken(data.refresh_token);
+        }
         processQueue(null, data.access_token);
 
         if (originalRequest.headers) {
@@ -146,6 +175,9 @@ api.interceptors.response.use(
 export async function apiLogin(credentials: LoginCredentials): Promise<TokenResponse> {
   const { data } = await api.post<TokenResponse>('/auth/login', credentials);
   setStoredToken(data.access_token);
+  if (data.refresh_token) {
+    setStoredRefreshToken(data.refresh_token);
+  }
   return data;
 }
 
@@ -156,7 +188,8 @@ export async function apiRegister(payload: RegisterData): Promise<User> {
 
 export async function apiLogout(): Promise<void> {
   try {
-    await api.post('/auth/logout');
+    const refreshToken = getStoredRefreshToken();
+    await api.post('/auth/logout', refreshToken ? { refresh_token: refreshToken } : {});
   } finally {
     clearStoredToken();
   }
@@ -168,8 +201,15 @@ export async function apiGetMe(): Promise<User> {
 }
 
 export async function apiRefreshToken(): Promise<TokenResponse> {
-  const { data } = await api.post<TokenResponse>('/auth/refresh');
+  const refreshToken = getStoredRefreshToken();
+  const { data } = await api.post<TokenResponse>(
+    '/auth/refresh',
+    refreshToken ? { refresh_token: refreshToken } : {}
+  );
   setStoredToken(data.access_token);
+  if (data.refresh_token) {
+    setStoredRefreshToken(data.refresh_token);
+  }
   return data;
 }
 

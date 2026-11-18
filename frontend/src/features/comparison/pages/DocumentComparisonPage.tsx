@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   GitCompare,
@@ -33,11 +33,31 @@ export type ViewMode = 'side-by-side' | 'diff-heatmap' | 'aligned-overlay' | 'ch
 export const DocumentComparisonPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const isMountedRef = useRef(true);
+  const hasAutoTriggeredRef = useRef(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      abortControllerRef.current?.abort();
+    };
+  }, []);
+
   const [exhibits, setExhibits] = useState<DocumentSummary[]>([]);
   useEffect(() => {
     listDocuments(100, 0)
-      .then((docs) => setExhibits(docs || []))
-      .catch(() => setExhibits([]));
+      .then((docs) => {
+        if (isMountedRef.current) {
+          setExhibits(docs || []);
+        }
+      })
+      .catch(() => {
+        if (isMountedRef.current) {
+          setExhibits([]);
+        }
+      });
   }, []);
 
   // Document IDs from query params
@@ -68,6 +88,10 @@ export const DocumentComparisonPage: React.FC = () => {
   const runComparison = useCallback(
     async (dA: string, dB: string, pA: number, pB: number, align: boolean) => {
       if (!dA || !dB) return;
+      abortControllerRef.current?.abort();
+      const ac = new AbortController();
+      abortControllerRef.current = ac;
+
       setLoading(true);
       setError(null);
       setSelectedRegion(null);
@@ -80,9 +104,11 @@ export const DocumentComparisonPage: React.FC = () => {
           page_b: pB,
           align_images: align,
         });
+        if (!isMountedRef.current) return;
         setComparison(res);
-        setSearchParams({ docA: dA.trim(), docB: dB.trim() });
       } catch (err: any) {
+        if (!isMountedRef.current) return;
+        if (err?.name === 'CanceledError' || err?.code === 'ERR_CANCELED') return;
         const msg =
           err?.response?.data?.detail ||
           err?.response?.data?.error ||
@@ -91,29 +117,36 @@ export const DocumentComparisonPage: React.FC = () => {
         setError(msg);
         setComparison(null);
       } finally {
-        setLoading(false);
+        if (isMountedRef.current) {
+          setLoading(false);
+        }
       }
     },
-    [setSearchParams]
+    []
   );
 
-  // Trigger comparison when query params are provided on mount or if defaults exist
+  // Only auto-trigger comparison ONCE on mount IF both docA and docB were explicitly provided in URL search params
   useEffect(() => {
-    if (paramDocA && paramDocB) {
+    if (paramDocA && paramDocB && !hasAutoTriggeredRef.current) {
+      hasAutoTriggeredRef.current = true;
       setDocAId(paramDocA);
       setDocBId(paramDocB);
       runComparison(paramDocA, paramDocB, pageA, pageB, alignImages);
-    } else if (exhibits.length >= 2 && !docAId && !docBId) {
-      // Pre-select first two available exhibits for instant inspection
+    }
+  }, [paramDocA, paramDocB, pageA, pageB, alignImages, runComparison]);
+
+  // Pre-select exhibits in the dropdown if none selected, but DO NOT run comparison automatically
+  useEffect(() => {
+    if (exhibits.length >= 2 && !docAId && !docBId && !paramDocA && !paramDocB) {
       setDocAId(exhibits[0].id);
       setDocBId(exhibits[1].id);
-      runComparison(exhibits[0].id, exhibits[1].id, 0, 0, true);
     }
-  }, [paramDocA, paramDocB, exhibits.length]);
+  }, [exhibits, docAId, docBId, paramDocA, paramDocB]);
 
-  const handleStartComparison = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleStartComparison = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (docAId.trim() && docBId.trim()) {
+      setSearchParams({ docA: docAId.trim(), docB: docBId.trim() }, { replace: true });
       runComparison(docAId.trim(), docBId.trim(), pageA, pageB, alignImages);
     }
   };
@@ -127,7 +160,10 @@ export const DocumentComparisonPage: React.FC = () => {
     setDocBId(nextB);
     setPageA(nextPA);
     setPageB(nextPB);
-    runComparison(nextA, nextB, nextPA, nextPB, alignImages);
+    if (comparison) {
+      setSearchParams({ docA: nextA.trim(), docB: nextB.trim() }, { replace: true });
+      runComparison(nextA, nextB, nextPA, nextPB, alignImages);
+    }
   };
 
   // Document labels and file info
@@ -187,25 +223,11 @@ export const DocumentComparisonPage: React.FC = () => {
     if (!comparison) {
       return [
         {
-          id: 'kd-1',
-          title: 'Content Replacement',
-          description: `Different document type and issuer (${docAName} vs ${docBName})`,
-          severity: 'Major',
-          color: 'red',
-        },
-        {
-          id: 'kd-2',
-          title: 'Layout & Structure',
-          description: 'Different layout, field arrangement, and visual structure',
-          severity: 'Major',
-          color: 'red',
-        },
-        {
-          id: 'kd-3',
-          title: 'Text & Typography',
-          description: 'Different text content, fonts, and signature pattern',
-          severity: 'Moderate',
-          color: 'amber',
+          id: 'kd-empty',
+          title: 'Awaiting Execution',
+          description: 'Click Compare Selected Exhibits above to extract differential regions.',
+          severity: 'Pending',
+          color: 'purple',
         },
       ];
     }
@@ -247,10 +269,13 @@ export const DocumentComparisonPage: React.FC = () => {
         color: 'red',
       },
     ];
-  }, [comparison, docAName, docBName, diffPercent, isIdentical]);
+  }, [comparison, diffPercent, isIdentical]);
 
   // Forensic Interpretation Text
   const interpretationText = useMemo(() => {
+    if (!comparison) {
+      return 'Select reference Doc A and questioned Doc B above, then click Compare to generate detailed forensic interpretations.';
+    }
     if (isIdentical) {
       return `The two documents are identical. They exhibit 100% structural similarity (SSIM = ${ssimScore.toFixed(4)}) with zero pixel-level modifications across all examined feature bands.`;
     }
@@ -258,14 +283,15 @@ export const DocumentComparisonPage: React.FC = () => {
       return `The two documents are not the same. They show substantial structural, textual, and content-level differences (${diffPercent.toFixed(2)}% pixel difference, SSIM = ${ssimScore.toFixed(4)}), indicating that Doc B is a different document and not a simple copy or minor edit of Doc A.`;
     }
     return `The two documents share high structural alignment, but exhibit localized modifications (${diffPercent.toFixed(2)}% pixel difference, SSIM = ${ssimScore.toFixed(4)}). Targeted inspection of highlighted regions is recommended to verify authenticity.`;
-  }, [isIdentical, isDifferent, diffPercent, ssimScore]);
+  }, [comparison, isIdentical, isDifferent, diffPercent, ssimScore]);
 
   const conclusionLabel = useMemo(() => {
+    if (!comparison) return 'Pending Execution';
     if (isIdentical) return 'Identical Documents';
     if (isDifferent) return 'Different Documents';
     if (verdict === 'LOCALIZED_DIFFERENCES') return 'Localized Differences Detected';
     return 'Significant Differences Detected';
-  }, [isIdentical, isDifferent, verdict]);
+  }, [comparison, isIdentical, isDifferent, verdict]);
 
   return (
     <div className="space-y-5 pb-10">
@@ -630,140 +656,185 @@ export const DocumentComparisonPage: React.FC = () => {
 
         {/* Right Column: Comparison Result Card */}
         <div className="lg:col-span-4 bg-white border border-[#E6E5F0] rounded-2xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
-          <div className="space-y-4">
-            {/* Top Row: Icon, Title & Verdict Banner */}
-            <div className="flex items-start justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center">
-                  <GitCompare size={17} />
-                </div>
-                <h3 className="text-sm font-bold text-[#17172F]">Comparison Result</h3>
-              </div>
-
-              {/* Status Banner */}
-              <div className="text-right">
-                {isIdentical ? (
-                  <div className="px-3 py-1 bg-[#EBF9F1] border border-[#D1F2DE] rounded-xl text-right">
-                    <span className="text-xs font-extrabold text-[#159B55] block leading-tight">
-                      AUTHENTIC PAIR
-                    </span>
-                    <span className="text-[10px] text-[#159B55] block leading-tight">
-                      No significant differences
-                    </span>
-                  </div>
-                ) : (
-                  <div className="px-3 py-1 bg-[#FDF2F2] border border-[#FAD8D8] rounded-xl text-right">
-                    <span className="text-xs font-extrabold text-[#DC4545] block leading-tight">
-                      MODIFIED DOCUMENT
-                    </span>
-                    <span className="text-[10px] text-[#DC4545] block leading-tight">
-                      Significant differences detected
-                    </span>
-                  </div>
-                )}
-              </div>
+          {loading ? (
+            <div className="flex flex-col items-center justify-center text-center py-16 px-4 h-full my-auto space-y-3">
+              <RefreshCw size={28} className="animate-spin text-[#7045E8] mb-3" />
+              <h4 className="text-sm font-bold text-[#17172F]">Executing Comparison Analysis</h4>
+              <p className="text-xs text-[#73758B] max-w-xs leading-relaxed">
+                Performing geometric registration, structural SSIM differential calculation, and change heatmap synthesis...
+              </p>
             </div>
-
-            {/* Donut Chart & Metrics Row */}
-            <div className="flex items-center gap-4 pt-1">
-              {/* SVG Donut Chart for Difference */}
-              <div className="relative w-28 h-28 shrink-0 flex items-center justify-center">
-                <svg className="w-full h-full -rotate-90" viewBox="0 0 110 110">
-                  {/* Background Track */}
-                  <circle
-                    cx="55"
-                    cy="55"
-                    r={donutRadius}
-                    fill="transparent"
-                    stroke="#F3F3FA"
-                    strokeWidth="11"
-                  />
-                  {/* Difference Arc */}
-                  <circle
-                    cx="55"
-                    cy="55"
-                    r={donutRadius}
-                    fill="transparent"
-                    stroke={isIdentical ? '#159B55' : '#DC4545'}
-                    strokeWidth="11"
-                    strokeDasharray={`${strokeDash} ${circumference - strokeDash}`}
-                    strokeDashoffset={0}
-                    strokeLinecap="round"
-                  />
-                </svg>
-
-                {/* Center Percentage */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                  <span className="text-sm font-extrabold font-mono text-[#17172F] leading-tight">
-                    {diffPercent.toFixed(2)}%
-                  </span>
-                  <span className="text-[10px] text-[#73758B] font-semibold leading-tight mt-0.5">
-                    Difference
-                  </span>
+          ) : !comparison ? (
+            <div className="flex flex-col justify-between h-full py-1 space-y-4">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-xl bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center">
+                    <GitCompare size={17} />
+                  </div>
+                  <h3 className="text-sm font-bold text-[#17172F]">Comparison Analysis</h3>
+                </div>
+                <p className="text-xs text-[#73758B] leading-relaxed mt-2">
+                  Select a reference exhibit (Doc A) and a comparison exhibit (Doc B) from the dropdowns above, then click <strong>Compare</strong> to execute geometric registration, differential heatmapping, and structural similarity analysis.
+                </p>
+                <div className="mt-4 p-3.5 rounded-xl bg-[#F8F9FF] border border-[#E6E5F0] space-y-2 text-xs text-[#5A5D72]">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#73758B]">Reference (Doc A):</span>
+                    <span className="font-semibold text-[#17172F] truncate max-w-[150px]">{docAName || 'None selected'}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#73758B]">Questioned (Doc B):</span>
+                    <span className="font-semibold text-[#17172F] truncate max-w-[150px]">{docBName || 'None selected'}</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Right Metrics Table */}
-              <div className="space-y-2 flex-1 text-xs">
-                {/* SSIM Metric */}
-                <div className="flex items-center justify-between">
-                  <span className="text-[#73758B] font-medium text-[11px]">
-                    Structural Similarity (SSIM)
-                  </span>
-                  <span className={`px-2 py-0.5 rounded-full font-mono font-bold text-[10px] ${
-                    ssimScore > 0.85
-                      ? 'bg-[#EBF9F1] text-[#159B55]'
-                      : ssimScore > 0.5
-                      ? 'bg-[#FFF8EC] text-[#E9A12A]'
-                      : 'bg-[#FDF2F2] text-[#DC4545]'
-                  }`}>
-                    {ssimScore.toFixed(4)} / 1.0000
-                  </span>
-                </div>
-
-                {/* Geometric Alignment */}
-                <div className="flex items-center justify-between">
-                  <span className="text-[#73758B] font-medium text-[11px]">
-                    Geometric Alignment
-                  </span>
-                  <span className="text-[#159B55] font-semibold font-mono text-[11px] flex items-center gap-1">
-                    <CheckCircle2 size={12} /> {isAligned ? 'Aligned' : 'Aligned'}
-                  </span>
-                </div>
-
-                {/* Differing Pixels */}
-                <div className="flex items-center justify-between">
-                  <span className="text-[#73758B] font-medium text-[11px]">
-                    Differing Pixels
-                  </span>
-                  <span className="text-[#17172F] font-mono font-semibold text-[11px]">
-                    {differingPixels.toLocaleString()} ({diffPercent.toFixed(2)}%)
-                  </span>
-                </div>
-
-                {/* Image Dimensions */}
-                <div className="flex items-center justify-between">
-                  <span className="text-[#73758B] font-medium text-[11px]">
-                    Image Dimensions
-                  </span>
-                  <span className="text-[#17172F] font-mono text-[10px]">
-                    {dimsA[0]}×{dimsA[1]} vs {dimsB[0]}×{dimsB[1]}
-                  </span>
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={() => handleStartComparison()}
+                disabled={!docAId || !docBId}
+                className="w-full py-2.5 bg-[#7045E8] hover:bg-[#5D32D4] disabled:opacity-50 text-white rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 shadow-sm"
+              >
+                <GitCompare size={14} /> Compare Selected Exhibits
+              </button>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="space-y-4">
+                {/* Top Row: Icon, Title & Verdict Banner */}
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-xl bg-[#F0EBFF] text-[#7045E8] flex items-center justify-center">
+                      <GitCompare size={17} />
+                    </div>
+                    <h3 className="text-sm font-bold text-[#17172F]">Comparison Result</h3>
+                  </div>
 
-          <div className="pt-2 border-t border-[#E6E5F0] text-[11px] text-[#73758B] flex items-center justify-between">
-            <span>RANSAC Inliers: {comparison?.alignment?.matches_found ?? 2500}</span>
-            <button
-              type="button"
-              onClick={handleSwapDocuments}
-              className="text-[#7045E8] hover:underline font-bold flex items-center gap-1"
-            >
-              <GitCompare size={12} /> Swap Exhibits
-            </button>
-          </div>
+                  {/* Status Banner */}
+                  <div className="text-right">
+                    {isIdentical ? (
+                      <div className="px-3 py-1 bg-[#EBF9F1] border border-[#D1F2DE] rounded-xl text-right">
+                        <span className="text-xs font-extrabold text-[#159B55] block leading-tight">
+                          AUTHENTIC PAIR
+                        </span>
+                        <span className="text-[10px] text-[#159B55] block leading-tight">
+                          No significant differences
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="px-3 py-1 bg-[#FDF2F2] border border-[#FAD8D8] rounded-xl text-right">
+                        <span className="text-xs font-extrabold text-[#DC4545] block leading-tight">
+                          MODIFIED DOCUMENT
+                        </span>
+                        <span className="text-[10px] text-[#DC4545] block leading-tight">
+                          Significant differences detected
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Donut Chart & Metrics Row */}
+                <div className="flex items-center gap-4 pt-1">
+                  {/* SVG Donut Chart for Difference */}
+                  <div className="relative w-28 h-28 shrink-0 flex items-center justify-center">
+                    <svg className="w-full h-full -rotate-90" viewBox="0 0 110 110">
+                      {/* Background Track */}
+                      <circle
+                        cx="55"
+                        cy="55"
+                        r={donutRadius}
+                        fill="transparent"
+                        stroke="#F3F3FA"
+                        strokeWidth="11"
+                      />
+                      {/* Difference Arc */}
+                      <circle
+                        cx="55"
+                        cy="55"
+                        r={donutRadius}
+                        fill="transparent"
+                        stroke={isIdentical ? '#159B55' : '#DC4545'}
+                        strokeWidth="11"
+                        strokeDasharray={`${strokeDash} ${circumference - strokeDash}`}
+                        strokeDashoffset={0}
+                        strokeLinecap="round"
+                      />
+                    </svg>
+
+                    {/* Center Percentage */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                      <span className="text-sm font-extrabold font-mono text-[#17172F] leading-tight">
+                        {diffPercent.toFixed(2)}%
+                      </span>
+                      <span className="text-[10px] text-[#73758B] font-semibold leading-tight mt-0.5">
+                        Difference
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Right Metrics Table */}
+                  <div className="space-y-2 flex-1 text-xs">
+                    {/* SSIM Metric */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#73758B] font-medium text-[11px]">
+                        Structural Similarity (SSIM)
+                      </span>
+                      <span className={`px-2 py-0.5 rounded-full font-mono font-bold text-[10px] ${
+                        ssimScore > 0.85
+                          ? 'bg-[#EBF9F1] text-[#159B55]'
+                          : ssimScore > 0.5
+                          ? 'bg-[#FFF8EC] text-[#E9A12A]'
+                          : 'bg-[#FDF2F2] text-[#DC4545]'
+                      }`}>
+                        {ssimScore.toFixed(4)} / 1.0000
+                      </span>
+                    </div>
+
+                    {/* Geometric Alignment */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#73758B] font-medium text-[11px]">
+                        Geometric Alignment
+                      </span>
+                      <span className="text-[#159B55] font-semibold font-mono text-[11px] flex items-center gap-1">
+                        <CheckCircle2 size={12} /> {isAligned ? 'Aligned' : 'Aligned'}
+                      </span>
+                    </div>
+
+                    {/* Differing Pixels */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#73758B] font-medium text-[11px]">
+                        Differing Pixels
+                      </span>
+                      <span className="text-[#17172F] font-mono font-semibold text-[11px]">
+                        {differingPixels.toLocaleString()} ({diffPercent.toFixed(2)}%)
+                      </span>
+                    </div>
+
+                    {/* Image Dimensions */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#73758B] font-medium text-[11px]">
+                        Image Dimensions
+                      </span>
+                      <span className="text-[#17172F] font-mono text-[10px]">
+                        {dimsA[0]}×{dimsA[1]} vs {dimsB[0]}×{dimsB[1]}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-[#E6E5F0] text-[11px] text-[#73758B] flex items-center justify-between">
+                <span>RANSAC Inliers: {comparison?.alignment?.matches_found ?? 2500}</span>
+                <button
+                  type="button"
+                  onClick={handleSwapDocuments}
+                  className="text-[#7045E8] hover:underline font-bold flex items-center gap-1"
+                >
+                  <GitCompare size={12} /> Swap Exhibits
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -798,7 +869,7 @@ export const DocumentComparisonPage: React.FC = () => {
                   <div className="w-8 h-8 rounded-lg bg-white/10 text-purple-300 flex items-center justify-center mx-auto mb-1">
                     <Sparkles size={16} />
                   </div>
-                  <span className="text-[10px] text-gray-400 font-mono">Heatmap Ready</span>
+                  <span className="text-[10px] text-gray-400 font-mono">Heatmap Pending</span>
                 </div>
               )}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[11px] font-bold">
@@ -868,7 +939,9 @@ export const DocumentComparisonPage: React.FC = () => {
 
           {/* Bottom Conclusion Card */}
           <div className={`p-3 rounded-xl border flex items-center gap-2.5 mt-2 ${
-            isIdentical 
+            !comparison
+              ? 'bg-[#F8F9FF] border-[#E6E5F0] text-[#73758B]'
+              : isIdentical 
               ? 'bg-[#EBF9F1] border-[#D1F2DE] text-[#159B55]' 
               : 'bg-[#FDF2F2] border-[#FAD8D8] text-[#DC4545]'
           }`}>
