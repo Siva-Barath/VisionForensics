@@ -11,6 +11,8 @@ import type {
   WorkspaceStats,
   InvestigationCase,
   CaseStats,
+  ModelIntegrityVerification,
+  AuditLogEntry,
 } from '@/types';
 
 const TOKEN_KEY = 'vf_access_token';
@@ -324,6 +326,19 @@ export async function getCaseStats(): Promise<CaseStats> {
 
 export async function createCase(payload: { title: string; notes?: string; priority?: string; status?: string }): Promise<InvestigationCase> {
   return (await api.post<InvestigationCase>('/cases', payload)).data;
+}
+
+export async function verifyModelIntegrity(): Promise<ModelIntegrityVerification> {
+  return (await api.get<ModelIntegrityVerification>('/health/verify-integrity')).data;
+}
+
+export async function getAuditLogs(params?: {
+  limit?: number;
+  skip?: number;
+  category?: string;
+  search?: string;
+}): Promise<AuditLogEntry[]> {
+  return (await api.get<AuditLogEntry[]>('/admin/audit-logs', { params })).data;
 }
 
 export default api;

@@ -126,6 +126,11 @@ export default function Topbar({
               Access, review, and download finalized forensic investigation reports.
             </p>
           )}
+          {location.pathname === '/settings' && (
+            <p className="text-xs text-[#73758B] mt-0.5 hidden sm:block">
+              Configure system parameters, monitor forensic engines and maintain evidentiary integrity.
+            </p>
+          )}
         </div>
       </div>
 

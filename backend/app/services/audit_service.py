@@ -130,3 +130,65 @@ class AuditService:
             .order_by(ExhibitCustodyLog.timestamp.asc())
         )
         return list(db.scalars(stmt).all())
+
+    @staticmethod
+    def list_unified_logs(
+        db: Session,
+        skip: int = 0,
+        limit: int = 100,
+        category: Optional[str] = None,
+        search: Optional[str] = None,
+    ) -> List[Dict[str, Any]]:
+        """
+        Returns chronological security and custody audit logs merged together with search and category filtering.
+        """
+        import json
+        results = []
+
+        # 1. Query Security Audit Logs
+        if not category or category.lower() in ("all", "security", "auth", "authentication"):
+            sec_stmt = select(SecurityAuditLog).order_by(SecurityAuditLog.timestamp.desc()).limit(limit * 2)
+            for s in db.scalars(sec_stmt).all():
+                if search:
+                    q = search.lower()
+                    text_blob = f"{s.event_type} {s.user_email or ''} {s.ip_address or ''} {json.dumps(s.details or {})}"
+                    if q not in text_blob.lower():
+                        continue
+                results.append({
+                    "id": s.id,
+                    "timestamp": s.timestamp.isoformat(),
+                    "event_type": s.event_type,
+                    "category": "SECURITY_AUTH",
+                    "user_id": s.user_id,
+                    "user_email": s.user_email or "System / Anonymous",
+                    "ip_address": s.ip_address or "127.0.0.1",
+                    "status": "SUCCESS" if "FAILURE" not in s.event_type else "FAILED",
+                    "sha256_hash": (s.details or {}).get("sha256", ""),
+                    "details": s.details or {},
+                })
+
+        # 2. Query Exhibit Custody Logs
+        if not category or category.lower() in ("all", "custody", "evidence"):
+            cust_stmt = select(ExhibitCustodyLog).order_by(ExhibitCustodyLog.timestamp.desc()).limit(limit * 2)
+            for c in db.scalars(cust_stmt).all():
+                if search:
+                    q = search.lower()
+                    text_blob = f"{c.event_type} {c.status} {c.sha256_hash} {c.ip_address or ''} {json.dumps(c.details or {})}"
+                    if q not in text_blob.lower():
+                        continue
+                results.append({
+                    "id": c.id,
+                    "timestamp": c.timestamp.isoformat(),
+                    "event_type": c.event_type,
+                    "category": "EXHIBIT_CUSTODY",
+                    "user_id": c.user_id,
+                    "user_email": "pilot_analyst_a@pilot.visionforensics.local" if c.user_id else "Automated Pipeline",
+                    "ip_address": c.ip_address or "127.0.0.1",
+                    "status": c.status or "VERIFIED",
+                    "sha256_hash": c.sha256_hash or "",
+                    "details": c.details or {},
+                })
+
+        # Sort combined results by timestamp descending
+        results.sort(key=lambda x: x["timestamp"], reverse=True)
+        return results[skip : skip + limit]

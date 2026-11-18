@@ -99,3 +99,81 @@ async def health_check(response: Response, db: Session = Depends(get_db)) -> Hea
         modules=modules,
     )
 
+
+@router.api_route("/health/verify-integrity", methods=["GET", "POST"], summary="Verify ML Model & Schema Integrity")
+async def verify_ml_integrity() -> Dict[str, Any]:
+    """
+    Computes runtime SHA-256 digests directly from disk for model binary and feature schema,
+    verifying against pinned cryptographic commitments (Phase 4 Freeze).
+    """
+    import hashlib
+    import json
+    from datetime import datetime, timezone
+    from app.services.ml_inference import MLInferenceService
+    from app.services.ml_inference.inference_service import FROZEN_MODEL_SHA256, FROZEN_SCHEMA_SHA256
+
+    ml_service = MLInferenceService()
+    model_path = ml_service.model_path
+    schema_path = ml_service.schema_path
+
+    # Model digest
+    model_sha256 = ""
+    model_verified = False
+    if model_path and Path(model_path).exists():
+        h = hashlib.sha256()
+        with open(model_path, "rb") as f:
+            while chunk := f.read(65536):
+                h.update(chunk)
+        model_sha256 = h.hexdigest()
+        model_verified = (model_sha256.lower() == FROZEN_MODEL_SHA256.lower())
+
+    # Schema digest
+    schema_sha256 = ""
+    schema_verified = False
+    feature_count = 18
+    if schema_path and Path(schema_path).exists():
+        h = hashlib.sha256()
+        with open(schema_path, "rb") as f:
+            data = f.read()
+            h.update(data)
+            try:
+                schema_json = json.loads(data.decode("utf-8"))
+                feature_count = len(schema_json.get("features", []))
+            except Exception:
+                pass
+        schema_sha256 = h.hexdigest()
+        schema_verified = (schema_sha256.lower() == FROZEN_SCHEMA_SHA256.lower())
+
+    all_verified = model_verified and schema_verified
+
+    return {
+        "status": "VERIFIED" if all_verified else "FAILED",
+        "verified_at": datetime.now(timezone.utc).isoformat(),
+        "model": {
+            "name": "Random Forest Classifier",
+            "version": "v1.0.0-frozen",
+            "trees": 100,
+            "criterion": "Gini Impurity",
+            "operational_threshold": 0.40,
+            "expected_sha256": FROZEN_MODEL_SHA256,
+            "actual_sha256": model_sha256,
+            "verified": model_verified,
+            "feature_count": feature_count,
+        },
+        "schema": {
+            "name": "18-Feature Forensic Schema",
+            "version": "v1.0.0",
+            "expected_sha256": FROZEN_SCHEMA_SHA256,
+            "actual_sha256": schema_sha256,
+            "verified": schema_verified,
+            "feature_count": feature_count,
+        },
+        "decision_threshold": {
+            "threshold": 0.40,
+            "status": "LOCKED",
+            "protocol": "Phase 4 Specification (Recall >= 0.90)",
+            "superseded_thresholds": [0.55, 0.50],
+        }
+    }
+
+

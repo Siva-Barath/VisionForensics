@@ -67,6 +67,49 @@ export type UploadState =
   | { phase: 'success'; result: UploadResponse }
   | { phase: 'error'; message: string };
 
+export interface ModelIntegrityVerification {
+  status: 'VERIFIED' | 'FAILED';
+  verified_at: string;
+  model: {
+    name: string;
+    version: string;
+    trees: number;
+    criterion: string;
+    operational_threshold: number;
+    expected_sha256: string;
+    actual_sha256: string;
+    verified: boolean;
+    feature_count: number;
+  };
+  schema: {
+    name: string;
+    version: string;
+    expected_sha256: string;
+    actual_sha256: string;
+    verified: boolean;
+    feature_count: number;
+  };
+  decision_threshold: {
+    threshold: number;
+    status: string;
+    protocol: string;
+    superseded_thresholds: number[];
+  };
+}
+
+export interface AuditLogEntry {
+  id: string;
+  timestamp: string;
+  event_type: string;
+  category: string;
+  status: string;
+  sha256_hash?: string;
+  user_id?: string;
+  user_email?: string;
+  ip_address?: string;
+  details?: Record<string, any>;
+}
+
 export * from './analysis';
 export * from './comparison';
 export * from './report';

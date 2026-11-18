@@ -83,6 +83,9 @@ class AuditLogResponse(BaseModel):
     id: str
     timestamp: datetime
     event_type: str
+    category: Optional[str] = "SECURITY_AUTH"
+    status: Optional[str] = "SUCCESS"
+    sha256_hash: Optional[str] = ""
     user_id: Optional[str] = None
     user_email: Optional[str] = None
     ip_address: Optional[str] = None

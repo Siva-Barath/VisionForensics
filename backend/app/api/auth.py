@@ -566,11 +566,19 @@ async def admin_update_user_status(
 async def admin_get_audit_logs(
     skip: int = 0,
     limit: int = 100,
+    category: Optional[str] = None,
+    search: Optional[str] = None,
     db: Session = Depends(get_db),
-    admin: User = Depends(require_role([UserRole.SYSTEM_ADMINISTRATOR.value])),
+    admin: User = Depends(require_role([
+        UserRole.SYSTEM_ADMINISTRATOR.value,
+        UserRole.SENIOR_INVESTIGATOR.value,
+        UserRole.FORENSIC_ANALYST.value,
+    ])),
 ):
     """
-    Retrieves the system security audit event log.
-    Restricted to SYSTEM_ADMINISTRATOR.
+    Retrieves the system security and custody audit event logs.
+    Accessible to SYSTEM_ADMINISTRATOR, SENIOR_INVESTIGATOR, and FORENSIC_ANALYST.
     """
-    return AuditService.list_security_logs(db, skip=skip, limit=limit)
+    return AuditService.list_unified_logs(
+        db, skip=skip, limit=limit, category=category, search=search
+    )
